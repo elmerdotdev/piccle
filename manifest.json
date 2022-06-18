@@ -1,0 +1,16 @@
+{
+  "name": "Piccle",
+  "short_name": "Piccle",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#2A3443",
+  "description": "Piccle: Search the Object",
+  "theme_color": "#2A3443",
+  "icons": [
+    {
+      "src": "/images/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
