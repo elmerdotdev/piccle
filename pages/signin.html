@@ -1,0 +1,72 @@
+<header>
+  <h1>
+    <span class="visually-hidden">Piccle</span>
+    <img src="./images/logo.png" alt="Piccle Logo" />
+  </h1>
+  <div class="toolbar">
+    <a href="#signup">Home</a>
+    <a href="#signin">About</a>
+    <a href="#testpage">test</a>
+  </div>
+</header>
+
+<div class="main-wrapper">
+  <main>
+    <div class="login-field desktop-right">
+      <div class="welcome">
+        <p>Welcome,</p>
+        <p>Login to start playing!</p>
+      </div>
+      <form action="#">
+        <div class="formfield-wrapper">
+          <label for="email">Email Address</label>
+          <input type="text" id="email" placeholder="Your email" required />
+        </div>
+        <div class="formfield-wrapper">
+          <label for="password">Password</label>
+          <input
+            type="text"
+            id="password"
+            placeholder="Your password"
+            required
+          />
+
+          <a href="#">forgot your password?</a>
+        </div>
+
+        <div class="formfield-wrapper">
+          <input type="submit" value="Login" class="submit-btn" />
+        </div>
+      </form>
+      <div class="or">
+        <p>or</p>
+        <a href="#signup" class="signup-label">Signup</a>
+      </div>
+    </div>
+    <!-- end of .desktop-right -->
+    <div class="login-social desktop-left">
+      <p>Login with your social media</p>
+      <ul>
+        <li>
+          <a href="#"
+            ><span class="visually-hidden">facebook</span
+            ><img src="./images/icons/facebook-fill.svg" alt="Facebook"
+          /></a>
+        </li>
+        <li>
+          <a href="#"
+            ><span class="visually-hidden">twitter</span
+            ><img src="./images/icons/twitter-fill.svg" alt="Twitter"
+          /></a>
+        </li>
+        <li>
+          <a href="#"
+            ><span class="visually-hidden">google</span
+            ><img src="./images/icons/google-fill.svg" alt="Google"
+          /></a>
+        </li>
+      </ul>
+    </div>
+    <!-- end of .desktop-left -->
+  </main>
+</div>
