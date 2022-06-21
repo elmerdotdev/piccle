@@ -1,0 +1,60 @@
+<header class="header-border visually-hidden">
+  <h1>
+    <span class="visually-hidden">Piccle</span>
+    <img src="./images/logo.png" alt="Piccle Logo" />
+  </h1>
+  <div class="toolbar">
+    <a href="#signup">Home</a>
+    <a href="#signin">About</a>
+    <a href="#testpage">test</a>
+  </div>
+</header>
+
+<div class="main-wrapper">
+  <main class="main-signup">
+    <div class="signup-field desktop-right">
+      <form action="#">
+        <div class="formfield-wrapper">
+          <label for="name">Name</label>
+          <input type="text" id="name" placeholder="Full Name" required />
+        </div>
+        <div class="formfield-wrapper">
+          <label for="email">Password</label>
+          <input type="text" id="email" placeholder="Email" required />
+        </div>
+        <div class="formfield-wrapper">
+          <label for="password1">Password</label>
+          <input type="text" id="password1" placeholder="Password" required />
+        </div>
+        <div class="formfield-wrapper">
+          <label for="password2">Confirm Password</label>
+          <input
+            type="text"
+            id="password2"
+            placeholder="Confirm Password"
+            required
+          />
+        </div>
+
+        <div class="formfield-wrapper">
+          <input type="submit" value="Signup" class="signup-btn" />
+        </div>
+      </form>
+
+      <div class="or">
+        <p>or</p>
+        <a href="#signin" class="signup-label">Login</a>
+      </div>
+    </div>
+    <!-- end of .desktop-right -->
+    <div class="signup-banner desktop-left">
+      <button>
+        <a href="#signin" class="signup-label"
+          ><img src="./images/icons/arrow_back_ios.svg"
+        /></a>
+      </button>
+      <h2>Signup</h2>
+    </div>
+    <!-- end of .desktop-left -->
+  </main>
+</div>

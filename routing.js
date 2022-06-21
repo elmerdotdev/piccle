@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 class Page {
   constructor(name, htmlName, jsName) {
@@ -7,7 +7,7 @@ class Page {
     // if jsName is not given use the html name + '.js'
     this.jsName = jsName
       ? jsName
-      : htmlName.substring(0, htmlName.lastIndexOf('.')) + '.js';
+      : htmlName.substring(0, htmlName.lastIndexOf(".")) + ".js";
   }
 }
 
@@ -15,7 +15,7 @@ class Router {
   static init(mainAreaId, pages) {
     Router.pages = pages;
     Router.rootElem = document.getElementById(mainAreaId);
-    window.addEventListener('hashchange', function (e) {
+    window.addEventListener("hashchange", function (e) {
       Router.handleHashChange();
     });
     Router.handleHashChange();
@@ -44,10 +44,9 @@ class Router {
       const txt = await response.text();
       Router.rootElem.innerHTML = txt;
       //append JS part to run.
-      const script = document.createElement('script');
-      script.setAttribute('src', page.jsName + '?ver=' + Date.now());
-      script.setAttribute('type', 'text/javascript');
-      script.setAttribute('type', 'module');
+      const script = document.createElement("script");
+      script.setAttribute("src", page.jsName);
+      script.setAttribute("type", "text/javascript");
       Router.rootElem.appendChild(script);
     } catch (error) {
       console.error(error);
