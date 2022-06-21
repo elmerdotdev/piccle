@@ -46,7 +46,7 @@ class Router {
       //append JS part to run.
       const script = document.createElement("script");
       script.setAttribute("src", page.jsName);
-      script.setAttribute("type", "text/javascript");
+      script.setAttribute("type", "module");
       Router.rootElem.appendChild(script);
     } catch (error) {
       console.error(error);
