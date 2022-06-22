@@ -1,13 +1,17 @@
 "use strict";
 
 class Page {
-  constructor(name, htmlName, jsName) {
+  constructor(name, htmlName, jsName, cssName) {
     this.name = name;
     this.htmlName = htmlName;
     // if jsName is not given use the html name + '.js'
     this.jsName = jsName
       ? jsName
       : htmlName.substring(0, htmlName.lastIndexOf(".")) + ".js";
+    // if Name is not given use the html name + '.js'
+    this.cssName = cssName
+      ? cssName
+      : htmlName.substring(0, htmlName.lastIndexOf(".")) + ".css";
   }
 }
 
@@ -48,6 +52,11 @@ class Router {
       script.setAttribute("src", page.jsName);
       script.setAttribute("type", "module");
       Router.rootElem.appendChild(script);
+      //append CSS part to run.
+      const pageCss = document.createElement("link");
+      pageCss.setAttribute("href", page.cssName);
+      pageCss.setAttribute("rel", "stylesheet");
+      Router.rootElem.appendChild(pageCss);
     } catch (error) {
       console.error(error);
     }
