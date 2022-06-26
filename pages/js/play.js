@@ -25,13 +25,6 @@ function init () {
     const allWords = query(wordsRef)
 
     // Get User Progress
-    let usedWords = []
-
-    const datesAreOnSameDay = (first, second) =>
-        first.getFullYear() === second.getFullYear() &&
-        first.getMonth() === second.getMonth() &&
-        first.getDate() === second.getDate();
-
     const progressRef = collection(db, "progress")
     const userProgress = query(progressRef,
         where("user_email", "==", userEmail),
@@ -44,62 +37,47 @@ function init () {
 
         let allProgress = snapshot.docs
         let recentProgress = allProgress[0]
+        let dateStarted = new Date(recentProgress.data().date_started.seconds * 1000)
 
         if (recentProgress.data().resolved === false) {
             // if resolved false
-            let dateStarted = new Date(recentProgress.data().date_started.seconds * 1000)
-
             if (datesAreOnSameDay(dateStarted, new Date())) {
                 // same day
-                const docRef = doc(db, "words", recentProgress.data().word)
-                getDoc(docRef)
-                .then((doc) => {
-                    wordOfTheDay = doc.data().name
-                    document.querySelector('.word-to-guess').innerHTML = doc.data().name
+                if (recentProgress.data().tries <= 5) {
+                    // if they have 5 or less tries
+                    const docRef = doc(db, "words", recentProgress.data().word)
+                    getDoc(docRef)
+                    .then((doc) => {
+                        wordOfTheDay = doc.data().name
+                        document.querySelector('.word-to-guess').innerHTML = doc.data().name
 
-                    doc.data().hints.forEach((hint) => {
-                        document.querySelector('.word-hints').innerHTML += `<li>${hint}</li>`
-                    })
-                })
-
-            } else {
-                // not same day
-                let wordPool = []
-                let listOfWords = []
-                let finishedWords = []
-                
-                allProgress.forEach((doc) => {
-                    finishedWords.push(doc.data().word)
-                })
-                
-                let getList = async () => {
-                    await getDocs(allWords)
-                    .then((snapshot) => {
-                        snapshot.docs.forEach((doc) => {
-                            listOfWords.push(doc.id)
+                        doc.data().hints.forEach((hint) => {
+                            document.querySelector('.word-hints').innerHTML += `<li>${hint}</li>`
                         })
                     })
+                } else {
+                    // user has done more than 5 tries
+                    noMoreTries()
                 }
-
-                const getNewWord = async () => {
-                    await getList()
-                    wordPool = listOfWords.filter(val => !finishedWords.includes(val))
-
-                    wordOfTheDay = wordPool[Math.floor(Math.random() * wordPool.length)]
-                    
-                    addNewProgress(wordOfTheDay)
-                }
-                getNewWord()
+            } else {
+                // not same day
+                createProgress(allProgress)
             }
         } else {
             // if resolved true
+            if (datesAreOnSameDay(dateStarted, new Date())) {
+                // same day
+                challengeCompleteWaitTomorrow()
+            } else {
+                // not same day
+                createProgress(allProgress)
+            }
         }
     })
     .catch((error) => {
         console.log(error.message)
         // no user progress found
         // Get all words and choose one randomly
-
         getDocs(allWords)
         .then((snapshot) => {
             let randomWord = snapshot.docs[Math.floor(Math.random() * snapshot.docs.length)].id
@@ -108,6 +86,46 @@ function init () {
         })
     })
 
+    // compare dates
+    function datesAreOnSameDay(first, second) {
+        if (first.getFullYear() === second.getFullYear() && first.getMonth() === second.getMonth() && first.getDate() === second.getDate()) {
+            return true
+        } else {
+            return false
+        }
+    }
+
+    // generate a new challenge
+    function createProgress(allProgress) {
+        let wordPool = []
+        let listOfWords = []
+        let finishedWords = []
+        
+        allProgress.forEach((doc) => {
+            finishedWords.push(doc.data().word)
+        })
+        
+        let getList = async () => {
+            await getDocs(allWords)
+            .then((snapshot) => {
+                snapshot.docs.forEach((doc) => {
+                    listOfWords.push(doc.id)
+                })
+            })
+        }
+
+        let getNewWord = async () => {
+            await getList()
+            wordPool = listOfWords.filter(val => !finishedWords.includes(val))
+
+            wordOfTheDay = wordPool[Math.floor(Math.random() * wordPool.length)]
+            
+            addNewProgress(wordOfTheDay)
+        }
+        getNewWord()
+    }
+
+    // adds the new word to firebase progress
     function addNewProgress(whatstheword) {
         let addProgress = async () => {
             await addDoc(collection(db, "progress"), {
@@ -122,6 +140,15 @@ function init () {
             location.reload()
         }
         addProgress()
+    }
+
+    function challengeCompleteWaitTomorrow() {
+        alert(`you have completed today's challenge. come back tomorrow`)
+    }
+
+    // show when user is out of tries
+    function noMoreTries() {
+        alert(`you ran out of chances`)
     }
 
 }
