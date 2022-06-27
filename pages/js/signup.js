@@ -9,7 +9,6 @@ import {
     setDoc,
 } from 'https://www.gstatic.com/firebasejs/9.8.3/firebase-firestore.js'
 
-
 // initialize firebase services
 const auth = getAuth();
 const db = getFirestore();
@@ -58,10 +57,6 @@ function createEmailInUserCol (email, fname, lname) {
     })
 }
 
-// Registration of User using Email and Password
-
-const appRegForm = document.querySelector('.signup-field form');
-
 const pwMatchCheck = (firstPw, secondPw) => {
     if (firstPw === secondPw) {
         return true
@@ -70,27 +65,35 @@ const pwMatchCheck = (firstPw, secondPw) => {
     }
 };
 
-appRegForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const userFirstName = document.querySelector('#name');
-    const userLastName = "";
-    const userEmail = document.querySelector('#email');
-    const userPw = document.querySelector('#password1');
-    // Prepare error warning text
-    const appRegFormOutp = document.createElement('p');
-    appRegFormOutp.innerHTML = '';
-    appRegFormOutp.classList.add('form-error-output-text');
-    appRegFormOutp.classList.toggle('visually-hidden');
-    if (!document.body.contains(appRegFormOutp)) {
-        document.querySelector('input.signup-btn').parentElement.prepend(appLoginFormOutp)
-    }
-    appRegFormOutp.innerHTML = "";
-    if (! pwMatchCheck(userPw, document.querySelector('#password2'))) {
-        // Show error warning text
-        appRegFormOutp.innerHTML = "Error: Passwords do not match."
+console.log('TEST')
+
+document.addEventListener('DOMContentLoaded', (e) => {
+    
+    // Registration of User using Email and Password
+    
+    const appRegForm = document.querySelector('.signup-field form');
+    
+    appRegForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const userFirstName = document.querySelector('#name');
+        const userLastName = "";
+        const userEmail = document.querySelector('#email');
+        const userPw = document.querySelector('#password1');
+        // Prepare error warning text
+        const appRegFormOutp = document.createElement('p');
+        appRegFormOutp.innerHTML = '';
+        appRegFormOutp.classList.add('form-error-output-text');
         appRegFormOutp.classList.toggle('visually-hidden');
-    } else {
-        createUserWithEmailAndPassword(auth, userEmail, userPw)
+        if (!document.body.contains(appRegFormOutp)) {
+            document.querySelector('input.signup-btn').parentElement.prepend(appLoginFormOutp)
+        }
+        appRegFormOutp.innerHTML = "";
+        if (! pwMatchCheck(userPw, document.querySelector('#password2'))) {
+            // Show error warning text
+            appRegFormOutp.innerHTML = "Error: Passwords do not match."
+            appRegFormOutp.classList.toggle('visually-hidden');
+        } else {
+            createUserWithEmailAndPassword(auth, userEmail, userPw)
             .then((cred) => {
                 createEmailInUserCol(userEmail, userFirstName, userLastName)
                 console.log('user created:', cred.user);
@@ -102,4 +105,5 @@ appRegForm.addEventListener('submit', (e) => {
         };
     })
     
-
+    console.log('TEST-TEST')
+})
