@@ -1,7 +1,7 @@
 import { getAuth, signOut,
     createUserWithEmailAndPassword, signInWithEmailAndPassword,
     signInWithPopup, FacebookAuthProvider,
-    GoogleAuthProvider, 
+    GoogleAuthProvider, TwitterAuthProvider,
 } from 'https://www.gstatic.com/firebasejs/9.8.3/firebase-auth.js'
 
 import {
@@ -60,17 +60,20 @@ function createEmailInUserCol (email, fname, lname) {
 
 // Signing in User using Email and Password
 
-const appLoginForm = document.querySelector('#appLoginForm');
-const appLoginFormOutp = document.querySelector('#appLoginFormTextOutp');
+const appLoginForm = document.querySelector('.login-field form');
+const appLoginFormOutp = document.createElement('p');
+document.querySelector('input.submit-btn').parentElement.prepend(appLoginFormOutp)
+
 
 appLoginForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    const userEmail = appLoginForm.loginUsername.value;
-    const userPw = appLoginForm.loginPw.value;
+    const userEmail = appLoginForm.email.value;
+    const userPw = appLoginForm.password.value;
     appLoginFormOutp.innerHTML = ""
     signInWithEmailAndPassword(auth, userEmail, userPw)
         .then((cred) => {
             console.log('user signed in:', cred.user);
+            window.location.hash = "home";
         })
         .catch((err) => {
             console.log(err.message);
@@ -82,7 +85,7 @@ appLoginForm.addEventListener('submit', (e) => {
 
 // Sign in with Facebook
 
-const fbLoginButton = document.getElementById('fbLoginBtn');
+const fbLoginButton = document.querySelector('.login-social ul li:nth-of-type(1)');
 const providerFB = new FacebookAuthProvider(); 
 providerFB.addScope('email')
 
@@ -93,14 +96,33 @@ fbLoginButton.addEventListener('click', (e) => {
             console.log('Preparing users')
             const user = cred.user;
             console.log(user);
+            createEmailInUserCol(user.email, user.displayName, "");
+            window.location.hash = "home";
         })
         .catch((err) => {
             console.log(err.message);
         })
     })
+
+// Sign in with Twitter
+const twLoginButton = document.querySelector('.login-social ul li:nth-of-type(2)');
+const providerTW = new TwitterAuthProvider;
+
+twLoginButton.addEventListener('click', (e) => {
+    e.preventDefault();
+    signInWithPopup(auth, providerTW)
+    .then((cred) => {
+        const user = cred._tokenResponse;
+        createEmailInUserCol(user.email, user.displayName, "");
+        window.location.hash = "home" 
+    })
+    .catch((err) => {
+        console.log(err.message);
+    })
+})
     
 // Sign in with Google
-const googleLoginButton = document.getElementById('googleLoginBtn');
+const googleLoginButton = document.querySelector('.login-social ul li:nth-of-type(3)');
 const providerGoogle = new GoogleAuthProvider();
 providerGoogle.addScope('https://www.googleapis.com/auth/userinfo.email');
 providerGoogle.addScope('https://www.googleapis.com/auth/userinfo.profile');
@@ -111,6 +133,7 @@ googleLoginButton.addEventListener('click', (e) => {
     .then((cred) => {
         const user = cred.user.providerData[0];
         createEmailInUserCol(user.email, user.displayName, "");
+        window.location.hash = "home";
     })
     .catch((err) => {
         console.log(err.message);

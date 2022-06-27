@@ -65,45 +65,49 @@ const pwMatchCheck = (firstPw, secondPw) => {
     }
 };
 
-console.log('TEST')
 
-document.addEventListener('DOMContentLoaded', (e) => {
-    
-    // Registration of User using Email and Password
-    
-    const appRegForm = document.querySelector('.signup-field form');
-    
-    appRegForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const userFirstName = document.querySelector('#name');
-        const userLastName = "";
-        const userEmail = document.querySelector('#email');
-        const userPw = document.querySelector('#password1');
-        // Prepare error warning text
-        const appRegFormOutp = document.createElement('p');
-        appRegFormOutp.innerHTML = '';
-        appRegFormOutp.classList.add('form-error-output-text');
-        appRegFormOutp.classList.toggle('visually-hidden');
-        if (!document.body.contains(appRegFormOutp)) {
-            document.querySelector('input.signup-btn').parentElement.prepend(appLoginFormOutp)
-        }
-        appRegFormOutp.innerHTML = "";
-        if (! pwMatchCheck(userPw, document.querySelector('#password2'))) {
-            // Show error warning text
-            appRegFormOutp.innerHTML = "Error: Passwords do not match."
-            appRegFormOutp.classList.toggle('visually-hidden');
-        } else {
-            createUserWithEmailAndPassword(auth, userEmail, userPw)
-            .then((cred) => {
-                createEmailInUserCol(userEmail, userFirstName, userLastName)
-                console.log('user created:', cred.user);
+// Registration of User using Email and Password
+
+const appRegForm = document.querySelector('.signup-field form');
+
+// Create error warning p element
+const appRegFormOutp = document.createElement('p');
+
+appRegForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    appRegFormOutp.classList.toggle('visually-hidden');
+    const userFirstName = document.querySelector('#name').value;
+    const userLastName = "";
+    const userEmail = document.querySelector('#email').value;
+    const userPw = document.querySelector('#password1').value;
+
+    // Prepare error warning p element
+    appRegFormOutp.innerHTML = '';
+    appRegFormOutp.classList.add('form-error-output-text');
+    appRegFormOutp.classList.add('visually-hidden');
+    if (!document.body.contains(appRegFormOutp)) {
+        document.querySelector('input.signup-btn').parentElement.prepend(appRegFormOutp)
+    }
+    appRegFormOutp.innerHTML = "";
+    if (! pwMatchCheck(userPw, document.querySelector('#password2').value)) {
+        // Display error warning p element and error text
+        appRegFormOutp.innerHTML = "Error: Passwords do not match."
+        appRegFormOutp.classList.remove('visually-hidden');
+    } else {
+        createUserWithEmailAndPassword(auth, userEmail, userPw)
+        .then((cred) => {
+            createEmailInUserCol(userEmail, userFirstName, userLastName)
+            console.log('user created:', cred.user);
+            signInWithEmailAndPassword(auth, userEmail, userPw)
+            .then((signincred) => {
                 appRegForm.reset();
+                console.log('user created:', signincred.user);
+                window.location.hash = "home";
             })
-            .catch((err) => {
-                console.log(err.message);
-            })
-        };
-    })
-    
-    console.log('TEST-TEST')
+        })
+        .catch((err) => {
+            console.log(err.message);
+        })
+    };
 })
+
