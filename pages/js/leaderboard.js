@@ -18,6 +18,8 @@ if (user === null) {
     window.location.hash = "signin";
 }
 
+console.log('hello from leaderboard.js');
+
 // reference to collections
 const colRefUsers = collection(db, "users")
 const q = query(colRefUsers, orderBy("score", "desc"));
