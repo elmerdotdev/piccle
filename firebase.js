@@ -6,10 +6,6 @@ import { getAuth, signOut,
     GoogleAuthProvider, 
 } from 'https://www.gstatic.com/firebasejs/9.8.3/firebase-auth.js'
 
-import {
-    getFirestore, collection, doc, getDoc,
-    setDoc,
-} from 'https://www.gstatic.com/firebasejs/9.8.3/firebase-firestore.js'
 
 const firebaseConfig = {
     apiKey: "AIzaSyBz55X3M4wdtYiW7EsbFwGz98K1Mw4xOOo",
