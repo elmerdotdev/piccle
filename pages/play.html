@@ -1,7 +1,97 @@
-<h1 class="name-field"></h1>
+<header class="nav-bar">
+  <div class="left-menu">
+    <button>
+      <a href="#signin" class="signup-label"
+        ><img src="./images/icons/arrow_back_ios.svg"
+      /></a>
+    </button>
+    <h1 class="setting-header">Settings</h1>
+  </div>
+  <ul class="main-menu">
+    <li>
+      <div class="menu-icon">
+        <img src="./../images/icons/home-2-fill.svg" alt="" />
+      </div>
+      <a href="#home"><span>Home</span></a>
+    </li>
+    <li>
+      <div class="menu-icon">
+        <img src="./../images/icons/camera-3-fill.svg" alt="" />
+      </div>
+      <a href="#playnow"><span>Play Now</span></a>
+    </li>
+    <li>
+      <div class="menu-icon">
+        <img src="./../images/icons/fire-fill.svg" alt="" />
+      </div>
+      <a href="#history"><span>History</span></a>
+    </li>
+    <li>
+      <div class="menu-icon">
+        <img src="./../images/icons/P.svg" alt="" />
+      </div>
+      <a href="#piccleshop"><span>Piccle Shop</span></a>
+    </li>
+    <li class="main-menu-active">
+      <div class="menu-icon">
+        <img src="./../images/icons/settings-white.svg" alt="" />
+      </div>
+      <a href="#settings"><span>Settings</span></a>
+    </li>
+  </ul>
+  <button id="menuBtn">
+    <a class="signup-label"><img src="./images/icons/menu-3-line.svg" /></a>
+  </button>
+</header>
 
-<h2>Word to Guess</h2>
-<span class="word-to-guess"></span>
+<div class="st-sidenav" id="st-sidenavId">
+  <ul class="st-main-menu">
+    <li class="sd-menu-header">
+      <a style="color: transparent">.</a>
+      <a href="#home"><span>Menu</span></a>
+      <button id="clsBtn">
+        <a class="signup-label"><img src="./../images/icons/cancel.svg" /></a>
+      </button>
+    </li>
+    <li>
+      <a href="#home"><span>Home</span></a>
+    </li>
+    <li>
+      <a href="#play"><span>Play Now</span></a>
+    </li>
+    <li>
+      <a href="#history"><span>History</span></a>
+    </li>
+    <li>
+      <a href="#piccleshop"><span>Piccle Shop</span></a>
+    </li>
+    <li class="main-menu-active">
+      <a href="#settings"><span>Settings</span></a>
+    </li>
+  </ul>
+</div>
 
-<h3>Hints</h3>
-<ul class="word-hints"></ul>
+<main class="st-main">
+  <section class="st-container">
+    <!-- <div class="pl-card">
+      <span>Account</span>
+      <img src="./../images/icons/account-circle-fill.svg" alt="Account Icon" />
+    </div> -->
+    <div class="container">
+      <div class="stepper-wrapper">
+        <div class="progress"></div>
+        <div class="screen-indicator completed">1</div>
+        <div class="screen-indicator">2</div>
+        <div class="screen-indicator">3</div>
+        <div class="screen-indicator">4</div>
+      </div>
+      <button class="control-btn" id="prev-btn" onclick="previous()">
+        Back
+      </button>
+      <button class="control-btn" id="next-btn" onclick="next()">
+        Continue
+      </button>
+    </div>
+  </section>
+  <section></section>
+</main>

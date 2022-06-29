@@ -1,0 +1,23 @@
+/* need to remove */
+section {
+  margin: 1rem;
+}
+
+.btn-sections {
+  margin: 2rem 1rem;
+}
+footer.visually-hidden {
+  position: inherit;
+}
+
+.btn-collections pre {
+  background: rgb(34, 30, 57);
+  color: rgb(97, 224, 214);
+  border-radius: 1rem;
+  margin-top: 2rem;
+}
+
+.btn-sections label span {
+  font-weight: bolder;
+  font-size: 2rem;
+}
