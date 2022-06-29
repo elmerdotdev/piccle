@@ -500,7 +500,7 @@ li.main-menu-active a span {
   position: fixed;
   z-index: 1;
   top: 0;
-  left: 0;
+  right: 0;
   background-color: rgb(255, 255, 255);
   overflow-x: hidden;
   transition: 0.5s;
@@ -512,7 +512,7 @@ li.main-menu-active a span {
 }
 
 .left-menu h1 {
-  margin-left: 9rem;
+  margin-left: 60%;
 }
 /* end of settings page */
 
