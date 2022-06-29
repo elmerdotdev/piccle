@@ -3,7 +3,7 @@ if ("serviceWorker" in navigator) {
     console.log(`Service Worker ready (Scope: ${reg.scope})`);
   });
   navigator.serviceWorker
-    .register("./sw.js", { scope: "/" })
+    .register("./sw.js", { scope: "/piccle/dev/" })
     .then(function (reg) {
       console.log(`Service Worker Registration (Scope: ${reg.scope})`);
     })
