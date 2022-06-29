@@ -86,12 +86,7 @@ header,
 h1,
 h2 {
   font-family: "Rammetto One", Helvetica, sans-serif;
-  text-align: center;
   margin: 0;
-}
-
-h2 {
-  font-size: 2.5rem;
 }
 
 p {
@@ -110,13 +105,13 @@ li a {
   display: block;
 }
 
-button {
-  /* border & shadow */
+/* button {
+  border & shadow
   box-shadow: 4px 4px;
   border-radius: 5px;
   width: 3rem;
   height: 3rem;
-}
+} */
 
 /* ======================= index */
 /* =============== header */
