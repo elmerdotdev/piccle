@@ -49,12 +49,12 @@ class Router {
       Router.rootElem.innerHTML = txt;
       //append JS part to run.
       const script = document.createElement("script");
-      script.setAttribute("src", page.jsName);
+      script.setAttribute("src", page.jsName + '?ver=' + Date.now());
       script.setAttribute("type", "module");
       Router.rootElem.appendChild(script);
       //append CSS part to run.
       const pageCss = document.createElement("link");
-      pageCss.setAttribute("href", page.cssName);
+      pageCss.setAttribute("href", page.cssName + '?ver=' + Date.now());
       pageCss.setAttribute("rel", "stylesheet");
       Router.rootElem.appendChild(pageCss);
     } catch (error) {
