@@ -1,10 +1,14 @@
 'use strict';
 
+import { getFirestore, collection, query, where, orderBy, getDoc, getDocs, doc, addDoc, updateDoc, Timestamp  } from 'https://www.gstatic.com/firebasejs/9.8.3/firebase-firestore.js'
 import Vision from '../../vision.js'
-import { getFirestore, collection, query, where, orderBy, getDoc, getDocs, doc, setDoc, addDoc, Timestamp  } from 'https://www.gstatic.com/firebasejs/9.8.3/firebase-firestore.js'
 
 const userEmail = "ebalbin00@mylangara.ca"
-let wordOfTheDay = ""
+let currentHint = []
+let currentWord = ""
+let wordId = ""
+let progressId = ""
+let usedTries = 0
 
 function init () {
 
@@ -14,13 +18,14 @@ function init () {
     const userRef = collection(db, "users")
     const userDetails = query(userRef, where("user_email", "==", userEmail))
 
-    getDocs(userDetails)
-    .then((snapshot) => {
-        snapshot.docs.forEach((doc) => {
-            document.querySelector('.name-field').innerHTML = `Hi ${doc.data().firstname}!`
-        })
-    })
+    // getDocs(userDetails)
+    // .then((snapshot) => {
+    //     snapshot.docs.forEach((doc) => {
+    //         document.querySelector('.name-field').innerHTML = `Hi ${doc.data().firstname}!`
+    //     })
+    // })
 
+    // Get all words in database
     const wordsRef = collection(db, "words")
     const allWords = query(wordsRef)
 
@@ -33,43 +38,26 @@ function init () {
     getDocs(userProgress)
     .then((snapshot) => {
         // user progress found
-        document.querySelector('#mainArea').style.display = "block"
-
         let allProgress = snapshot.docs
         let recentProgress = allProgress[0]
         let dateStarted = new Date(recentProgress.data().date_started.seconds * 1000)
 
         if (recentProgress.data().resolved === false) {
-            // if resolved false
             if (datesAreOnSameDay(dateStarted, new Date())) {
-                // same day
-                if (recentProgress.data().tries <= 5) {
-                    // if they have 5 or less tries
-                    const docRef = doc(db, "words", recentProgress.data().word)
-                    getDoc(docRef)
-                    .then((doc) => {
-                        wordOfTheDay = doc.data().name
-                        document.querySelector('.word-to-guess').innerHTML = doc.data().name
-
-                        doc.data().hints.forEach((hint) => {
-                            document.querySelector('.word-hints').innerHTML += `<li>${hint}</li>`
-                        })
-                    })
+                if (recentProgress.data().tries < 5) {
+                    getWordAndHint(recentProgress.data().word, recentProgress.data().tries)
+                    progressId = recentProgress.id
+                    usedTries = recentProgress.data().tries + 1;
                 } else {
-                    // user has done more than 5 tries
                     noMoreTries()
                 }
             } else {
-                // not same day
                 createProgress(allProgress)
             }
         } else {
-            // if resolved true
             if (datesAreOnSameDay(dateStarted, new Date())) {
-                // same day
                 challengeCompleteWaitTomorrow()
             } else {
-                // not same day
                 createProgress(allProgress)
             }
         }
@@ -86,7 +74,6 @@ function init () {
         })
     })
 
-    // compare dates
     function datesAreOnSameDay(first, second) {
         if (first.getFullYear() === second.getFullYear() && first.getMonth() === second.getMonth() && first.getDate() === second.getDate()) {
             return true
@@ -95,62 +82,192 @@ function init () {
         }
     }
 
+    // get word and hint
+    function getWordAndHint(word, tries) {
+        const docRef = doc(db, "words", word)
+        getDoc(docRef)
+        .then((doc) => {
+            currentWord = doc.data().name
+            currentHint = doc.data().hints[tries]
+            wordId = doc.id
+            
+            document.querySelector('.play-wrapper__hint').innerHTML = currentHint
+            document.querySelectorAll('.play-wrapper__numbers li')[tries].classList.add("current-hint")
+        })
+    }
+
     // generate a new challenge
     function createProgress(allProgress) {
         let wordPool = []
         let listOfWords = []
         let finishedWords = []
+        let chosenWord = ""
         
         allProgress.forEach((doc) => {
             finishedWords.push(doc.data().word)
         })
         
-        let getList = async () => {
-            await getDocs(allWords)
-            .then((snapshot) => {
-                snapshot.docs.forEach((doc) => {
-                    listOfWords.push(doc.id)
-                })
+        getDocs(allWords)
+        .then((snapshot) => {
+            snapshot.docs.forEach((doc) => {
+                listOfWords.push(doc.id)
             })
-        }
 
-        let getNewWord = async () => {
-            await getList()
             wordPool = listOfWords.filter(val => !finishedWords.includes(val))
+            chosenWord = wordPool[Math.floor(Math.random() * wordPool.length)]
 
-            wordOfTheDay = wordPool[Math.floor(Math.random() * wordPool.length)]
-            
-            addNewProgress(wordOfTheDay)
-        }
-        getNewWord()
+            addNewProgress(chosenWord)
+        })
     }
 
-    // adds the new word to firebase progress
-    function addNewProgress(whatstheword) {
-        let addProgress = async () => {
-            await addDoc(collection(db, "progress"), {
-                date_completed: "",
-                date_started: Timestamp.fromDate(new Date()),
-                resolved: false,
-                tries: 1,
-                user_email: userEmail,
-                word: whatstheword
-            });
+    // add the new word to firebase progress
+    async function addNewProgress(whatstheword) {
+        await addDoc(collection(db, "progress"), {
+            date_completed: "",
+            date_started: Timestamp.fromDate(new Date()),
+            resolved: false,
+            tries: 0,
+            user_email: userEmail,
+            word: whatstheword
+        });
 
-            location.reload()
-        }
-        addProgress()
+        location.reload()
     }
 
     function challengeCompleteWaitTomorrow() {
         alert(`you have completed today's challenge. come back tomorrow`)
+        location.hash = "#home"
     }
 
-    // show when user is out of tries
     function noMoreTries() {
         alert(`you ran out of chances`)
+        location.hash = "#home"
     }
 
+    async function updateTries() {
+        const currentProgressRef = doc(db, "progress", progressId);
+        await updateDoc(currentProgressRef, {
+            tries: usedTries
+        });
+        document.querySelector('.popup-window').style.display = "block"
+    }
+
+    async function answerCorrect(theword, image) {
+        const currentProgressRef = doc(db, "progress", progressId);
+        await updateDoc(currentProgressRef, {
+            date_completed: Timestamp.fromDate(new Date()),
+            resolved: true,
+            tries: usedTries
+        });
+
+        webcam.stop()
+        let domContent = `<h2>&ldquo;${theword}&rdquo; <span>is the correct answer!</span></h2>`
+        domContent += `<div><img src="${image}" /></div>`
+        domContent += `<a href="index.html#home">Home</a>`
+        document.querySelector('.results-wrapper').innerHTML = domContent
+
+        document.querySelector('.results-wrapper').style.display = "block"
+        document.querySelector('.play-wrapper').style.display = "none"
+    }
+
+
+    // Camera functions ==========================
+
+    const webcamElement = document.getElementById('webcam')
+    const canvasElement = document.getElementById('canvas')
+    const webcam = new Webcam(webcamElement, 'environment', canvasElement)
+    let base64Image =  ""
+
+    webcam.start()
+    .then(result => {
+        if (location.hash == "#play") {
+            console.log("webcam started");
+        } else {
+            webcam.stop()
+        }
+    })
+    .catch(err => {
+        console.log(err);
+    });
+
+    async function waitForVisionResponse(nonStrippedImage, strippedImage) {
+        let vision = new Vision(strippedImage)
+        let results = await vision.cloudVision()
+
+        console.log(currentWord)
+        console.log(results)
+
+        if (results.includes(currentWord.toLowerCase())) {
+            answerCorrect(currentWord, nonStrippedImage)
+        } else {
+            let domContent = "<h2>Try Again!</h2>"
+            domContent += `<p>Sorry that is incorrect. You have ${5 - usedTries} tries remaining.</p>`
+            domContent += `<a href="index.html#play">Next Clue</a>`
+            document.querySelector('.popup-window').innerHTML = domContent
+        }
+        updateTries()
+    }
+
+    document.querySelector('.upload-btn').addEventListener('click', () => {
+        document.querySelector('#uploader').click()
+    })
+
+    document.querySelector('#uploader').addEventListener('change', () => {
+        let reader = new FileReader();
+        if (document.querySelector('#uploader').files[0]) {
+            reader.readAsDataURL(document.querySelector('#uploader').files[0]);
+            reader.onload = function () {
+                base64Image = reader.result;
+                document.querySelector('#previewImage').setAttribute('src', base64Image)
+                document.querySelector('#previewImage').style.zIndex = 2
+                document.querySelector('.camera-btn').style.display = "inline"
+                document.querySelector('.capture-btn').style.display = "none"
+                webcam.stop()
+            };
+            reader.onerror = function (error) {
+                console.log('Error: ', error);
+            };
+        }
+    })
+
+    document.querySelector('.camera-btn').addEventListener('click', () => {
+        document.querySelector('#previewImage').style.zIndex = 0
+        webcam.start()
+        .then(result => {
+            document.querySelector('.camera-btn').style.display = "none"
+            document.querySelector('.capture-btn').style.display = "inline"
+        })
+    })
+
+    document.querySelector('.capture-btn').addEventListener('click', () => {
+        base64Image = webcam.snap()
+        document.querySelector('#previewImage').setAttribute('src', base64Image)
+        document.querySelector('#previewImage').style.zIndex = 2
+        document.querySelector('.camera-btn').style.display = "inline"
+        document.querySelector('.capture-btn').style.display = "none"
+        webcam.stop()
+    })
+
+    document.querySelector('.delete-btn').addEventListener('click', () => {
+        webcam.start()
+        document.querySelector('#previewImage').style.zIndex = 0
+        document.querySelector('.camera-btn').style.display = "none"
+        document.querySelector('.capture-btn').style.display = "inline"
+        base64Image = ""
+    })
+
+    document.querySelector('.submit-btn').addEventListener('click', () => {
+        if (base64Image != "") {
+            let strippedBase64Image = base64Image.replace("data:image/jpeg;base64,","")
+            strippedBase64Image = strippedBase64Image.replace("data:image/jpg;base64,","")
+            strippedBase64Image = strippedBase64Image.replace("data:image/png;base64,","")
+            strippedBase64Image = strippedBase64Image.replace("data:image/gif;base64,","")
+            
+            waitForVisionResponse(base64Image, strippedBase64Image)
+        } else {
+            alert('need photo')
+        }
+    })
 }
 
 init();
