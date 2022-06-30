@@ -31,6 +31,12 @@ function checkEmailInUserCol (email) {
         })
 }
 
+// Store user id in browser localStorage
+
+function storeUIDInBrowser (email) {
+    localStorage.setItem('piccleUID', email);
+}
+
 // Create new email id in user collection
     
 function createEmailInUserCol (email, fname, lname) {
@@ -102,6 +108,7 @@ appRegForm.addEventListener('submit', (e) => {
             .then((signincred) => {
                 appRegForm.reset();
                 console.log('user created:', signincred.user);
+                storeUIDInBrowser(userEmail);
                 window.location.hash = "home";
             })
         })
