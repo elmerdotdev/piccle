@@ -64,6 +64,10 @@ class Ranking {
 };
 
 const leaderboardTable = [];
+const leaderboardList = document.createElement('div');
+leaderboardList.classList.add('leaderboard-list');
+leaderboardList.innerHTML = "<p>Ranking, Name, Score, Current User</p>";
+document.getElementById('mainArea').appendChild(leaderboardList);
 
 getDocs(q)
 .then((snapshot) => {
@@ -74,6 +78,10 @@ getDocs(q)
         leaderboardTable.push( new Ranking((leaderboardTable.length + 1), userName, userInfo.score, curUserFlag));
     })
     console.table(leaderboardTable);
+    
+    leaderboardTable.forEach((row) => {
+        leaderboardList.innerHTML += `<p>${JSON.stringify(row)}</p>`;
+    });
 })
 .catch((err) => {
     console.log(err.message);
@@ -90,6 +98,7 @@ function displayPublicName (firstname, lastname) {
         }
     }
 };
+
 
 // const leaderboardTable = document.createElement('table');
 // leaderboardTable.style.width = "600px";
