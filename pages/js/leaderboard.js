@@ -5,18 +5,46 @@ import {
     getFirestore, collection, 
     query, orderBy, limit,    
     doc, getDocs, setDoc,
+    getDoc,
 } from 'https://www.gstatic.com/firebasejs/9.8.3/firebase-firestore.js'
 
 // initialize firebase services
 const auth = getAuth();
 const db = getFirestore();
-const user = auth.currentUser;
-console.log(user)
-if (user === null) {
-    console.log("User is not signed in");
-    alert("You are not signed in");
-    window.location.hash = "signin";
-}
+const user = localStorage.piccleUID;
+
+// const user = auth.currentUser;
+// console.log(user)
+// if (user === null) {
+//     console.log("User is not signed in");
+//     alert("You are not signed in");
+//     window.location.hash = "signin";
+// }
+
+// Check if UID stored in browser exists in "users" collection
+async function checkUIDinBrowser () {
+    const uIDInBrowser = localStorage.getItem('piccleUID');
+    if ( uIDInBrowser != null ) {
+        const docRef = doc(db, "users", uIDInBrowser);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    };
+};
+
+checkUIDinBrowser()
+    .then((resp) => {
+        if (!resp) {
+            alert("Please sign-in. Redirecting...");
+            window.location.hash = "signin";
+        }
+    })
+    .catch((err) => {console.log(err.message)})
 
 console.log('hello from leaderboard.js');
 
@@ -42,7 +70,7 @@ getDocs(q)
     snapshot.forEach((doc) => {
         const userInfo = doc.data();
         const userName = displayPublicName(userInfo.firstname, userInfo.lastname);
-        const curUserFlag = (user.email === userInfo.user_email) ? true : false;
+        const curUserFlag = (user === userInfo.user_email) ? true : false;
         leaderboardTable.push( new Ranking((leaderboardTable.length + 1), userName, userInfo.score, curUserFlag));
     })
     console.table(leaderboardTable);
