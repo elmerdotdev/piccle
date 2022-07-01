@@ -3,7 +3,7 @@
 import { getFirestore, collection, query, where, orderBy, getDoc, getDocs, doc, addDoc, updateDoc, Timestamp  } from 'https://www.gstatic.com/firebasejs/9.8.3/firebase-firestore.js'
 import Vision from '../../vision.js'
 
-const userEmail = "ebalbin00@mylangara.ca"
+const userEmail = localStorage.getItem('piccleUID')
 let currentHint = []
 let currentWord = ""
 let wordId = ""
