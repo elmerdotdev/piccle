@@ -1,8 +1,7 @@
 export default class Vision {
-    constructor (base64Image, keyword) {
+    constructor (base64Image) {
         this.image = base64Image,
-        this.apiKey = "https://vision.googleapis.com/v1/images:annotate?key=" + AIzaSyAISbg6ujMBUkFhb1CP6451dsaxTHMM7Gk,
-        this.keyword = keyword
+        this.apiKey = "https://vision.googleapis.com/v1/images:annotate?key=" + 'AIzaSyAISbg6ujMBUkFhb1CP6451dsaxTHMM7Gk'
     }
 
     async cloudVision() {
@@ -34,12 +33,10 @@ export default class Vision {
         
         for (let annotations in data.responses[0]) {
             for (let prop of data.responses[0][annotations]) {
-                results.push(prop.description)
+                results.push(prop.description.toLowerCase())
             }
         }
 
-        if (results.includes(this.keyword)) {
-            console.log('correct')
-        }
+        return results
     }
 }

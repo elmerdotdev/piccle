@@ -57,6 +57,32 @@ function createEmailInUserCol (email, fname, lname) {
     })
 }
 
+// Store user id in browser localStorage
+
+function storeUIDInBrowser (email) {
+    localStorage.setItem('piccleUID', email);
+}
+
+// Remove piccleUID from browser localStorage
+function removeUIDinBrowser () {
+    localStorage.removeItem('piccleUID');
+}
+
+// Check if UID stored in browser exists in "users" collection
+async function checkUIDinBrowser () {
+    const uIDInBrowser = localStorage.getItem('piccleUID');
+    if ( uIDInBrowser != null ) {
+        const docRef = doc(db, "users", uIDInBrowser);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return false;
+    };
+};
 
 // Signing in User using Email and Password
 
@@ -73,6 +99,7 @@ appLoginForm.addEventListener('submit', (e) => {
     signInWithEmailAndPassword(auth, userEmail, userPw)
         .then((cred) => {
             console.log('user signed in:', cred.user);
+            storeUIDInBrowser(userEmail);
             window.location.hash = "home";
         })
         .catch((err) => {
@@ -97,6 +124,7 @@ fbLoginButton.addEventListener('click', (e) => {
             const user = cred.user;
             console.log(user);
             createEmailInUserCol(user.email, user.displayName, "");
+            storeUIDInBrowser(user.email);
             window.location.hash = "home";
         })
         .catch((err) => {
@@ -114,6 +142,7 @@ twLoginButton.addEventListener('click', (e) => {
     .then((cred) => {
         const user = cred._tokenResponse;
         createEmailInUserCol(user.email, user.displayName, "");
+        storeUIDInBrowser(user.email);
         window.location.hash = "home" 
     })
     .catch((err) => {
@@ -133,9 +162,23 @@ googleLoginButton.addEventListener('click', (e) => {
     .then((cred) => {
         const user = cred.user.providerData[0];
         createEmailInUserCol(user.email, user.displayName, "");
+        storeUIDInBrowser(user.email);
         window.location.hash = "home";
     })
     .catch((err) => {
         console.log(err.message);
     })
 })
+
+checkUIDinBrowser()
+    .then((resp) => {
+        if (resp) {
+            alert("Previous sign-in detected, logging in...")
+            window.location.hash = "home";
+        } else {
+            window.location.has = "signin";
+        }
+    })
+    .catch((err) => {
+        console.log(err.message);
+    })
