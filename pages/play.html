@@ -1,7 +1,123 @@
-<h1 class="name-field"></h1>
+<div class="play-wrapper">
+    <ul class="play-wrapper__numbers">
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+        <li>4</li>
+        <li>5</li>
+    </ul>
+    <p class="play-wrapper__hint"></p>
+    <div class="play-wrapper__camera">
+        <video id="webcam" autoplay playsinline width="640" height="480"></video>
+        <img id="previewImage" width="640" height="480" src="" alt="">
+        <canvas id="canvas" style="display: none"></canvas>
+    </div>
 
-<h2>Word to Guess</h2>
-<span class="word-to-guess"></span>
+    <div class="play-wrapper__controls">
+        <button class="upload-btn">Upload</button>
+        <button class="camera-btn" style="display: none">Camera</button>
+        <button class="capture-btn">Capture</button>
+        <button class="delete-btn">Delete</button>
+        <button class="submit-btn">Submit</button>
+    </div>
+    
+    <input type="file" name="" id="uploader" style="visibility: hidden">
 
-<h3>Hints</h3>
-<ul class="word-hints"></ul>
+    <div class="popup-window"></div>
+</div>
+
+<div class="results-wrapper"></div>
+
+<style>
+    .play-wrapper {
+        display: flex;
+        flex-flow: column wrap;
+        row-gap: 1rem;
+    }
+
+    .play-wrapper__numbers {
+        display: flex;
+        column-gap: 1rem;
+        list-style: none;
+        margin: 1rem auto;
+        padding: 0;
+    }
+
+    .play-wrapper__numbers li {
+        font-size: 2rem;
+        width: 37px;
+        height: 37px;
+        background-color: black;
+        color: white;
+        text-align: center;
+        border-radius: 50%;
+    }
+
+    .play-wrapper__numbers .current-hint {
+        background-color: red;
+    }
+
+    .play-wrapper__hint {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    .play-wrapper__camera {
+        position: relative;
+        width: 640px;
+        height: 480px;
+        margin: auto;
+    }
+
+    .play-wrapper__camera * {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    .play-wrapper__camera video {
+        z-index: 1;
+        background-color: black;
+    }
+
+    .play-wrapper__camera img {
+        z-index: 0;
+    }
+
+    .play-wrapper__controls {
+        text-align: center;
+    }
+    
+    .play-wrapper__controls button {
+        font-size: 1rem;
+    }
+
+    .popup-window {
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 9999;
+        padding: 2rem;
+        background-color: white;
+        border: 5px solid #333;
+    }
+
+    .results-wrapper {
+        display: none;
+        margin: auto;
+        padding: 2rem;
+        width: 100%;
+        max-width: 700px;
+        background-color: white;
+        border: 5px solid #333;
+    }
+
+    .results-wrapper img {
+        max-width: 100%;
+        height: auto;
+    }
+</style>
