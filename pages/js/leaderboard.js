@@ -85,7 +85,7 @@ class UserRank {
 
         // temporary styling
         newTable.style = "border-collapse: collapse;"
-        
+
         return newTable;
     }
  
@@ -95,7 +95,7 @@ class UserRank {
 
     getAsRow () {
         const valuesList = this.getAsList(); 
-        return this.constructor.createRow(valuesList);
+        return UserRank.createRow(valuesList);
     }
  
 }
