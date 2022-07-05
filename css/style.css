@@ -86,12 +86,7 @@ header,
 h1,
 h2 {
   font-family: "Rammetto One", Helvetica, sans-serif;
-  text-align: center;
   margin: 0;
-}
-
-h2 {
-  font-size: 2.5rem;
 }
 
 p {
@@ -110,13 +105,13 @@ li a {
   display: block;
 }
 
-button {
-  /* border & shadow */
+/* button {
+  border & shadow
   box-shadow: 4px 4px;
   border-radius: 5px;
   width: 3rem;
   height: 3rem;
-}
+} */
 
 /* ======================= index */
 /* =============== header */
@@ -505,7 +500,7 @@ li.main-menu-active a span {
   position: fixed;
   z-index: 1;
   top: 0;
-  left: 0;
+  right: 0;
   background-color: rgb(255, 255, 255);
   overflow-x: hidden;
   transition: 0.5s;
@@ -517,7 +512,7 @@ li.main-menu-active a span {
 }
 
 .left-menu h1 {
-  margin-left: 9rem;
+  margin-left: 60%;
 }
 /* end of settings page */
 
