@@ -52,22 +52,57 @@ console.log('hello from leaderboard.js');
 const colRefUsers = collection(db, "users")
 const q = query(colRefUsers, orderBy("score", "desc"));
 
-class Ranking {
 
+class UserRank {
+ 
     constructor (rank, name, score, curUser) {
         this.rank = rank;
         this.name = name;
         this.score = score;
         this.curUser = curUser;
     }
-    
-};
+ 
+    static createRow (rowItems) {
+        const row = document.createElement('tr');
+        rowItems.forEach((rowItem) => {
+            const cell = row.insertCell();
+            cell.innerHTML = rowItem;
 
-const leaderboardTable = [];
-const leaderboardList = document.createElement('div');
-leaderboardList.classList.add('leaderboard-list');
-leaderboardList.innerHTML = "<p>Ranking, Name, Score, Current User</p>";
-document.getElementById('mainArea').appendChild(leaderboardList);
+            // temporary styling
+            cell.style = "border: 1px solid black;"
+        });
+        return row;
+    }
+
+    static createTable () {
+        const newTable = document.createElement('table');
+        const headerRow = newTable.createTHead().insertRow();
+        const rowHeaders = ["Ranking", "Name", "Score", "Current User"];
+        rowHeaders.forEach((headerItem) => {
+            const headerCell = headerRow.insertCell();
+            headerCell.innerHTML = headerItem;
+        })
+
+        // temporary styling
+        newTable.style = "border-collapse: collapse;"
+        
+        return newTable;
+    }
+ 
+    getAsList () {
+        return [this.rank, this.name, this.score, this.curUser];
+    }
+
+    getAsRow () {
+        const valuesList = this.getAsList(); 
+        return this.constructor.createRow(valuesList);
+    }
+ 
+}
+
+const leaderboardTable = UserRank.createTable();
+document.getElementById('mainArea').appendChild(leaderboardTable);
+const leaderboardTBody = leaderboardTable.createTBody();
 
 getDocs(q)
 .then((snapshot) => {
@@ -75,13 +110,10 @@ getDocs(q)
         const userInfo = doc.data();
         const userName = displayPublicName(userInfo.firstname, userInfo.lastname);
         const curUserFlag = (user === userInfo.user_email) ? true : false;
-        leaderboardTable.push( new Ranking((leaderboardTable.length + 1), userName, userInfo.score, curUserFlag));
+        const userObj = new UserRank((leaderboardTBody.rows.length + 1), userName, userInfo.score, curUserFlag);
+        leaderboardTBody.appendChild(userObj.getAsRow());
     })
-    console.table(leaderboardTable);
     
-    leaderboardTable.forEach((row) => {
-        leaderboardList.innerHTML += `<p>${JSON.stringify(row)}</p>`;
-    });
 })
 .catch((err) => {
     console.log(err.message);
@@ -98,15 +130,3 @@ function displayPublicName (firstname, lastname) {
         }
     }
 };
-
-
-// const leaderboardTable = document.createElement('table');
-// leaderboardTable.style.width = "600px";
-// const lbTableHeader = leaderboardTable.createTHead();
-// const lbHeaderRow = lbTableHeader.insertRow();
-// lbHeaderRow.insertCell("Rank");
-// lbHeaderRow.insertCell("Name");
-// lbHeaderRow.insertCell("Total Points");
-
-// document.getElementById("mainArea").appendChild(leaderboardTable);
-
