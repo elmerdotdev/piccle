@@ -63,14 +63,17 @@ function init() {
     const renderDOM = (date, resolved, tries) => {
         let message = ""
         let element = ""
+        let elementClass = ""
 
         if (resolved) {
             message = messages.win
+            elementClass = "status-win"
         } else {
             message = messages.lose
+            elementClass = "status-lose"
         }
 
-        element += `<div class="entry-score">` 
+        element += `<div class="box ${elementClass}">` 
         element += `<h3>${date}</h3>`
         element += `<p>${message}</p>`
         element += `<div>Hints used: ${tries}</div>`
