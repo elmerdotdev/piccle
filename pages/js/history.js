@@ -29,36 +29,24 @@ function init() {
     const db = getFirestore();
 
     // Get list of progress
-    const getProgress = async (filter) => {
-        let progressQuery = ""
-
+    const getProgress = async () => {
         const progressRef = collection(db, "progress");
-
-        if (filter != undefined) {
-            progressQuery = query(
-                progressRef,
-                where("user_email", "==", userEmail),
-                where("resolved", "==", filter),
-                orderBy("date_started", "desc")
-            )
-        } else {
-            progressQuery = query(
-                progressRef,
-                where("user_email", "==", userEmail),
-                orderBy("date_started", "desc")
-            )
-        }
+        const progressQuery = query(
+            progressRef,
+            where("user_email", "==", userEmail),
+            orderBy("date_started", "desc")
+        )
 
         const snapshot = await getDocs(progressQuery)
         try {
             snapshot.forEach((doc) => {
                 if (!datesAreOnSameDay(new Date(doc.data().date_started.seconds * 1000), new Date())) {
                     const fullDate = timestampToDate(doc.data().date_started)
-                    renderDOM(fullDate, doc.data().resolved, doc.data().tries, doc.id, doc.data().word)
+                    renderDOM(fullDate, doc.data().resolved, doc.data().tries, doc.id, doc.data().word, snapshot.docs.length)
                 } else {
                     if (doc.data().resolved) {
                         const fullDate = timestampToDate(doc.data().date_started)
-                        renderDOM(fullDate, doc.data().resolved, doc.data().tries, doc.id, doc.data().word)
+                        renderDOM(fullDate, doc.data().resolved, doc.data().tries, doc.id, doc.data().word, snapshot.docs.length)
                     }
                 }
             })
@@ -70,10 +58,8 @@ function init() {
     // Convert timestamp to date
     const timestampToDate = (timestamp) => {
         const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-
         let date = timestamp.toDate()
         date = `${date.getDate()} ${MONTHS[date.getMonth()]} ${date.getFullYear()}`
-
         return date
     }
 
@@ -86,7 +72,7 @@ function init() {
     }
 
     // Render progress history into DOM
-    const renderDOM = (date, resolved, tries, id, word) => {
+    const renderDOM = (date, resolved, tries, id, word, totalGames) => {
         let message = ""
         let boxElement = ""
         let elementClass = ""
@@ -105,6 +91,7 @@ function init() {
         boxElement += `<div>Hints used: ${tries}</div>`
         boxElement += `</div>`
 
+        document.querySelector('.total-games-counter').innerHTML = totalGames
         document.querySelector('.history-wrapper__body').innerHTML += boxElement
         setTimeout(() => {
             document.querySelector('.box-' + id).addEventListener('click', () => { showPopup(date, message, resolved, tries, word) })
@@ -115,12 +102,10 @@ function init() {
     const wordAndPoints = async (wordId) => {
         const wordRef = doc(db, "words", wordId);
         const snapshot = await getDoc(wordRef);
-
         const wordPoints = {
             word: snapshot.data().name,
             points: snapshot.data().points
         }
-
         return wordPoints
     }
 
@@ -128,7 +113,7 @@ function init() {
     const showPopup = async (date, message, resolved, tries, word) => {
         let popupElement = ""
         const wordpoints = await wordAndPoints(word)
-
+        
         document.querySelector('.history-wrapper__popup-overlay').classList.add('show')
 
         popupElement += `<h3>${date}</h3>`
@@ -151,15 +136,26 @@ function init() {
 
     // Monitor change of select dropdown
     document.querySelector('.filter').addEventListener('change', (e) => {
-        document.querySelector('.history-wrapper__body').innerHTML = ""
         if (e.target.value == "win") {
-            getProgress(true)
+            showHideWL('lose')
         } else if (e.target.value == "lose") {
-            getProgress(false)
+            showHideWL('win')
         } else {
-            getProgress()
+            showHideWL()
         }
     })
+
+    // Hide/Show wins/losses
+    const showHideWL = (status) => {
+        document.querySelectorAll('.box').forEach(box => {
+            box.classList.remove('hide')
+        })
+        if (status) {
+            document.querySelectorAll('.status-' + status).forEach(box => {
+                box.classList.add('hide')
+            })
+        }
+    }
 
     getProgress()
 

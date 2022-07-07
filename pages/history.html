@@ -1,6 +1,11 @@
 <div class="history-wrapper">
     <div class="history-wrapper__header">
-        <div></div>
+        <div>
+            <div class="total-games">
+                <span>Games Played:</span>
+                <strong class="total-games-counter"></strong>
+            </div>
+        </div>
         <div>
             <select class="filter">
                 <option value="" selected>All</option>
@@ -29,6 +34,7 @@
     .history-wrapper__header {
         display: flex;
         justify-content: space-between;
+        align-items: center;
     }
 
     .history-wrapper__body {
@@ -45,6 +51,10 @@
         border: 1px solid black;
         border-radius: 20px;
         cursor: pointer;
+    }
+
+    .box.hide {
+        display: none;
     }
 
     .history-wrapper__body h3 {
@@ -73,6 +83,7 @@
         background-color: white;
     }
 
+    .total-games,
     .filter {
         font-size: 2rem;
     }
