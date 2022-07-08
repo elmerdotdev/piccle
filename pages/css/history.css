@@ -1,0 +1,202 @@
+.nav-bar {
+    border-bottom: 1px solid black;
+    margin-bottom: 3rem;
+    padding-bottom: 1rem;
+}
+
+.main-wrapper {
+    margin: 0 2%;
+}
+
+main > .card {
+    padding: 0;
+}
+
+.history-header {  
+    border-bottom: 1px solid black;
+    background-color:  #B470ED;
+    border-top-left-radius: 23px;
+    border-top-right-radius: 23px;
+    margin-bottom: 2rem;
+    padding: 1rem 1rem 2rem 1rem;
+
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1rem;
+}
+
+.grouped-left {
+    display: flex;
+    gap: 1rem;
+    flex-flow: column nowrap;
+}
+
+.history-title,
+.game-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.history-indicator {
+    display: grid;
+    align-items: center;
+    gap: 1rem;
+    grid-template-columns: 1fr 1fr;
+    justify-items: center;
+}
+
+.player-rank {
+    font-size: 2rem;
+}
+
+h2, .history-indicator span {
+    color: white;
+}
+
+/****** dropdown - filter  ******/
+.dropdown {
+    display: flex;
+    justify-content: flex-end;
+    min-width: 150px;
+}
+
+.dropdown > .card {
+    min-width: 138px;
+    display: flex;
+    justify-content: space-around;
+}
+
+a {
+    text-decoration: none;
+    color: #000000;
+}
+
+a:hover {
+    color: #222222
+}
+
+  /* Dropdown */
+
+.play-history {
+    cursor: pointer;
+}
+
+.play-history:hover {
+    background-color: #eeeeee;
+}
+
+
+.dd-input {
+    display: none;
+}
+
+.dd-menu {
+    position: absolute;
+    top: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 0;
+    margin: 2px 0 0 0;
+    box-shadow: 0 0 6px 0 rgba(0,0,0,0.1);
+    background-color: #ffffff;
+    list-style-type: none;
+}
+
+.dd-input + .dd-menu {
+    display: none;
+} 
+
+.dd-input:checked + .dd-menu {
+    display: block;
+}
+
+.dd-menu li {
+    padding: 10px 20px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.dd-menu li:hover {
+    background-color: #f6f6f6;
+}
+
+.dd-menu li a {
+    display: block;
+    margin: -10px -20px;
+    padding: 10px 20px;
+}
+
+.dd-menu li.divider{
+    padding: 0;
+    border-bottom: 1px solid #cccccc;
+}
+
+/***** history card *****/
+.history-body {
+    text-align: center;
+    max-width: 330px;
+    margin: auto;
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 1rem;
+    padding-bottom: 2rem;;
+}
+
+.play-date {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.game-status {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.hints-used {
+    font-size: 1.2rem;
+}
+
+@media screen and (min-width: 1100px) {
+    .nav-bar {
+        border: none;
+    }
+
+    main {
+        border: unset;
+        border-radius: unset;
+        box-shadow: unset;
+    }
+
+    main > .card {
+        min-width: 90vh;
+    }
+
+    .history-header {
+        flex-flow: row nowrap;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .grouped-left {
+        flex-flow: row nowrap;
+    }
+
+    .history-body {
+        flex-flow: row nowrap;
+        max-width: unset;
+        justify-content: center;
+        align-items: center;
+        padding: 0 2% 2rem 2%;
+    }
+
+    .history-title, .game-title {
+        flex-flow: column nowrap;
+        
+    }
+
+    .dropdown {
+        display: block;
+    }
+
+}
