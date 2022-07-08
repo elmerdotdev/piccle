@@ -1,0 +1,59 @@
+
+.left-menu h1 {
+    margin-left: 0;
+}
+
+main {
+    align-items: center;
+}
+
+.leaderboard-title {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.leaderboard-title h2 {
+    flex-basis: 100%;
+}
+
+main > .card {
+    margin-top: 2rem;
+    padding: 0;
+}
+
+.icon-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    justify-content: center;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+/* highlight */
+.highlighted td {
+    background: yellow;
+}
+
+td, th {
+    text-align: center;
+    padding: 1rem;
+}
+
+
+.socialmedia-icons {
+    margin-top: 5rem;
+}
+
+@media screen and (min-width: 1100px) {
+    main {
+        flex-flow: column nowrap;
+        padding-bottom: 2rem;
+    }
+
+}
