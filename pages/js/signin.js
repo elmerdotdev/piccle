@@ -47,6 +47,7 @@ function createEmailInUserCol (email, fname, lname) {
                 bonus_tries: 0,
                 points: 0,
                 score: 0,
+                finished_tutorial: false,
             })
             .then(() => {
                 console.log('new user record created')
