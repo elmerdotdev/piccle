@@ -1,0 +1,90 @@
+<div class="history-wrapper">
+    <div class="history-wrapper__header">
+        <div>
+            <div class="total-games">
+                <span>Games Played:</span>
+                <strong class="total-games-counter"></strong>
+            </div>
+        </div>
+        <div>
+            <select class="filter">
+                <option value="" selected>All</option>
+                <option value="win">Win</option>
+                <option value="lose">Lose</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="history-wrapper__body"></div>
+
+    <div class="history-wrapper__popup-overlay">
+        <div class="popup-message">
+            <button class="close-btn">X</button>
+            <div class="popup-content"></div>
+            <div class="popup-social-share"></div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .history-wrapper {
+        padding: 2rem;
+    }
+
+    .history-wrapper__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .history-wrapper__body {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 2rem;
+        padding: 2rem;
+        text-align: center;
+    }
+
+    .history-wrapper__body .box {
+        padding: 1rem;
+        background-color: white;
+        border: 1px solid black;
+        border-radius: 20px;
+        cursor: pointer;
+    }
+
+    .box.hide {
+        display: none;
+    }
+
+    .history-wrapper__body h3 {
+        margin: 0;
+    }
+
+    .history-wrapper__popup-overlay{
+        display: none;
+        place-items: center;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 9999;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, .8);
+    }
+
+    .history-wrapper__popup-overlay.show {
+        display: grid;
+    }
+
+    .history-wrapper__popup-overlay .popup-message {
+        padding: 1rem;
+        background-color: white;
+    }
+
+    .total-games,
+    .filter {
+        font-size: 2rem;
+    }
+</style>
