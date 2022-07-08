@@ -123,7 +123,7 @@ function init() {
         if (resolved) {
             popupElement += `<tr><th>Points earned:</th><td>${wordpoints.points} Piccles</td></tr>`
         }
-        popupElement += `<tr><th>Hints used:</th><td>${tries} Hints</td></tr>`
+        popupElement += `<tr><th>Solved with:</th><td>${tries} Hints</td></tr>`
         popupElement += `</table>`
 
         document.querySelector('.popup-content').innerHTML = popupElement
