@@ -15,17 +15,23 @@ import {
 } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-firestore.js";
 import Vision from "../../vision.js";
 
-const userEmail = localStorage.getItem("piccleUID");
-let currentHint = [];
-let currentWord = "";
-let wordPoints = 0;
-let wordId = "";
-let progressId = "";
-let usedTries = 0;
-let userScore = 0;
-let userPoints = 0;
+
 
 function init() {
+  const userEmail = localStorage.getItem("piccleUID");
+  if (!userEmail) {
+    location.hash = "#signin"
+  }
+
+  let currentHint = [];
+  let currentWord = "";
+  let wordPoints = 0;
+  let wordId = "";
+  let progressId = "";
+  let usedTries = 0;
+  let userScore = 0;
+  let userPoints = 0;
+
   const db = getFirestore();
 
   // Get User Details
