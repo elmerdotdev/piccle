@@ -12,16 +12,16 @@
 
     <div class="shop-wrapper__purchased">
         <h3>Purchased Items</h3>
-        <div class="items-purchased">loading...</div>
+        <div class="items-purchased"></div>
     </div>
 
     <div class="shop-wrapper__overlay">
         <div class="shop-wrapper__popup">
+            <h2 class="popup-title">Purchase Verification</h2>
             <div class="popup-content"></div>
             <div class="popup-buttons">
                 <button class="popup-cancel">Cancel</button>
-                <button class="popup-purchase">Purchase</button>
-                <button class="popup-close">Close</button>
+                <button class="popup-purchase show">Purchase</button>
             </div>
         </div>
     </div>
@@ -43,7 +43,8 @@
         padding: 2rem;
     }
 
-    .items-available {
+    .items-available,
+    .items-purchased {
         display: flex;
         gap: 1rem;
     }
@@ -77,9 +78,18 @@
         display: grid;
     }
 
+    .popup-title,
     .popup-content,
     .popup-buttons {
         padding: 1rem;
         background-color: white;
+    }
+
+    .popup-purchase {
+        display: none;
+    }
+
+    .popup-purchase.show {
+        display: inline-block;
     }
 </style>

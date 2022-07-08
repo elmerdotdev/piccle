@@ -5,10 +5,12 @@ import {
     collection,
     query,
     where,
-    orderBy,
     getDocs,
     doc,
-    getDoc
+    getDoc,
+    updateDoc,
+    addDoc,
+    Timestamp
 } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-firestore.js";
 
 function init() {
@@ -40,7 +42,7 @@ function init() {
             document.querySelector('.items-available').innerHTML += element
             setTimeout(function() {
                 document.querySelector(`.item-${item.id}`).addEventListener('click', () => {
-                    showPopup(email, item.id)
+                    showPopup(item.id, item.data().name, item.data().price)
                 })
             }, 100)
         })
@@ -60,15 +62,36 @@ function init() {
     }
 
     /* BUTTON FUNCTIONS ========================================= */
-    const showPopup = (email, itemID) => {
+    // Open popup
+    const showPopup = (itemId, name, price) => {
+        let element = ""
+        element += `<div class="item-name">${name}</div>`
+        element += `<div class="item-price">${price}</div>`
+        document.querySelector('.popup-content').innerHTML = element
+
+        document.querySelector('.popup-purchase').setAttribute('item-id', itemId)
         document.querySelector('.shop-wrapper__overlay').classList.add('show')
     }
-
-    const closePopup = (rebuildShop) => {
-        document.querySelector('.shop-wrapper__overlay').classList.remove('show')
+    
+    // Purchase Successful Popup
+    const successPopup = (name, price) => {
+        document.querySelector('.popup-title').innerHTML = `Purchase Successful`
+        document.querySelector('.popup-cancel').innerHTML = `Close`
+        document.querySelector('.popup-purchase').classList.remove('show')
     }
 
+    // Close popup
+    document.querySelector('.popup-cancel').addEventListener('click', () => {
+        document.querySelector('.popup-title').innerHTML = `Purchase Verification`
+        document.querySelector('.popup-cancel').innerHTML = `Cancel`
+        document.querySelector('.popup-purchase').classList.add('show')
+        document.querySelector('.shop-wrapper__overlay').classList.remove('show')
+    })
 
+    // Purchase button
+    document.querySelector('.popup-purchase').addEventListener('click', function() {
+        updateUser(this.getAttribute('item-id'), userEmail)
+    })
     /* END BUTTON FUNCTIONS ========================================= */
 
 
@@ -77,8 +100,33 @@ function init() {
     const getAvailablePoints = async (email) => {
         const userRef = doc(db, "users", email)
         const snapshot = await getDoc(userRef)
-
         return snapshot.data().points
+    }
+
+    // Update user doc
+    const updateUser = async (itemId, email) => {
+        const userRef = doc(db, "users", email)
+        const currentPoints = await getAvailablePoints(email)
+        const item = await getSpecificItem(itemId)
+
+        if (currentPoints > item.data().price) {
+            await updateDoc(userRef, {
+                points: currentPoints - item.data().price
+            });
+
+            await addDoc(collection(db, "purchases"), {
+                cost: item.data().price,
+                date_purchased: Timestamp.fromDate(new Date()),
+                item: itemId,
+                used: false,
+                user_email: email
+            });
+            
+            renderShop(userEmail)
+            successPopup(item.data().name, item.data().price)
+        } else {
+            alert('You do not have enough points to purchase!')
+        }
     }
 
     // Get shop items
@@ -98,7 +146,6 @@ function init() {
     const getSpecificItem = async (itemId) => {
         const itemRef = doc(db, "shop", itemId)
         const snapshot = await getDoc(itemRef)
-
         try {
             return snapshot
         } catch(error) {
@@ -114,7 +161,6 @@ function init() {
             where("user_email", "==", email)
         )
         const snapshot = await getDocs(purchasesQuery)
-
         try {
             return snapshot.docs
         } catch(error) {
