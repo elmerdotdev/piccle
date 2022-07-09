@@ -47,6 +47,7 @@ function createEmailInUserCol (email, fname, lname) {
                 bonus_tries: 0,
                 points: 0,
                 score: 0,
+                finished_tutorial: false,
             })
             .then(() => {
                 console.log('new user record created')
@@ -182,3 +183,14 @@ checkUIDinBrowser()
     .catch((err) => {
         console.log(err.message);
     })
+
+
+// =============== SHOW PW  
+function myFunction() {
+    const x = document.getElementById("password");
+    if (x.type === "password") {
+    x.type = "text";
+    } else {
+    x.type = "password";
+    }
+  }
