@@ -120,7 +120,10 @@ appRegForm.addEventListener('submit', (e) => {
 })
 
 // SHOW PW =======================  
-function myFunction() {
+
+document.querySelector('.reveal-pw').addEventListener('click', revealPW)
+
+function revealPW() {
     // Place HTML element reference in variable
     const checkboxShowPw = document.querySelector("input.pw-checkbox");
     const pwField1 = document.getElementById('password1')
