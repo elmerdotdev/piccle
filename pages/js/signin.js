@@ -183,3 +183,14 @@ checkUIDinBrowser()
     .catch((err) => {
         console.log(err.message);
     })
+
+
+// =============== SHOW PW  
+function myFunction() {
+    const x = document.getElementById("password");
+    if (x.type === "password") {
+    x.type = "text";
+    } else {
+    x.type = "password";
+    }
+  }
