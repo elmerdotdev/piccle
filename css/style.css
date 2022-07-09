@@ -76,6 +76,9 @@ img {
 
 header,
 .signup-banner {
+  border-bottom: 1px solid black;
+  /* border-radius: 0 0 100px 0; */
+  /* box-shadow: 2px 10px; */
   padding: 0.5rem 1rem;
   background-color: #fff;
 }
@@ -84,7 +87,6 @@ h1,
 h2 {
   font-family: "Rammetto One", Helvetica, sans-serif;
   margin: 0;
-  text-align: center;
 }
 
 p {
@@ -120,10 +122,11 @@ header img {
 
 /* =============== main */
 main {
+  padding: 3rem 2rem;
   margin: auto;
   display: flex;
   flex-flow: column nowrap;
-  max-width: 1920px;
+  max-width: 1100px;
 }
 
 .desktop-right {
@@ -205,18 +208,18 @@ main {
   gap: 1rem;
 }
 
-.socialmedia-icons {
+.login-social ul {
   display: flex;
   gap: 4rem;
   padding: 0;
   justify-content: space-evenly;
 }
 
-.socialmedia-icons li {
+.login-social li {
   flex-flow: row nowrap;
 }
 
-.socialmedia-icons a {
+.login-social a {
   display: flex;
   border: 1px solid black;
   width: 40px;
@@ -231,22 +234,6 @@ main {
 .login-social p {
   font-size: 1.8rem;
 }
-
-.reveal-pw {
-  display: flex;
-  flex-flow: row nowrap;
-  align-items: center;
-}
-
-.reveal-pw label {
-  font-size: 1rem;
-}
-
-input.pw-checkbox {
-  height: 1rem;
-  flex-grow: 0;
-}
-
 /* =============== end of index */
 
 /* ======================= signup */
@@ -279,15 +266,16 @@ input.pw-checkbox {
 
 @media screen and (min-width: 700px) {
   main {
+    padding: 2rem 3rem;
     margin: auto;
     display: flex;
     flex-flow: column nowrap;
     max-width: 1100px;
   }
 
-  .desktop-right {
-    margin: 0 5rem;
-}
+  .signup-field {
+    margin: 0 3rem;
+  }
 }
 
 @media screen and (min-width: 800px) {
@@ -309,6 +297,7 @@ input.pw-checkbox {
     border: 1px solid black;
     border-radius: 20px;
     box-shadow: 5px 5px;
+    margin: 5rem auto;
     padding: 0;
   }
 
@@ -325,16 +314,25 @@ input.pw-checkbox {
   }
 
   .desktop-left {
-    flex-basis: 50%;
+    flex-basis: 48%;
     justify-content: center;
     border-right: 1.5px solid black;
     border-radius: 40px 100px;
     padding: 1rem 3rem;
+  }
+
+  .signup-banner {
     margin-bottom: 0;
     box-shadow: unset;
     border-bottom: 0;
-    display: block; /* to align button (R) and label (C) on desktop view */
-}
+    position: relative;
+  }
+
+  .signup-banner h2 {
+    position: absolute;
+    top: 50%;
+    left: 30%;
+  }
 
   .signup-banner button {
     margin-left: -1rem;
@@ -369,15 +367,14 @@ input.pw-checkbox {
     white-space: unset;
     width: 100%;
     bottom: 0;
-    background-color: transparent;
+    background-color: #fff;
 
     display: flex;
-    /* border-top: 1px solid black;
+    border-top: 1px solid black;
     border-radius: 100px 0;
-    box-shadow: 0px -8px 0px 0px; */
+    box-shadow: 0px -8px 0px 0px;
     justify-content: center;
     align-items: center;
-    margin: 2rem 0;
   }
 
   footer p {
@@ -527,6 +524,15 @@ li.main-menu-active a span {
     /* min-height: 100vh; */
     justify-content: center;
     align-items: center;
+  }
+
+  header,
+  .signup-banner {
+    border-bottom: 1px solid black;
+    border-radius: 0 0 100px 0;
+    box-shadow: 2px 10px;
+    padding: 0.5rem 1rem;
+    background-color: #fff;
   }
 
   .nav-bar {
