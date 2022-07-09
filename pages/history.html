@@ -43,8 +43,8 @@
     <main class="order1-main box-border">
         
 
-        <div class="card">
-            <div class="history-header">
+        <div class="history-wrapper card">
+            <div class="history-header history-wrapper__header">
                 <div class="grouped-left">
                     <div class="history-title">
                         <h2>Current Streak</h2>
@@ -54,71 +54,36 @@
                             <span class="player-rank icon-label">5th</span>
                         </div>
                     </div>
-                    <div class="game-title">
+                    <div class="game-title total-games">
                         <h2>Games Played</h2>
                     
                         <div class="history-indicator">
                             <div class="btn btn-icon round"><img src="./images/icons/camera-3-fill.svg" alt="camera icon"></div>
-                            <span class="player-rank icon-label">8</span>
+                            <strong class="total-games-counter"></strong>
                         </div>
                     </div>
                 </div>
-                <label class="dropdown">
-                    <div class="card">
-                        Filter <img src="../images/icons/arrow-down.svg" alt="">
-                    </div>
-                
-                    <input type="checkbox" class="dd-input" id="test">
-                
-                    <ul class="dd-menu">
-                        <li>Filter 1</li>
-                        <li>Filter 2</li>
-                        <li>Filter 3</li>
-                
-                    </ul>
-                
-                </label>
-            </div>
-
-            <div class="history-body">
-                <div class="play-history card">
-                    <div class="play-date">
-                        28 May 2022
-                    </div>
-                    <div class="game-status">
-                        You Won
-                    </div>
-                    <div class="hints-used">
-                        No. of hints used: 4
-                    </div>
-                </div>
-
-                <div class="play-history card">
-                    <div class="play-date">
-                        28 May 2022
-                    </div>
-                    <div class="game-status">
-                        You Won
-                    </div>
-                    <div class="hints-used">
-                        No. of hints used: 4
-                    </div>
-                </div>
-
-                <div class="play-history card">
-                    <div class="play-date">
-                        28 May 2022
-                    </div>
-                    <div class="game-status">
-                        You Won
-                    </div>
-                    <div class="hints-used">
-                        No. of hints used: 4
-                    </div>
+                <div class="card">
+                    <select class="filter">
+                        <option value="" selected>All</option>
+                        <option value="win">Win</option>
+                        <option value="lose">Lose</option>
+                    </select>
                 </div>
             </div>
+
+            <div class="history-body history-wrapper__body">
+            </div>
+
         </div>
 
+        <div class="history-wrapper__popup-overlay">
+            <div class="popup-message">
+                <button class="close-btn">X</button>
+                <div class="popup-content"></div>
+                <div class="popup-social-share"></div>
+            </div>
+        </div>
         
     </main>
   </div>

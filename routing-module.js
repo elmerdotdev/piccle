@@ -10,7 +10,7 @@ Router.init("mainArea", [
     "pages/js/home.js",
     "pages/css/home.css"
   ),
-  new Page("#history", "pages/history.html", "pages/js/history.js"),
+  new Page("#history", "pages/history.html", "pages/js/history.js", "pages/css/history.css"),
   new Page("#leaderboard", "pages/leaderboard.html", "pages/js/leaderboard.js"),
   new Page(
     "#play",
