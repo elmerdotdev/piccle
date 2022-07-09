@@ -50,86 +50,66 @@ main > .card {
     font-size: 2rem;
 }
 
+/* ==========body */
+.history-wrapper__body {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 2rem;
+    padding: 2rem;
+    text-align: center;
+}
+
 h2, .history-indicator span {
     color: white;
 }
 
-/****** dropdown - filter  ******/
-.dropdown {
-    display: flex;
-    justify-content: flex-end;
-    min-width: 150px;
+select {
+    border: 0;
+    background-color: transparent;
+    font-size: 2rem;
 }
 
-.dropdown > .card {
-    min-width: 138px;
-    display: flex;
-    justify-content: space-around;
+.history-header > .card {
+    width: 9rem;
 }
 
-a {
-    text-decoration: none;
-    color: #000000;
-}
-
-a:hover {
-    color: #222222
-}
-
-  /* Dropdown */
-
-.play-history {
+.history-wrapper__body .box {
+    padding: 1rem;
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 20px;
     cursor: pointer;
 }
 
-.play-history:hover {
-    background-color: #eeeeee;
-}
-
-
-.dd-input {
+.box.hide {
     display: none;
 }
 
-.dd-menu {
-    position: absolute;
-    top: 100%;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    padding: 0;
-    margin: 2px 0 0 0;
-    box-shadow: 0 0 6px 0 rgba(0,0,0,0.1);
-    background-color: #ffffff;
-    list-style-type: none;
+.history-wrapper__body h3 {
+    margin: 0;
 }
 
-.dd-input + .dd-menu {
+/* =========== pop up */
+.history-wrapper__popup-overlay{
     display: none;
-} 
-
-.dd-input:checked + .dd-menu {
-    display: block;
+    place-items: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, .8);
 }
 
-.dd-menu li {
-    padding: 10px 20px;
-    cursor: pointer;
-    white-space: nowrap;
+.history-wrapper__popup-overlay.show {
+    display: grid;
 }
 
-.dd-menu li:hover {
-    background-color: #f6f6f6;
-}
-
-.dd-menu li a {
-    display: block;
-    margin: -10px -20px;
-    padding: 10px 20px;
-}
-
-.dd-menu li.divider{
-    padding: 0;
-    border-bottom: 1px solid #cccccc;
+.history-wrapper__popup-overlay .popup-message {
+    padding: 1rem;
+    background-color: white;
 }
 
 /***** history card *****/
@@ -200,3 +180,4 @@ a:hover {
     }
 
 }
+
