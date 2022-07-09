@@ -108,7 +108,7 @@ appLoginButton.addEventListener('click', (e) => {
             console.log(err.message);
             if (err.message === "Firebase: Error (auth/wrong-password).") {
                 if (!appLoginPWField.classList.contains('incorrect-pw')) {
-                    appLoginPWField.classList.remove('incorrect-pw');
+                    appLoginPWField.classList.add('incorrect-pw');
                 }
             }
         })
@@ -189,11 +189,14 @@ checkUIDinBrowser()
 
 
 // =============== SHOW PW  
-function myFunction() {
+
+document.querySelector('.pw-checkbox').addEventListener('click', revealPW)
+
+function revealPW() {
     const x = document.getElementById("password");
     if (x.type === "password") {
-    x.type = "text";
+        x.type = "text";
     } else {
-    x.type = "password";
+        x.type = "password";
     }
   }
