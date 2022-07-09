@@ -47,7 +47,6 @@ function createEmailInUserCol (email, fname, lname) {
                 bonus_tries: 0,
                 points: 0,
                 score: 0,
-                finished_tutorial: false,
             })
             .then(() => {
                 console.log('new user record created')
@@ -88,16 +87,15 @@ async function checkUIDinBrowser () {
 // Signing in User using Email and Password
 
 const appLoginForm = document.querySelector('.login-field form');
-const appLoginButton = document.querySelector('.login-field form .formfield-wrapper:nth-of-type(3)');
-const appLoginPWField = document.querySelector('.login-field form input[type=password]');
+const appLoginFormOutp = document.createElement('p');
+document.querySelector('input.submit-btn').parentElement.prepend(appLoginFormOutp)
 
-appLoginButton.addEventListener('click', (e) => {
+
+appLoginForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const userEmail = appLoginForm.email.value;
     const userPw = appLoginForm.password.value;
-    if (appLoginPWField.classList.contains('incorrect-pw')) {
-        appLoginPWField.classList.remove('incorrect-pw');
-    }
+    appLoginFormOutp.innerHTML = ""
     signInWithEmailAndPassword(auth, userEmail, userPw)
         .then((cred) => {
             console.log('user signed in:', cred.user);
@@ -107,16 +105,14 @@ appLoginButton.addEventListener('click', (e) => {
         .catch((err) => {
             console.log(err.message);
             if (err.message === "Firebase: Error (auth/wrong-password).") {
-                if (!appLoginPWField.classList.contains('incorrect-pw')) {
-                    appLoginPWField.classList.add('incorrect-pw');
-                }
+                appLoginFormOutp.innerHTML = "Error: Wrong password."
             }
         })
 })
 
 // Sign in with Facebook
 
-const fbLoginButton = document.querySelector('.socialmedia-icons li:nth-of-type(1)');
+const fbLoginButton = document.querySelector('.login-social ul li:nth-of-type(1)');
 const providerFB = new FacebookAuthProvider(); 
 providerFB.addScope('email')
 
@@ -137,7 +133,7 @@ fbLoginButton.addEventListener('click', (e) => {
     })
 
 // Sign in with Twitter
-const twLoginButton = document.querySelector('.socialmedia-icons li:nth-of-type(2)');
+const twLoginButton = document.querySelector('.login-social ul li:nth-of-type(2)');
 const providerTW = new TwitterAuthProvider;
 
 twLoginButton.addEventListener('click', (e) => {
@@ -155,7 +151,7 @@ twLoginButton.addEventListener('click', (e) => {
 })
     
 // Sign in with Google
-const googleLoginButton = document.querySelector('.socialmedia-icons li:nth-of-type(3)');
+const googleLoginButton = document.querySelector('.login-social ul li:nth-of-type(3)');
 const providerGoogle = new GoogleAuthProvider();
 providerGoogle.addScope('https://www.googleapis.com/auth/userinfo.email');
 providerGoogle.addScope('https://www.googleapis.com/auth/userinfo.profile');
@@ -186,17 +182,3 @@ checkUIDinBrowser()
     .catch((err) => {
         console.log(err.message);
     })
-
-
-// =============== SHOW PW  
-
-document.querySelector('.pw-checkbox').addEventListener('click', revealPW)
-
-function revealPW() {
-    const x = document.getElementById("password");
-    if (x.type === "password") {
-        x.type = "text";
-    } else {
-        x.type = "password";
-    }
-  }

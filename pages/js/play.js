@@ -15,34 +15,26 @@ import {
 } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-firestore.js";
 import Vision from "../../vision.js";
 
-
+const userEmail = localStorage.getItem("piccleUID");
+let currentHint = [];
+let currentWord = "";
+let wordId = "";
+let progressId = "";
+let usedTries = 0;
 
 function init() {
-  const userEmail = localStorage.getItem("piccleUID");
-  if (!userEmail) {
-    location.hash = "#signin"
-  }
-
-  let currentHint = [];
-  let currentWord = "";
-  let wordPoints = 0;
-  let wordId = "";
-  let progressId = "";
-  let usedTries = 0;
-  let userScore = 0;
-  let userPoints = 0;
-
   const db = getFirestore();
 
   // Get User Details
   const userRef = collection(db, "users");
   const userDetails = query(userRef, where("user_email", "==", userEmail));
 
-  getDocs(userDetails)
-  .then((snapshot) => {
-    userScore = snapshot.docs[0].data().score;
-    userPoints = snapshot.docs[0].data().points;
-  })
+  // getDocs(userDetails)
+  // .then((snapshot) => {
+  //     snapshot.docs.forEach((doc) => {
+  //         document.querySelector('.name-field').innerHTML = `Hi ${doc.data().firstname}!`
+  //     })
+  // })
 
   // Get all words in database
   const wordsRef = collection(db, "words");
@@ -119,7 +111,6 @@ function init() {
       currentWord = doc.data().name;
       currentHint = doc.data().hints[tries];
       wordId = doc.id;
-      wordPoints = doc.data().points;
 
       document.querySelector(".play-wrapper__hint").innerHTML = currentHint;
       document
@@ -189,12 +180,6 @@ function init() {
       date_completed: Timestamp.fromDate(new Date()),
       resolved: true,
       tries: usedTries,
-    });
-
-    const currentUserRef = doc(db, "users", userEmail);
-    await updateDoc(currentUserRef, {
-      points: (Number(userPoints) + Number(wordPoints)),
-      score: (Number(userScore) + Number(wordPoints))
     });
 
     webcam.stop();
