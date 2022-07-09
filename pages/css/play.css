@@ -1,0 +1,58 @@
+.stepper-wrapper {
+  margin: 50px auto;
+  width: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+
+.stepper-wrapper::before {
+  content: "";
+  width: 100%;
+  height: 3px;
+  background-color: lightgray;
+  position: absolute;
+  z-index: -2;
+}
+
+.progress {
+  content: "";
+  width: 0%;
+  height: 3px;
+  background-color: rgb(78, 196, 243);
+  position: absolute;
+  z-index: -1;
+  transition: width 1s;
+}
+
+.screen-indicator {
+  border-radius: 50%;
+  border: 3px solid lightgrey;
+  background-color: white;
+  padding: 10px 19px;
+  color: gray;
+  transition: border-color color;
+  transition-duration: 0.7s;
+}
+
+.completed {
+  border-color: rgb(78, 196, 243);
+  color: rgb(78, 196, 243);
+}
+
+.control-btn {
+  background-color: rgb(238, 238, 238);
+  padding: 5px 10px;
+  border: 1px solid gray;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.control-btn:disabled {
+  cursor: not-allowed;
+}
+
+.control-btn:not(:disabled):hover {
+  background-color: lightgray;
+}
