@@ -53,6 +53,7 @@ function createEmailInUserCol (email, fname, lname) {
                 bonus_tries: 0,
                 points: 0,
                 score: 0,
+                finished_tutorial: false,
             })
             .then(() => {
                 console.log('new user record created')
@@ -119,7 +120,10 @@ appRegForm.addEventListener('submit', (e) => {
 })
 
 // SHOW PW =======================  
-function myFunction() {
+
+document.querySelector('.reveal-pw').addEventListener('click', revealPW)
+
+function revealPW() {
     // Place HTML element reference in variable
     const checkboxShowPw = document.querySelector("input.pw-checkbox");
     const pwField1 = document.getElementById('password1')
