@@ -119,3 +119,26 @@ appRegForm.addEventListener('submit', (e) => {
     };
 })
 
+// SHOW PW =======================  
+
+document.querySelector('.reveal-pw').addEventListener('click', revealPW)
+
+function revealPW() {
+    // Place HTML element reference in variable
+    const checkboxShowPw = document.querySelector("input.pw-checkbox");
+    const pwField1 = document.getElementById('password1')
+    const pwField2 = document.getElementById('password2')
+    
+    // See if checkbox is checked ============
+    if (checkboxShowPw.checked === true) {
+        // If true or checked, set pw inputs to type = text
+        pwField1.type = "text";
+        pwField2.type = "text";
+        
+    } else {
+        // If false or unchecked, set pw inputs to type = password
+        pwField1.type = "password";
+        pwField2.type = "password";
+    }     
+
+} 
