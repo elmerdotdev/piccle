@@ -1,4 +1,5 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.8.3/firebase-app.js'
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-analytics.js";
 
 import { getAuth, signOut,
     createUserWithEmailAndPassword, signInWithEmailAndPassword,
@@ -17,3 +18,4 @@ const firebaseConfig = {
 };
 
 initializeApp(firebaseConfig);
+getAnalytics(app);
