@@ -1,10 +1,19 @@
 const runPushNotifications = async () => {
     const reg = await navigator.serviceWorker.getRegistration();
+
+    if ('showTrigger' in Notification.prototype) {
+        alert('notifications work')
+      } else {
+        alert('no')
+        console.log(Notification.prototype)
+      }
+
     Notification.requestPermission().then(permission => {
         if (permission !== 'granted') {
             alert('you need to allow push notifications');
         } else {
             const timestamp = new Date().getTime() + 10 * 1000; // now plus 5000ms
+            console.log(timestamp)
             reg.showNotification(
                 'Demo Push Notification',
                 {
