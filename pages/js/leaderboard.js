@@ -56,20 +56,24 @@ const q = query(colRefUsers, orderBy("score", "desc"));
 class UserRank {
  
     constructor (rank, name, score, curUser) {
-        this.rank = rank;
+        this.rank = rank + ".";
         this.name = name;
         this.score = score;
         this.curUser = curUser;
     }
  
     static createRow (rowItems) {
+        const rowItemsSliced = rowItems.slice(0,3);
         const row = document.createElement('tr');
-        rowItems.forEach((rowItem) => {
+        if (rowItems[3] === true) {
+            row.classList.add('highlighted');
+        }
+        rowItemsSliced.forEach((rowItem) => {
             const cell = row.insertCell();
             cell.innerHTML = rowItem;
 
-            // temporary styling
-            cell.style = "border: 1px solid black;"
+            // // temporary styling
+            // cell.style = "border: 1px solid black;"
         });
         return row;
     }
@@ -77,14 +81,14 @@ class UserRank {
     static createTable () {
         const newTable = document.createElement('table');
         const headerRow = newTable.createTHead().insertRow();
-        const rowHeaders = ["Ranking", "Name", "Score", "Current User"];
+        const rowHeaders = ["Rank", "Name", "Total Points"];
         rowHeaders.forEach((headerItem) => {
             const headerCell = headerRow.insertCell();
             headerCell.innerHTML = headerItem;
         })
 
         // temporary styling
-        newTable.style = "border-collapse: collapse;"
+        // newTable.style = "border-collapse: collapse;"
 
         return newTable;
     }
@@ -101,7 +105,7 @@ class UserRank {
 }
 
 const leaderboardTable = UserRank.createTable();
-document.getElementById('mainArea').appendChild(leaderboardTable);
+document.querySelector('.order1-main .card').appendChild(leaderboardTable);
 const leaderboardTBody = leaderboardTable.createTBody();
 
 getDocs(q)
