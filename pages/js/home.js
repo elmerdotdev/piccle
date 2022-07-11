@@ -20,6 +20,10 @@ function init () {
         "userProgress" : query(progressColRef, where("user_email", "==", loggedInUser), orderBy("date_started", "desc"), limit(1)),
         "userGames" : query(progressColRef, where("user_email", "==", loggedInUser), orderBy("date_started", "desc")),
     };
+    const playHintDisplay = {
+        "ready" : "New Game is Ready",
+        "wait" : "Next Game Begins Tomorrow",
+    }
     
     getDocs(queries["userRankQuery"])
     .then(snapshot => {
@@ -46,19 +50,39 @@ function init () {
             document.querySelector('span.game-hint').innerHTML = "";
         } else {
             snapshot.forEach(docSnap => {
+                console.log(docSnap.data())
                 userCurrentGame = docSnap.data();
-                console.log(userCurrentGame.date_started.toDate());
-                userHints = 5 - userCurrentGame.tries;
                 userGameWord = userCurrentGame.word;
-    
-                document.querySelector('span.game-chance').innerHTML = userHints;
-    
-                const wordDocRef = doc(db, "words", userGameWord);
-                getDoc(wordDocRef)
-                .then(wordDoc => {
-                    const wordHints = wordDoc.data().hints;
-                    document.querySelector('span.game-hint').innerHTML = wordHints[userCurrentGame.tries];
-                })
+                const lastGameDate = new Date(userCurrentGame.date_started.seconds * 1000);
+
+                // check if last game was started today
+                if (datesAreOnSameDay(lastGameDate, new Date())) {
+                    userHints = 5 - userCurrentGame.tries;
+
+                    // check if game is done
+                    // game is done when:
+                    // 1. remaining hints == 0; or
+                    // 2. game resolved == true
+                    if (userHints === 0 || userCurrentGame.resolved) {
+                        document.querySelector('span.game-hint').innerHTML = playHintDisplay["wait"];
+                        document.querySelector('span.game-chance').innerHTML = "";
+
+                    } else {
+                        document.querySelector('span.game-chance').innerHTML = userHints;
+                        const wordDocRef = doc(db, "words", userGameWord);
+                        getDoc(wordDocRef)
+                        .then(wordDoc => {
+                            const wordHints = wordDoc.data().hints;
+                            document.querySelector('span.game-hint').innerHTML = wordHints[userCurrentGame.tries];
+                        })
+                    }
+
+                } else {
+                    document.querySelector('span.game-hint').innerHTML = playHintDisplay["ready"];
+                    document.querySelector('span.game-chance').innerHTML = "";
+                    userHints = 0;
+                }
+
             });
         }
     });
@@ -86,6 +110,14 @@ function ordinalSuffixOf(i) {
         return i + "rd";
     }
     return i + "th";
+}
+
+function datesAreOnSameDay (first, second) {
+    if ( first.getFullYear() === second.getFullYear() && first.getMonth() === second.getMonth() && first.getDate() === second.getDate()) {
+        return true
+    } else {
+        return false
+    }
 }
     
 init();
