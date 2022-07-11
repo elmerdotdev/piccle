@@ -15,12 +15,13 @@ function init () {
     const userRef = collection(db, "users");
     const progressColRef = collection(db, "progress");
     const wordsColRef = collection(db, "words");
-    const userDetails = query(userRef, where("user_email", "==", loggedInUser));
-    const userRankQuery = query(userRef, orderBy("score", "desc"));
-    const userProgress = query(progressColRef, where("user_email", "==", loggedInUser), orderBy("date_started", "desc"), limit(1));
-    const userGames = query(progressColRef, where("user_email", "==", loggedInUser), orderBy("date_started", "desc"));
+    const queries = {
+        "userRankQuery" : query(userRef, orderBy("score", "desc")),
+        "userProgress" : query(progressColRef, where("user_email", "==", loggedInUser), orderBy("date_started", "desc"), limit(1)),
+        "userGames" : query(progressColRef, where("user_email", "==", loggedInUser), orderBy("date_started", "desc")),
+    };
     
-    getDocs(userRankQuery)
+    getDocs(queries["userRankQuery"])
     .then(snapshot => {
         const emailList = [];
         snapshot.forEach(doc => {
@@ -30,7 +31,7 @@ function init () {
                 userPoints = userInfo.points;
             };
         });
-        const userRank = emailList.indexOf(loggedInUser);
+        const userRank = emailList.indexOf(loggedInUser) + 1;
         document.querySelector('.player-rank').innerHTML = ordinalSuffixOf(userRank);
         document.querySelector('.earned-points').innerHTML = userPoints;
     })
@@ -38,26 +39,31 @@ function init () {
         console.log(err.message);
     });
 
-    getDocs(userProgress)
+    getDocs(queries["userProgress"])
     .then(snapshot => {
-        snapshot.forEach(docSnap => {
-            userCurrentGame = docSnap.data();
-            console.log(userCurrentGame.date_started.toDate());
-            userHints = 5 - userCurrentGame.tries;
-            userGameWord = userCurrentGame.word;
-
-            document.querySelector('span.game-chance').innerHTML = userHints;
-
-            const wordDocRef = doc(db, "words", userGameWord);
-            getDoc(wordDocRef)
-            .then(wordDoc => {
-                const wordHints = wordDoc.data().hints;
-                document.querySelector('span.game-hint').innerHTML = wordHints[userCurrentGame.tries];
-            })
-        });
+        if (snapshot.size === 0) {
+            document.querySelector('span.game-chance').innerHTML = "";
+            document.querySelector('span.game-hint').innerHTML = "";
+        } else {
+            snapshot.forEach(docSnap => {
+                userCurrentGame = docSnap.data();
+                console.log(userCurrentGame.date_started.toDate());
+                userHints = 5 - userCurrentGame.tries;
+                userGameWord = userCurrentGame.word;
+    
+                document.querySelector('span.game-chance').innerHTML = userHints;
+    
+                const wordDocRef = doc(db, "words", userGameWord);
+                getDoc(wordDocRef)
+                .then(wordDoc => {
+                    const wordHints = wordDoc.data().hints;
+                    document.querySelector('span.game-hint').innerHTML = wordHints[userCurrentGame.tries];
+                })
+            });
+        }
     });
 
-    getDocs(userGames)
+    getDocs(queries["userGames"])
     .then(snapshot => {
         document.querySelector('span.player-history').innerHTML = snapshot.size;
     })
@@ -65,11 +71,6 @@ function init () {
         console.log(err.message)
     })
     
-    // getDocs(userDetails)
-    // .then((snapshot) => {
-        //     document.querySelector('.logged-in-user').innerHTML = `Hi ${snapshot.docs[0].data().firstname}!`
-        // })
-        
 }
     
 function ordinalSuffixOf(i) {
