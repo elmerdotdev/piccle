@@ -56,7 +56,7 @@ const q = query(colRefUsers, orderBy("score", "desc"));
 class UserRank {
  
     constructor (rank, name, score, curUser) {
-        this.rank = rank;
+        this.rank = rank + ".";
         this.name = name;
         this.score = score;
         this.curUser = curUser;
