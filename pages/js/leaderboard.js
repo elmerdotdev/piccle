@@ -69,9 +69,6 @@ class Ranking {
 
 const leaderboardTable = [];
 const leaderboardList = document.getElementById("leaderboard");
-// leaderboardList.classList.add("leaderboard-list");
-// leaderboardList.innerHTML = "<p>Ranking, Name, Score, Current User</p>";
-// document.getElementById("mainArea").appendChild(leaderboardList);
 
 getDocs(q)
   .then((snapshot) => {
@@ -93,7 +90,7 @@ getDocs(q)
     leaderboardTable.forEach((row) => {
       if (row.curUser == true) {
         const userPosition = document.getElementById("userPosition");
-        userPosition.innerHTML = row.rank + `th`;
+        userPosition.innerHTML = ordinalSuffixOf(row.rank);
         leaderboardList.innerHTML += `<tr class="current-user">
         <td>${row.rank}</td>
         <td>${row.name}</td>
@@ -120,6 +117,21 @@ function displayPublicName(firstname, lastname) {
       return firstname + " " + lastname;
     }
   }
+}
+
+function ordinalSuffixOf(i) {
+  let j = i % 10;
+  let k = i % 100;
+  if (j == 1 && k != 11) {
+    return i + "st";
+  }
+  if (j == 2 && k != 12) {
+    return i + "nd";
+  }
+  if (j == 3 && k != 13) {
+    return i + "rd";
+  }
+  return i + "th";
 }
 
 // const leaderboardTable = document.createElement('table');
