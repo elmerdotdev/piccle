@@ -177,7 +177,7 @@ googleLoginButton.addEventListener('click', (e) => {
 checkUIDinBrowser()
     .then((resp) => {
         if (resp) {
-            alert("Previous sign-in detected, logging in...")
+            // alert("Previous sign-in detected, logging in...")
             window.location.hash = "home";
         } else {
             window.location.has = "signin";
