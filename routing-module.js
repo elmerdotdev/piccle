@@ -11,7 +11,12 @@ Router.init("mainArea", [
     "pages/css/home.css"
   ),
   new Page("#history", "pages/history.html", "pages/js/history.js"),
-  new Page("#leaderboard", "pages/leaderboard.html", "pages/js/leaderboard.js"),
+  new Page(
+    "#leaderboard",
+    "pages/leaderboard.html",
+    "pages/js/leaderboard.js",
+    "pages/css/leaderboard.css"
+  ),
   new Page(
     "#play",
     "pages/play.html",
@@ -24,6 +29,11 @@ Router.init("mainArea", [
     "pages/js/component.js",
     "pages/css/component.css"
   ),
-  new Page("#settings", "pages/settings.html", "pages/js/settings.js"),
+  new Page(
+    "#settings",
+    "pages/settings.html",
+    "pages/js/settings.js",
+    "pages/css/settings.css"
+  ),
   new Page("#shop", "pages/shop.html", "pages/js/shop.js"),
 ]);

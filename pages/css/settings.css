@@ -1,0 +1,18 @@
+.setting-header {
+  color: #5c91f6;
+  text-shadow: 0px 4px 0px #1d1d1d;
+}
+
+.card-icon {
+  margin: auto;
+  background: #5c91f6;
+}
+
+.card-text {
+  width: 100%;
+  background: #fff;
+  text-align: center;
+  border-radius: 0 0 10px 10px;
+  padding: 0.5rem;
+  font-weight: 600;
+}
