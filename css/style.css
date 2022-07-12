@@ -287,7 +287,7 @@ input.pw-checkbox {
 
   .desktop-right {
     margin: 0 5rem;
-}
+  }
 }
 
 @media screen and (min-width: 800px) {
@@ -334,7 +334,7 @@ input.pw-checkbox {
     box-shadow: unset;
     border-bottom: 0;
     display: block; /* to align button (R) and label (C) on desktop view */
-}
+  }
 
   .signup-banner button {
     margin-left: -1rem;
@@ -540,7 +540,7 @@ li.main-menu-active a span {
   }
 
   .st-card {
-    flex: 0 0 32%;
+    flex: 0 0 31%;
     flex-flow: column-reverse nowrap;
     height: 210px;
     justify-content: center;
