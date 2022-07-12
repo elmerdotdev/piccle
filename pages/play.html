@@ -29,7 +29,7 @@
       <div class="menu-icon">
         <img src="./../images/icons/P.svg" alt="" />
       </div>
-      <a href="#piccleshop"><span>Piccle Shop</span></a>
+      <a href="#shop"><span>Piccle Shop</span></a>
     </li>
     <li class="main-menu-active">
       <div class="menu-icon">
@@ -128,7 +128,7 @@
 
 <style>
   body {
-    overflow: hidden
+    overflow: hidden;
   }
 
   .wrapper {
@@ -136,9 +136,9 @@
     grid-template-columns: repeat(2, 1fr);
     width: 200%;
     transform: translateX(0);
-    transition: transform .5s ease-in-out;
+    transition: transform 0.5s ease-in-out;
   }
-  
+
   .wrapper.correct-answer {
     transform: translateX(-50%);
   }
@@ -262,7 +262,7 @@
   }
 
   .fade {
-    opacity: .2;
+    opacity: 0.2;
   }
 
   .popup-window {
@@ -280,7 +280,7 @@
 
   .popup-window.show {
     display: block;
-    animation: shake .5s linear;
+    animation: shake 0.5s linear;
   }
 
   .popup-window h2 {
@@ -316,7 +316,7 @@
     background-color: white;
     border: 5px solid #333;
     transform: translateX(0);
-    transition: transform .5s linear;
+    transition: transform 0.5s linear;
   }
 
   .results-wrapper img {
@@ -352,12 +352,15 @@
   }
 
   @keyframes shake {
-    0%, 40%, 80% {
+    0%,
+    40%,
+    80% {
       transform: translate(-45%, -50%);
     }
-    20%, 60%, 100% {
+    20%,
+    60%,
+    100% {
       transform: translate(-50%, -50%);
     }
-
   }
 </style>

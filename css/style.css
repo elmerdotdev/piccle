@@ -544,6 +544,7 @@ li.main-menu-active a span {
     flex-flow: column-reverse nowrap;
     height: 210px;
     justify-content: center;
+    padding: 0;
   }
 
   footer.visually-hidden {
@@ -571,7 +572,7 @@ li.main-menu-active a span {
     justify-content: space-around;
   }
 
-  .main-menu li {
+  .main-menu li a {
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
