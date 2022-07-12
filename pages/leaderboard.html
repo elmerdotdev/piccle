@@ -1,65 +1,116 @@
 <header class="nav-bar">
-    <div class="left-menu">
-        <h1 class="ranking-header">Ranking</h1>
-    </div>
-    <ul class="main-menu">
-      <li>
+  <div class="left-menu">
+    <h1 class="ranking-header">Ranking</h1>
+  </div>
+  <ul class="main-menu">
+    <li>
+      <a href="#home">
         <div class="menu-icon">
           <img src="./../images/icons/home-2-fill.svg" alt="" />
         </div>
-        <a href="#home"><span>Home</span></a>
-      </li>
-      <li>
+        <span>Home</span>
+      </a>
+    </li>
+    <li>
+      <a href="#playnow">
         <div class="menu-icon">
           <img src="./../images/icons/camera-3-fill.svg" alt="" />
         </div>
-        <a href="#play"><span>Play Now</span></a>
-      </li>
-      <li>
+        <span>Play Now</span></a
+      >
+    </li>
+    <li>
+      <a href="#history">
         <div class="menu-icon">
           <img src="./../images/icons/fire-fill.svg" alt="" />
         </div>
-        <a href="#history"><span>History</span></a>
-      </li>
-      <li>
+        <span>History</span></a
+      >
+    </li>
+    <li>
+      <a href="#piccleshop">
         <div class="menu-icon">
           <img src="./../images/icons/P.svg" alt="" />
         </div>
-        <a href="#piccleshop"><span>Piccle Shop</span></a>
-      </li>
-      <li class="main-menu-active">
+        <span>Piccle Shop</span></a
+      >
+    </li>
+    <li class="main-menu-active">
+      <a href="#settings">
         <div class="menu-icon">
           <img src="./../images/icons/settings-white.svg" alt="" />
         </div>
-        <a href="#settings"><span>Settings</span></a>
-      </li>
-    </ul>
-    <button type="button" class="btn btn-icon" id="menuBtn">
-      <img src="./../images/icons/menu-3-line.svg" />
-    </button>
-  </header>
-  
-  <div class="main-wrapper">
-    <main class="order1-main box-border">
-        <div class="leaderboard-title">
-            <div class="rank-header">
-              <h2>Current Position</h2>
-              
-              <div class="icon-wrapper">
-                <div class="btn btn-icon round"><img src="./images/icons/trophy-fill.svg" alt="trophy icon"></div>
-                <span class="player-rank icon-label">5th</span>
-              </div>
-            </div>
+        <span>Settings</span></a
+      >
+    </li>
+  </ul>
+  <button type="button" class="btn btn-icon" id="menuBtn">
+    <img src="./../images/icons/menu-3-line.svg" />
+  </button>
+</header>
 
-            <ul class="socialmedia-icons">
-              <li><a href="#" class="btn btn-icon round"><span class="visually-hidden">facebook</span><img src="./images/icons/facebook-fill.svg" alt="Facebook"></a></li>
-              <li><a href="#" class="btn btn-icon round"><span class="visually-hidden">twitter</span><img src="./images/icons/twitter-fill.svg" alt="Twitter"></a></li>
-          </ul>
-        </div>
+<div class="st-sidenav" id="st-sidenavId">
+  <ul class="st-main-menu">
+    <li class="sd-menu-header">
+      <a style="color: transparent">.</a>
+      <a href="#home"><span>Menu</span></a>
+      <button type="button" class="btn btn-icon" id="clsBtn">
+        <img src="./../images/icons/cancel.svg" />
+      </button>
+    </li>
+    <li>
+      <a href="#home"><span>Home</span></a>
+    </li>
+    <li>
+      <a href="#playnow"><span>Play Now</span></a>
+    </li>
+    <li>
+      <a href="#history"><span>History</span></a>
+    </li>
+    <li>
+      <a href="#piccleshop"><span>Piccle Shop</span></a>
+    </li>
+    <li class="main-menu-active">
+      <a href="#settings"><span>Settings</span></a>
+    </li>
+  </ul>
+</div>
 
-        <div class="card">
-        </div>
-
-        
-    </main>
-  </div>
+<main class="lt-main">
+  <section class="lt__header">
+    <div class="lt__header__position_wrapper">
+      <div class="lt__header__wrapper_head">current position</div>
+      <div class="position-wrapper-body">
+        <button type="button" class="btn btn-icon round">
+          <img src="./../images/icons/trophy-fill.svg" />
+        </button>
+        <span class="position" id="userPosition"></span>
+      </div>
+    </div>
+    <div class="lt__header__share">
+      <div class="lt__header__wrapper_head">Share</div>
+      <div class="share-wrapper-body">
+        <button type="button" class="btn btn-icon round">
+          <img src="./../images/icons/facebook-fill.svg" />
+        </button>
+        <button type="button" class="btn btn-icon round">
+          <img src="./../images/icons/twitter-fill.svg" />
+        </button>
+      </div>
+    </div>
+  </section>
+  <section>
+    <div class="card lt_card">
+      <table class="lt-table">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Name</th>
+            <th>Total Points</th>
+          </tr>
+        </thead>
+        <tbody id="leaderboard" class="leaderboard-list"></tbody>
+      </table>
+    </div>
+  </section>
+</main>
