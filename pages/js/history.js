@@ -25,6 +25,9 @@ function init() {
         lose: 'Try again next time'
     }
 
+    // In-game status
+    let inGame = false
+
     // Connect to Firebase
     const db = getFirestore();
 
@@ -47,6 +50,13 @@ function init() {
                     if (doc.data().resolved) {
                         const fullDate = timestampToDate(doc.data().date_started)
                         renderDOM(fullDate, doc.data().resolved, doc.data().tries, doc.id, doc.data().word, snapshot.docs.length)
+                    } else {
+                        if (doc.data().tries >= 5) {
+                            const fullDate = timestampToDate(doc.data().date_started)
+                            renderDOM(fullDate, doc.data().resolved, doc.data().tries, doc.id, doc.data().word, snapshot.docs.length)
+                        } else {
+                            inGame = true
+                        }
                     }
                 }
             })
@@ -83,6 +93,10 @@ function init() {
         } else {
             message = messages.lose
             elementClass = "status-lose"
+        }
+
+        if (inGame) {
+            totalGames = totalGames - 1
         }
 
         boxElement += `<div class="box box-${id} ${elementClass}">`
