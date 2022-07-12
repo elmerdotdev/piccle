@@ -116,6 +116,10 @@ function init() {
       document
         .querySelectorAll(".play-wrapper__numbers li")
         [tries].classList.add("current-hint");
+
+        for (let i = 0; i < tries; i++) {
+          document.querySelectorAll(".play-wrapper__numbers li")[i].classList.add("used-hint")
+        }
     });
   }
 
@@ -171,7 +175,6 @@ function init() {
     await updateDoc(currentProgressRef, {
       tries: usedTries,
     });
-    document.querySelector(".popup-window").style.display = "block";
   }
 
   async function answerCorrect(theword, image) {
@@ -188,8 +191,7 @@ function init() {
     domContent += `<a href="index.html#home">Home</a>`;
     document.querySelector(".results-wrapper").innerHTML = domContent;
 
-    document.querySelector(".results-wrapper").style.display = "block";
-    document.querySelector(".play-wrapper").style.display = "none";
+    document.querySelector(".wrapper").classList.add('correct-answer');
   }
 
   // Camera functions ==========================
@@ -229,8 +231,18 @@ function init() {
       domContent += `<p>Sorry that is incorrect. You have ${
         5 - usedTries
       } tries remaining.</p>`;
-      domContent += `<hr><button class="btn btn-primary"><a href="index.html#play">Next Clue</a></button>`;
+      domContent += `<hr><button class="btn btn-primary"><a href="#play" class="next-clue-btn">Next Clue</a></button>`;
       document.querySelector(".popup-window").innerHTML = domContent;
+
+      setTimeout(() => {
+        document.querySelector('.next-clue-btn').addEventListener('click', () => {
+          location.reload()
+        })
+      }, 100)
+
+      document.querySelector('.play-wrapper_progress_bar').classList.add("fade");
+      document.querySelector('.play-wrapper_card').classList.add("fade");
+      document.querySelector(".popup-window").classList.add("show");
     }
     updateTries();
   }
@@ -308,6 +320,14 @@ function init() {
       alert("need photo");
     }
   });
+
+  document.querySelectorAll('.main-menu li a').forEach(link => {
+    link.addEventListener('click', () => {
+      if (link.getAttribute('href') != "#play") {
+        webcam.stop()
+      }
+    })
+  })
 }
 
 init();
