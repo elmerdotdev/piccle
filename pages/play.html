@@ -62,7 +62,7 @@
       <a href="#history"><span>History</span></a>
     </li>
     <li>
-      <a href="#piccleshop"><span>Piccle Shop</span></a>
+      <a href="#shop"><span>Piccle Shop</span></a>
     </li>
     <li class="main-menu-active">
       <a href="#settings"><span>Settings</span></a>
@@ -71,62 +71,80 @@
 </div>
 
 <!-- navbar end -->
-
-<div class="play-wrapper">
-  <div class="play-wrapper_progress_bar">
-    <ul class="play-wrapper__numbers">
-      <li><span class="number">1</span><span class="circle"></span></li>
-      <li><span class="number">2</span><span class="circle"></span></li>
-      <li><span class="number">3</span><span class="circle"></span></li>
-      <li><span class="number">4</span><span class="circle"></span></li>
-      <li><span class="number">5</span><span class="circle"></span></li>
-    </ul>
-    <span class="play-wrapper__progress_line"></span>
-  </div>
-  <div class="card play-wrapper_card">
-    <p class="play-wrapper__hint"></p>
-    <div class="play_wrapper__card_body">
-      <div class="play-wrapper__camera">
-        <video id="webcam" autoplay playsinline></video>
-        <!-- width="640"
-        height="480" -->
-        <img id="previewImage" src="" alt="" />
-        <canvas id="canvas" style="display: none"></canvas>
-      </div>
+<div class="wrapper">
+  <div class="play-wrapper">
+    <div class="play-wrapper_progress_bar">
+      <ul class="play-wrapper__numbers">
+        <li><span class="number">1</span><span class="circle"></span></li>
+        <li><span class="number">2</span><span class="circle"></span></li>
+        <li><span class="number">3</span><span class="circle"></span></li>
+        <li><span class="number">4</span><span class="circle"></span></li>
+        <li><span class="number">5</span><span class="circle"></span></li>
+      </ul>
+      <span class="play-wrapper__progress_line"></span>
     </div>
-    <div class="play-wrapper__controls">
-      <div class="play-wrapper__controls__btn-wrapper">
-        <button class="btn btn-icon round upload-btn">
-          <img src="./../images/icons/attachment-2.svg" />
-        </button>
+    <div class="card play-wrapper_card">
+      <p class="play-wrapper__hint"></p>
+      <div class="play_wrapper__card_body">
+        <div class="play-wrapper__camera">
+          <video id="webcam" autoplay playsinline></video>
+          <!-- width="640"
+          height="480" -->
+          <img id="previewImage" src="" alt="" />
+          <canvas id="canvas" style="display: none"></canvas>
+        </div>
       </div>
-      <div class="play-wrapper__controls__btn-wrapper">
-        <button class="btn btn-icon round camera-btn" style="display: none">
-          <img src="./../images/icons/camera-3-fill.svg" />
-        </button>
-        <button class="btn btn-icon round capture-btn">
-          <img src="./../images/icons/camera-3-fill.svg" />
-        </button>
+      <div class="play-wrapper__controls">
+        <div class="play-wrapper__controls__btn-wrapper">
+          <button class="btn btn-icon round upload-btn">
+            <img src="./../images/icons/attachment-2.svg" />
+          </button>
+        </div>
+        <div class="play-wrapper__controls__btn-wrapper">
+          <button class="btn btn-icon round camera-btn" style="display: none">
+            <img src="./../images/icons/camera-3-fill.svg" />
+          </button>
+          <button class="btn btn-icon round capture-btn">
+            <img src="./../images/icons/camera-3-fill.svg" />
+          </button>
+        </div>
+        <div class="play-wrapper__controls__btn-wrapper">
+          <button class="btn btn-icon round delete-btn">
+            <img src="./../images/icons/delete-bin-2-fill.svg" />
+          </button>
+        </div>
+        <div class="play-wrapper__controls__btn-wrapper">
+          <button class="btn btn-primary submit-btn">Submit</button>
+        </div>
       </div>
-      <div class="play-wrapper__controls__btn-wrapper">
-        <button class="btn btn-icon round delete-btn">
-          <img src="./../images/icons/delete-bin-2-fill.svg" />
-        </button>
-      </div>
-      <div class="play-wrapper__controls__btn-wrapper">
-        <button class="btn btn-primary submit-btn">Submit</button>
-      </div>
+      <input type="file" name="" id="uploader" style="visibility: hidden" />
     </div>
-    <input type="file" name="" id="uploader" style="visibility: hidden" />
+
+    <div class="card popup-window"></div>
   </div>
 
-  <div class="card popup-window"></div>
+  <div class="results-wrapper hide"></div>
 </div>
 
-<div class="results-wrapper"></div>
-
 <style>
+  body {
+    overflow: hidden
+  }
+
+  .wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 200%;
+    transform: translateX(0);
+    transition: transform .5s ease-in-out;
+  }
+  
+  .wrapper.correct-answer {
+    transform: translateX(-50%);
+  }
+
   .play-wrapper {
+    position: relative;
     display: flex;
     flex-flow: column wrap;
   }
@@ -160,6 +178,10 @@
     background: #ffffff;
     border: 2px solid #000000;
     box-shadow: 0px 2px 0px #1d1d1d;
+  }
+
+  .play-wrapper__numbers .used-hint .circle {
+    background-color: red;
   }
 
   .play-wrapper__numbers .current-hint .circle {
@@ -239,6 +261,10 @@
     font-size: 1rem;
   }
 
+  .fade {
+    opacity: .2;
+  }
+
   .popup-window {
     display: none;
     position: absolute;
@@ -250,6 +276,11 @@
     padding: 1.5rem 0;
     /*background-color: white;
     border: 5px solid #333; */
+  }
+
+  .popup-window.show {
+    display: block;
+    animation: shake .5s linear;
   }
 
   .popup-window h2 {
@@ -278,13 +309,14 @@
   }
 
   .results-wrapper {
-    display: none;
     margin: auto;
     padding: 2rem;
     width: 100%;
     max-width: 700px;
     background-color: white;
     border: 5px solid #333;
+    transform: translateX(0);
+    transition: transform .5s linear;
   }
 
   .results-wrapper img {
@@ -317,5 +349,15 @@
     .play-wrapper__controls {
       row-gap: 1rem;
     }
+  }
+
+  @keyframes shake {
+    0%, 40%, 80% {
+      transform: translate(-45%, -50%);
+    }
+    20%, 60%, 100% {
+      transform: translate(-50%, -50%);
+    }
+
   }
 </style>
