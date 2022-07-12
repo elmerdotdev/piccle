@@ -60,7 +60,7 @@ const q = query(colRefUsers, orderBy("score", "desc"));
 
 class Ranking {
   constructor(rank, name, score, curUser) {
-    this.rank = rank + ".";
+    this.rank = rank;
     this.name = name;
     this.score = score;
     this.curUser = curUser;
@@ -68,10 +68,7 @@ class Ranking {
 }
 
 const leaderboardTable = [];
-const leaderboardList = document.createElement("div");
-leaderboardList.classList.add("leaderboard-list");
-leaderboardList.innerHTML = "<p>Ranking, Name, Score, Current User</p>";
-document.getElementById("mainArea").appendChild(leaderboardList);
+const leaderboardList = document.getElementById("leaderboard");
 
 getDocs(q)
   .then((snapshot) => {
@@ -91,7 +88,19 @@ getDocs(q)
     console.table(leaderboardTable);
 
     leaderboardTable.forEach((row) => {
-      leaderboardList.innerHTML += `<p>${JSON.stringify(row)}</p>`;
+      if (row.curUser == true) {
+        const userPosition = document.getElementById("userPosition");
+        userPosition.innerHTML = ordinalSuffixOf(row.rank);
+        leaderboardList.innerHTML += `<tr class="current-user">
+        <td>${row.rank}</td>
+        <td>${row.name}</td>
+        <td>${row.score}</td></tr>`;
+      } else {
+        leaderboardList.innerHTML += `<tr>
+        <td>${row.rank}</td>
+        <td>${row.name}</td>
+        <td>${row.score}</td></tr>`;
+      }
     });
   })
   .catch((err) => {
@@ -108,6 +117,21 @@ function displayPublicName(firstname, lastname) {
       return firstname + " " + lastname;
     }
   }
+}
+
+function ordinalSuffixOf(i) {
+  let j = i % 10;
+  let k = i % 100;
+  if (j == 1 && k != 11) {
+    return i + "st";
+  }
+  if (j == 2 && k != 12) {
+    return i + "nd";
+  }
+  if (j == 3 && k != 13) {
+    return i + "rd";
+  }
+  return i + "th";
 }
 
 // const leaderboardTable = document.createElement('table');

@@ -1,0 +1,94 @@
+<header class="nav-bar">
+  <div class="left-menu">
+      <h1 class="ranking-header">History</h1>
+  </div>
+  <ul class="main-menu">
+    <li>
+      <div class="menu-icon">
+        <img src="./../images/icons/home-2-fill.svg" alt="" />
+      </div>
+      <a href="#home"><span>Home</span></a>
+    </li>
+    <li>
+      <div class="menu-icon">
+        <img src="./../images/icons/camera-3-fill.svg" alt="" />
+      </div>
+      <a href="#play"><span>Play Now</span></a>
+    </li>
+    <li>
+      <div class="menu-icon">
+        <img src="./../images/icons/fire-fill.svg" alt="" />
+      </div>
+      <a href="#history"><span>History</span></a>
+    </li>
+    <li>
+      <div class="menu-icon">
+        <img src="./../images/icons/P.svg" alt="" />
+      </div>
+      <a href="#piccleshop"><span>Piccle Shop</span></a>
+    </li>
+    <li class="main-menu-active">
+      <div class="menu-icon">
+        <img src="./../images/icons/settings-white.svg" alt="" />
+      </div>
+      <a href="#settings"><span>Settings</span></a>
+    </li>
+  </ul>
+  <button type="button" class="btn btn-icon" id="menuBtn">
+    <img src="./../images/icons/menu-3-line.svg" />
+  </button>
+</header>
+
+<div class="main-wrapper">
+  <main class="order1-main box-border">
+      
+
+      <div class="history-wrapper card">
+          <div class="history-header history-wrapper__header">
+              <div class="grouped-left">
+                  <div class="history-title">
+                      <h2>Current Streak</h2>
+                  
+                      <div class="history-indicator">
+                          <div class="btn btn-icon round"><img src="./images/icons/fire-fill.svg" alt="trophy icon"></div>
+                          <span class="player-rank icon-label">5th</span>
+                      </div>
+                  </div>
+                  <div class="game-title total-games">
+                      <h2>Games Played</h2>
+                  
+                      <div class="history-indicator">
+                          <div class="btn btn-icon round"><img src="./images/icons/camera-3-fill.svg" alt="camera icon"></div>
+                          <strong class="total-games-counter"></strong>
+                      </div>
+                  </div>
+              </div>
+              <div class="card">
+                  <select class="filter">
+                      <option value="" selected>All</option>
+                      <option value="win">Win</option>
+                      <option value="lose">Lose</option>
+                  </select>
+              </div>
+          </div>
+
+          <div class="history-body history-wrapper__body">
+          </div>
+
+      </div>
+
+      <div class="history-wrapper__popup-overlay">
+          <div class="popup-message">
+              <button class="close-btn">X</button>
+              <div class="popup-content"></div>
+              <div class="popup-social-share"></div>
+          </div>
+      </div>
+      
+  </main>
+</div>
+
+
+
+
+
