@@ -15,12 +15,17 @@ function init () {
     const userRef = collection(db, "users");
     const progressColRef = collection(db, "progress");
     const wordsColRef = collection(db, "words");
-    const userDetails = query(userRef, where("user_email", "==", loggedInUser));
-    const userRankQuery = query(userRef, orderBy("score", "desc"));
-    const userProgress = query(progressColRef, where("user_email", "==", loggedInUser), orderBy("date_started", "desc"), limit(1));
-    const userGames = query(progressColRef, where("user_email", "==", loggedInUser), orderBy("date_started", "desc"));
+    const queries = {
+        "userRankQuery" : query(userRef, orderBy("score", "desc")),
+        "userProgress" : query(progressColRef, where("user_email", "==", loggedInUser), orderBy("date_started", "desc"), limit(1)),
+        "userGames" : query(progressColRef, where("user_email", "==", loggedInUser), orderBy("date_started", "desc")),
+    };
+    const playHintDisplay = {
+        "ready" : "New Game is Ready",
+        "wait" : "Next Game Begins Tomorrow",
+    }
     
-    getDocs(userRankQuery)
+    getDocs(queries["userRankQuery"])
     .then(snapshot => {
         const emailList = [];
         snapshot.forEach(doc => {
@@ -30,7 +35,7 @@ function init () {
                 userPoints = userInfo.points;
             };
         });
-        const userRank = emailList.indexOf(loggedInUser);
+        const userRank = emailList.indexOf(loggedInUser) + 1;
         document.querySelector('.player-rank').innerHTML = ordinalSuffixOf(userRank);
         document.querySelector('.earned-points').innerHTML = userPoints;
     })
@@ -38,26 +43,51 @@ function init () {
         console.log(err.message);
     });
 
-    getDocs(userProgress)
+    getDocs(queries["userProgress"])
     .then(snapshot => {
-        snapshot.forEach(docSnap => {
-            userCurrentGame = docSnap.data();
-            console.log(userCurrentGame.date_started.toDate());
-            userHints = 5 - userCurrentGame.tries;
-            userGameWord = userCurrentGame.word;
+        if (snapshot.size === 0) {
+            document.querySelector('span.game-chance').innerHTML = "";
+            document.querySelector('span.game-hint').innerHTML = "";
+        } else {
+            snapshot.forEach(docSnap => {
+                console.log(docSnap.data())
+                userCurrentGame = docSnap.data();
+                userGameWord = userCurrentGame.word;
+                const lastGameDate = new Date(userCurrentGame.date_started.seconds * 1000);
 
-            document.querySelector('span.game-chance').innerHTML = userHints;
+                // check if last game was started today
+                if (datesAreOnSameDay(lastGameDate, new Date())) {
+                    userHints = 5 - userCurrentGame.tries;
 
-            const wordDocRef = doc(db, "words", userGameWord);
-            getDoc(wordDocRef)
-            .then(wordDoc => {
-                const wordHints = wordDoc.data().hints;
-                document.querySelector('span.game-hint').innerHTML = wordHints[userCurrentGame.tries];
-            })
-        });
+                    // check if game is done
+                    // game is done when:
+                    // 1. remaining hints == 0; or
+                    // 2. game resolved == true
+                    if (userHints === 0 || userCurrentGame.resolved) {
+                        document.querySelector('span.game-hint').innerHTML = playHintDisplay["wait"];
+                        document.querySelector('span.game-chance').innerHTML = "";
+
+                    } else {
+                        document.querySelector('span.game-chance').innerHTML = userHints;
+                        const wordDocRef = doc(db, "words", userGameWord);
+                        getDoc(wordDocRef)
+                        .then(wordDoc => {
+                            const wordHints = wordDoc.data().hints;
+                            document.querySelector('span.game-hint').innerHTML = wordHints[userCurrentGame.tries];
+                        })
+                    }
+
+                } else {
+                    document.querySelector('span.game-hint').innerHTML = playHintDisplay["ready"];
+                    document.querySelector('span.game-chance').innerHTML = "";
+                    userHints = 0;
+                }
+
+            });
+        }
     });
 
-    getDocs(userGames)
+    getDocs(queries["userGames"])
     .then(snapshot => {
         document.querySelector('span.player-history').innerHTML = snapshot.size;
     })
@@ -65,11 +95,6 @@ function init () {
         console.log(err.message)
     })
     
-    // getDocs(userDetails)
-    // .then((snapshot) => {
-        //     document.querySelector('.logged-in-user').innerHTML = `Hi ${snapshot.docs[0].data().firstname}!`
-        // })
-        
 }
     
 function ordinalSuffixOf(i) {
@@ -85,6 +110,14 @@ function ordinalSuffixOf(i) {
         return i + "rd";
     }
     return i + "th";
+}
+
+function datesAreOnSameDay (first, second) {
+    if ( first.getFullYear() === second.getFullYear() && first.getMonth() === second.getMonth() && first.getDate() === second.getDate()) {
+        return true
+    } else {
+        return false
+    }
 }
     
 init();
