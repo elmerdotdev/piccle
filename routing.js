@@ -1,13 +1,17 @@
-'use strict';
+"use strict";
 
 class Page {
-  constructor(name, htmlName, jsName) {
+  constructor(name, htmlName, jsName, cssName) {
     this.name = name;
     this.htmlName = htmlName;
     // if jsName is not given use the html name + '.js'
     this.jsName = jsName
       ? jsName
-      : htmlName.substring(0, htmlName.lastIndexOf('.')) + '.js';
+      : htmlName.substring(0, htmlName.lastIndexOf(".")) + ".js";
+    // if Name is not given use the html name + '.js'
+    this.cssName = cssName
+      ? cssName
+      : htmlName.substring(0, htmlName.lastIndexOf(".")) + ".css";
   }
 }
 
@@ -15,7 +19,7 @@ class Router {
   static init(mainAreaId, pages) {
     Router.pages = pages;
     Router.rootElem = document.getElementById(mainAreaId);
-    window.addEventListener('hashchange', function (e) {
+    window.addEventListener("hashchange", function (e) {
       Router.handleHashChange();
     });
     Router.handleHashChange();
@@ -44,11 +48,15 @@ class Router {
       const txt = await response.text();
       Router.rootElem.innerHTML = txt;
       //append JS part to run.
-      const script = document.createElement('script');
-      script.setAttribute('src', page.jsName + '?ver=' + Date.now());
-      script.setAttribute('type', 'text/javascript');
-      script.setAttribute('type', 'module');
+      const script = document.createElement("script");
+      script.setAttribute("src", page.jsName + '?ver=' + Date.now());
+      script.setAttribute("type", "module");
       Router.rootElem.appendChild(script);
+      //append CSS part to run.
+      const pageCss = document.createElement("link");
+      pageCss.setAttribute("href", page.cssName + '?ver=' + Date.now());
+      pageCss.setAttribute("rel", "stylesheet");
+      Router.rootElem.appendChild(pageCss);
     } catch (error) {
       console.error(error);
     }

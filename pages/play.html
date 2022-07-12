@@ -1,7 +1,363 @@
-<h1 class="name-field"></h1>
+<!-- navbar start -->
+<header class="nav-bar">
+  <div class="left-menu">
+    <button type="button" class="btn btn-icon">
+      <img src="./../images/icons/arrow_back_ios.svg" />
+    </button>
+    <h1 class="setting-header">Play</h1>
+  </div>
+  <ul class="main-menu">
+    <li>
+      <div class="menu-icon">
+        <img src="./../images/icons/home-2-fill.svg" alt="" />
+      </div>
+      <a href="#home"><span>Home</span></a>
+    </li>
+    <li>
+      <div class="menu-icon">
+        <img src="./../images/icons/camera-3-fill.svg" alt="" />
+      </div>
+      <a href="#play"><span>Play Now</span></a>
+    </li>
+    <li>
+      <div class="menu-icon">
+        <img src="./../images/icons/fire-fill.svg" alt="" />
+      </div>
+      <a href="#history"><span>History</span></a>
+    </li>
+    <li>
+      <div class="menu-icon">
+        <img src="./../images/icons/P.svg" alt="" />
+      </div>
+      <a href="#piccleshop"><span>Piccle Shop</span></a>
+    </li>
+    <li class="main-menu-active">
+      <div class="menu-icon">
+        <img src="./../images/icons/settings-white.svg" alt="" />
+      </div>
+      <a href="#settings"><span>Settings</span></a>
+    </li>
+  </ul>
+  <button type="button" class="btn btn-icon" id="menuBtn">
+    <img src="./../images/icons/menu-3-line.svg" />
+  </button>
+</header>
 
-<h2>Word to Guess</h2>
-<span class="word-to-guess"></span>
+<div class="st-sidenav" id="st-sidenavId">
+  <ul class="st-main-menu">
+    <li class="sd-menu-header">
+      <a style="color: transparent">.</a>
+      <a href="#home"><span>Menu</span></a>
+      <button type="button" class="btn btn-icon" id="clsBtn">
+        <img src="./../images/icons/cancel.svg" />
+      </button>
+    </li>
+    <li>
+      <a href="#home"><span>Home</span></a>
+    </li>
+    <li>
+      <a href="#play"><span>Play Now</span></a>
+    </li>
+    <li>
+      <a href="#history"><span>History</span></a>
+    </li>
+    <li>
+      <a href="#shop"><span>Piccle Shop</span></a>
+    </li>
+    <li class="main-menu-active">
+      <a href="#settings"><span>Settings</span></a>
+    </li>
+  </ul>
+</div>
 
-<h3>Hints</h3>
-<ul class="word-hints"></ul>
+<!-- navbar end -->
+<div class="wrapper">
+  <div class="play-wrapper">
+    <div class="play-wrapper_progress_bar">
+      <ul class="play-wrapper__numbers">
+        <li><span class="number">1</span><span class="circle"></span></li>
+        <li><span class="number">2</span><span class="circle"></span></li>
+        <li><span class="number">3</span><span class="circle"></span></li>
+        <li><span class="number">4</span><span class="circle"></span></li>
+        <li><span class="number">5</span><span class="circle"></span></li>
+      </ul>
+      <span class="play-wrapper__progress_line"></span>
+    </div>
+    <div class="card play-wrapper_card">
+      <p class="play-wrapper__hint"></p>
+      <div class="play_wrapper__card_body">
+        <div class="play-wrapper__camera">
+          <video id="webcam" autoplay playsinline></video>
+          <!-- width="640"
+          height="480" -->
+          <img id="previewImage" src="" alt="" />
+          <canvas id="canvas" style="display: none"></canvas>
+        </div>
+      </div>
+      <div class="play-wrapper__controls">
+        <div class="play-wrapper__controls__btn-wrapper">
+          <button class="btn btn-icon round upload-btn">
+            <img src="./../images/icons/attachment-2.svg" />
+          </button>
+        </div>
+        <div class="play-wrapper__controls__btn-wrapper">
+          <button class="btn btn-icon round camera-btn" style="display: none">
+            <img src="./../images/icons/camera-3-fill.svg" />
+          </button>
+          <button class="btn btn-icon round capture-btn">
+            <img src="./../images/icons/camera-3-fill.svg" />
+          </button>
+        </div>
+        <div class="play-wrapper__controls__btn-wrapper">
+          <button class="btn btn-icon round delete-btn">
+            <img src="./../images/icons/delete-bin-2-fill.svg" />
+          </button>
+        </div>
+        <div class="play-wrapper__controls__btn-wrapper">
+          <button class="btn btn-primary submit-btn">Submit</button>
+        </div>
+      </div>
+      <input type="file" name="" id="uploader" style="visibility: hidden" />
+    </div>
+
+    <div class="card popup-window"></div>
+  </div>
+
+  <div class="results-wrapper hide"></div>
+</div>
+
+<style>
+  body {
+    overflow: hidden
+  }
+
+  .wrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: 200%;
+    transform: translateX(0);
+    transition: transform .5s ease-in-out;
+  }
+  
+  .wrapper.correct-answer {
+    transform: translateX(-50%);
+  }
+
+  .play-wrapper {
+    position: relative;
+    display: flex;
+    flex-flow: column wrap;
+  }
+
+  .play-wrapper__numbers {
+    display: flex;
+    column-gap: 5rem;
+    list-style: none;
+    margin: 1rem auto;
+    padding: 0;
+  }
+
+  .play-wrapper__numbers li {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+  }
+
+  .play-wrapper__numbers li .number {
+    font-weight: 600;
+  }
+
+  .play-wrapper__numbers li .circle {
+    font-size: 2rem;
+    width: 37px;
+    height: 37px;
+    background-color: rgb(255, 255, 255);
+    color: white;
+    text-align: center;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 2px solid #000000;
+    box-shadow: 0px 2px 0px #1d1d1d;
+  }
+
+  .play-wrapper__numbers .used-hint .circle {
+    background-color: red;
+  }
+
+  .play-wrapper__numbers .current-hint .circle {
+    background-color: #fed235;
+  }
+
+  .play-wrapper_progress_bar {
+    display: flex;
+    flex-flow: column nowrap;
+    position: relative;
+  }
+
+  .play-wrapper__progress_line {
+    border: 1px solid #000;
+    width: 67%;
+    align-self: center;
+    position: absolute;
+    bottom: 33px;
+    z-index: -1;
+  }
+
+  .play-wrapper_card {
+    margin: 1rem;
+    padding: 0;
+  }
+
+  .play-wrapper__controls {
+    text-align: center;
+    display: flex;
+    flex-flow: row wrap;
+    row-gap: 3rem;
+    justify-content: center;
+  }
+
+  .play-wrapper__controls__btn-wrapper {
+    flex: 0 0 31%;
+  }
+
+  .play-wrapper__hint {
+    /* font-size: 1.5rem; */
+    text-align: center;
+    background-color: #fed235;
+    border-radius: 20px 20px 0 0;
+    padding: 2rem;
+  }
+
+  .play_wrapper__card_body {
+    padding: 2rem;
+  }
+
+  .play-wrapper__camera {
+    position: relative;
+    width: 240px;
+    height: 280px;
+    margin: auto;
+    border: 2px solid #000000;
+  }
+
+  .play-wrapper__camera * {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .play-wrapper__camera video {
+    z-index: 1;
+    background-color: black;
+  }
+
+  .play-wrapper__camera img {
+    z-index: 0;
+  }
+
+  .play-wrapper__controls button {
+    font-size: 1rem;
+  }
+
+  .fade {
+    opacity: .2;
+  }
+
+  .popup-window {
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    text-align: center;
+    padding: 1.5rem 0;
+    /*background-color: white;
+    border: 5px solid #333; */
+  }
+
+  .popup-window.show {
+    display: block;
+    animation: shake .5s linear;
+  }
+
+  .popup-window h2 {
+    font-family: "Rubik";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 43px;
+    /* identical to box height */
+
+    text-align: center;
+    letter-spacing: -0.025em;
+
+    /* Off Black */
+    padding: 1rem 0;
+    color: #1d1d1f;
+  }
+
+  .popup-window p {
+    padding: 2rem 1rem;
+  }
+
+  .popup-window hr {
+    border: 1px solid #000000;
+    margin-bottom: 1rem;
+  }
+
+  .results-wrapper {
+    margin: auto;
+    padding: 2rem;
+    width: 100%;
+    max-width: 700px;
+    background-color: white;
+    border: 5px solid #333;
+    transform: translateX(0);
+    transition: transform .5s linear;
+  }
+
+  .results-wrapper img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  @media only screen and (min-width: 600px) {
+    .play-wrapper__progress_line {
+      width: 450px;
+    }
+    .play-wrapper_card {
+      /* max-width: 900px; */
+      margin: auto;
+    }
+
+    .play-wrapper__hint {
+      padding: 1rem;
+    }
+
+    .play_wrapper__card_body {
+      padding: 1rem 8rem;
+    }
+
+    .play-wrapper__camera {
+      width: 373px;
+      height: 280px;
+    }
+
+    .play-wrapper__controls {
+      row-gap: 1rem;
+    }
+  }
+
+  @keyframes shake {
+    0%, 40%, 80% {
+      transform: translate(-45%, -50%);
+    }
+    20%, 60%, 100% {
+      transform: translate(-50%, -50%);
+    }
+
+  }
+</style>
