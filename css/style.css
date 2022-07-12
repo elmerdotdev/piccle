@@ -273,8 +273,8 @@ main {
     max-width: 1100px;
   }
 
-  .signup-field {
-    margin: 0 3rem;
+  .desktop-right {
+    margin: 0 5rem;
   }
 }
 
@@ -325,13 +325,7 @@ main {
     margin-bottom: 0;
     box-shadow: unset;
     border-bottom: 0;
-    position: relative;
-  }
-
-  .signup-banner h2 {
-    position: absolute;
-    top: 50%;
-    left: 30%;
+    display: block; /* to align button (R) and label (C) on desktop view */
   }
 
   .signup-banner button {
@@ -546,7 +540,7 @@ li.main-menu-active a span {
   }
 
   .st-card {
-    flex: 0 0 32%;
+    flex: 0 0 31%;
     flex-flow: column-reverse nowrap;
     height: 210px;
     justify-content: center;
