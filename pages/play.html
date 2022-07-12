@@ -29,7 +29,7 @@
       <div class="menu-icon">
         <img src="./../images/icons/P.svg" alt="" />
       </div>
-      <a href="#piccleshop"><span>Piccle Shop</span></a>
+      <a href="#shop"><span>Piccle Shop</span></a>
     </li>
     <li class="main-menu-active">
       <div class="menu-icon">
@@ -128,7 +128,7 @@
 
 <style>
   body {
-    overflow: hidden
+    overflow: hidden;
   }
 
   .wrapper {
@@ -147,6 +147,7 @@
     position: relative;
     display: flex;
     flex-flow: column wrap;
+    align-self: flex-start;
   }
 
   .play-wrapper__numbers {
@@ -300,7 +301,7 @@
   }
 
   .popup-window p {
-    padding: 2rem 1rem;
+    padding: 2rem;
   }
 
   .popup-window hr {
@@ -308,20 +309,91 @@
     margin-bottom: 1rem;
   }
 
+  .btn a {
+    color: inherit;
+  }
+
   .results-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-self: flex-start;
+    row-gap: 1.6rem;
     margin: auto;
-    padding: 2rem;
     width: 100%;
-    max-width: 700px;
-    background-color: white;
-    border: 5px solid #333;
+    max-width: 800px;
+    border-radius: 25px;
     transform: translateX(0);
     transition: transform .5s linear;
+  }
+
+  .results-inner {
+    display: flex;
+    width: 100%;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 30px;
+    box-shadow: 0px 8px 0px #1d1d1d;
+  }
+
+  .results-success-title {
+    color: #FF90E8;
+    font-size: 2.4rem;
+    -webkit-text-stroke: .01rem black;
+  }
+
+  .results-success-title.bounceMe {
+    animation: bounce 1s ease-in-out;
+  }
+
+  .statistics {
+    padding: 4rem 2rem;
+    background-color: #FED235;
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 25px 50px 50px 20px;
+  }
+
+  .statistics h2 {
+    margin-bottom: 2rem;
+  }
+
+  .statistics th {
+    padding-right: 1.5rem;
+    text-align: right;
+  }
+
+  .results-details {
+    flex: 1;
+    padding: 2rem 4rem;
+  }
+
+  .results-details h2 {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
+  }
+
+  .results-details h2 span:first-child {
+    font-size: 1.4em;
+  }
+
+  .results-trivia {
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .results-img {
+    text-align: center;
   }
 
   .results-wrapper img {
     max-width: 100%;
     height: auto;
+    border: 2px solid black;
+  }
+
+  .home-btn {
+    text-align: center;
   }
 
   @media only screen and (min-width: 600px) {
@@ -358,6 +430,14 @@
     20%, 60%, 100% {
       transform: translate(-50%, -50%);
     }
+  }
 
+  @keyframes bounce {
+    0%, 20%, 40%, 60%, 80%, 100% {
+      transform: translateY(0);
+    }
+    10%, 30%, 50%, 70%, 90% {
+      transform: translateY(-12px);
+    }
   }
 </style>

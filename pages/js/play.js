@@ -201,12 +201,24 @@ function init() {
     });
 
     webcam.stop();
-    let domContent = `<h2>&ldquo;${theword}&rdquo; <span>is the correct answer!</span></h2>`;
-    domContent += `<div><img src="${image}" /></div>`;
-    domContent += `<a href="index.html#home">Home</a>`;
+    let domContent = `<h2 class="results-success-title">Congratulations!</h2>`
+    domContent += `<div class="results-inner">`
+    domContent += `<div class="statistics"><h2>Statistics</h2>`
+    domContent += `<table><tr><th>Points Earned</th><td><strong>${wordPoints} Piccles</strong></td></tr></table>`
+    domContent += `</div>`
+    domContent += `<div class="results-details">`
+    domContent += `<h2><span>&ldquo;${theword}&rdquo;</span> <span>is the correct answer!</span></h2>`;
+    domContent += `<div class="results-trivia"><strong>Did you know?</strong><p>${currentHint}</p></div>`
+    domContent += `<div class="results-img"><img src="${image}" /></div>`;
+    domContent += `</div>`
+    domContent += `</div>`
+    domContent += `<div class="home-btn"><button class="btn btn-primary"><a href="index.html#home">Home</a></button></div>`;
     document.querySelector(".results-wrapper").innerHTML = domContent;
 
     document.querySelector(".wrapper").classList.add('correct-answer');
+    setTimeout(() => {
+      document.querySelector('.results-success-title').classList.add('bounceMe')
+    }, 300)
   }
 
   // Camera functions ==========================
