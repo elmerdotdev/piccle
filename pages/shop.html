@@ -1,95 +1,176 @@
-<div class="shop-wrapper">
-
-    <div class="shop-wrapper__points">
-        <h3>Available Points</h3>
-        <p class="points-available">loading...</p>
-    </div>
-
-    <div class="shop-wrapper__items">
-        <h3>Store Items</h3>
-        <div class="items-available">loading...</div>
-    </div>
-
-    <div class="shop-wrapper__purchased">
-        <h3>Purchased Items</h3>
-        <div class="items-purchased"></div>
-    </div>
-
-    <div class="shop-wrapper__overlay">
-        <div class="shop-wrapper__popup">
-            <h2 class="popup-title">Purchase Verification</h2>
-            <div class="popup-content"></div>
-            <div class="popup-buttons">
-                <button class="popup-cancel">Cancel</button>
-                <button class="popup-purchase show">Purchase</button>
-            </div>
+<header class="nav-bar">
+  <div class="left-menu">
+    <h1 class="shop-header">Shop</h1>
+  </div>
+  <ul class="main-menu">
+    <li>
+      <a href="#home">
+        <div class="menu-icon">
+          <img src="./../images/icons/home-2-fill.svg" alt="" />
         </div>
-    </div>
+        <span>Home</span>
+      </a>
+    </li>
+    <li>
+      <a href="#playnow">
+        <div class="menu-icon">
+          <img src="./../images/icons/camera-3-fill.svg" alt="" />
+        </div>
+        <span>Play Now</span></a
+      >
+    </li>
+    <li>
+      <a href="#history">
+        <div class="menu-icon">
+          <img src="./../images/icons/fire-fill.svg" alt="" />
+        </div>
+        <span>History</span></a
+      >
+    </li>
+    <li>
+      <a href="#piccleshop">
+        <div class="menu-icon">
+          <img src="./../images/icons/P.svg" alt="" />
+        </div>
+        <span>Piccle Shop</span></a
+      >
+    </li>
+    <li class="main-menu-active">
+      <a href="#settings">
+        <div class="menu-icon">
+          <img src="./../images/icons/settings-white.svg" alt="" />
+        </div>
+        <span>Settings</span></a
+      >
+    </li>
+  </ul>
+  <button type="button" class="btn btn-icon" id="menuBtn">
+    <img src="./../images/icons/menu-3-line.svg" />
+  </button>
+</header>
 
+<div class="st-sidenav" id="st-sidenavId">
+  <ul class="st-main-menu">
+    <li class="sd-menu-header">
+      <a style="color: transparent">.</a>
+      <a href="#home"><span>Menu</span></a>
+      <button type="button" class="btn btn-icon" id="clsBtn">
+        <img src="./../images/icons/cancel.svg" />
+      </button>
+    </li>
+    <li>
+      <a href="#home"><span>Home</span></a>
+    </li>
+    <li>
+      <a href="#playnow"><span>Play Now</span></a>
+    </li>
+    <li>
+      <a href="#history"><span>History</span></a>
+    </li>
+    <li>
+      <a href="#piccleshop"><span>Piccle Shop</span></a>
+    </li>
+    <li class="main-menu-active">
+      <a href="#settings"><span>Settings</span></a>
+    </li>
+  </ul>
+</div>
+
+<div class="shop-wrapper">
+  <div class="shop-wrapper__points">
+    <h3>Available Points</h3>
+    <div class="points-wrapper">
+      <button type="button" class="btn btn-icon round">
+        <img src="./../images/icons/P.svg" />
+      </button>
+      <span class="points-available">loading...</span>
+    </div>
+  </div>
+
+  <div class="shop-wrapper__items card">
+    <h3>Available Coupons</h3>
+    <div class="items-available">loading...</div>
+  </div>
+
+  <div class="shop-wrapper__purchased card">
+    <h3>Purchased Items</h3>
+    <div class="items-purchased"></div>
+  </div>
+
+  <div class="shop-wrapper__overlay">
+    <div class="shop-wrapper__popup">
+      <h2 class="popup-title">Purchase Verification</h2>
+      <div class="popup-content"></div>
+      <div class="popup-buttons">
+        <button class="popup-cancel">Cancel</button>
+        <button class="popup-purchase show">Purchase</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <style>
-    body {
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-    }
+  body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
 
-    #mainArea {
-        flex: 1;
-    }
+  #mainArea {
+    flex: 1;
+  }
 
-    .shop-wrapper {
-        padding: 2rem;
-    }
+  .shop-wrapper {
+    padding: 2rem;
+  }
 
-    .items-available,
-    .items-purchased {
-        display: flex;
-        gap: 1rem;
-    }
+  .items-available,
+  .items-purchased {
+    display: flex;
+    gap: 1rem;
+  }
 
-    .shop_item {
-        width: 300px;
-        padding: 1rem;
-        background-color: white;
-        text-align: center;
-        border: 1px solid black;
-        cursor: pointer;
-    }
+  .shop_item {
+    width: 300px;
+    padding: 1rem;
+    background-color: white;
+    text-align: center;
+    border: 1px solid black;
+    cursor: pointer;
+  }
 
-    .items-purchased .shop_item {
-        cursor: auto;
-    }
+  .items-purchased .shop_item {
+    cursor: auto;
+  }
 
-    .shop-wrapper__overlay {
-        display: none;
-        place-items: center;
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: 9999;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0,0,0,.8);
-    }
+  .shop-wrapper__overlay {
+    display: none;
+    place-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+  }
 
-    .shop-wrapper__overlay.show {
-        display: grid;
-    }
+  .shop-wrapper__overlay.show {
+    display: grid;
+  }
 
-    .popup-title,
-    .popup-content,
-    .popup-buttons {
-        padding: 1rem;
-        background-color: white;
-    }
+  .popup-title,
+  .popup-content,
+  .popup-buttons {
+    padding: 1rem;
+    background-color: white;
+  }
 
-    .popup-purchase {
-        display: none;
-    }
+  .popup-purchase {
+    display: none;
+  }
 
-    .popup-purchase.show {
-        display: inline-block;
-    }
+  .popup-purchase.show {
+    display: inline-block;
+  }
 </style>

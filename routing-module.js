@@ -50,5 +50,10 @@ Router.init("mainArea", [
     "pages/js/settings.js",
     "pages/css/settings.css"
   ),
-  new Page("#shop", "pages/shop.html", "pages/js/shop.js"),
+  new Page(
+    "#shop",
+    "pages/shop.html",
+    "pages/js/shop.js",
+    "pages/css/shop.css"
+  ),
 ]);
