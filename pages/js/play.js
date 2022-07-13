@@ -401,4 +401,8 @@ function init() {
   })
 }
 
+document.getElementById("pageName").innerHTML = "play";
+document.getElementById("pageName").style.color = "#FF90E8";
+document.querySelector('[href="#play"]').innerHTML = '<div style="background: #FF90E8;" class="menu-icon"><img src="./../images/icons/camera-3-fill-w.svg" alt=""></div><span>Play</span>';
+
 init();
