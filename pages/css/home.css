@@ -40,6 +40,7 @@ ul li {
 .home-labels,
 .game-hint {
   grid-column: 3/-1;
+  color: #fff;
 }
 
 .home-main-section ul {
@@ -59,6 +60,8 @@ a .btn,
 
 .go-play {
   grid-column: 1/-1;
+  padding: 0;
+  background-color: #ff90e8;
   /* background: linear-gradient(to top, #fff 32%, #FF90E8 32% 68%); */
 }
 
@@ -67,6 +70,12 @@ a .btn,
   min-width: 335px;
   min-height: 197px;
   align-content: center;
+  position: relative;
+}
+
+.icon-chance {
+  position: absolute;
+  top: 15%;
 }
 
 .go-play img {
@@ -79,11 +88,24 @@ a .btn,
 }
 
 .go-play .home-labels {
+  background-color: #fff;
   color: #ff90e8;
+  position: absolute;
+  width: 100%;
+  padding: 1rem;
+  border-radius: 0 0 22px 22px;
+  bottom: -24px;
+}
+
+.icon-chance {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
 }
 
 .go-play .game-chance {
   color: #fff;
+  margin-left: 2rem;
 }
 
 .settings .btn {
@@ -121,9 +143,21 @@ span {
   box-shadow: 0px 8px 0px #1d1d1d;
 }
 
+.leaderboard-border .player-rank,
+.history-border .player-history,
+.shop-border .earned-points,
+.go-play .game-chance {
+  font-weight: 400;
+  font-size: 66px;
+  line-height: 99px;
+  letter-spacing: -0.025em;
+  color: #1d1d1f;
+}
+
 .history-border {
   border-color: #b470ed;
   box-shadow: 0px 8px 0px #b470ed;
+  transition: all 0.5s;
 }
 
 .history-border:hover {
@@ -136,6 +170,7 @@ span {
 .shop-border {
   border-color: #4ec887;
   box-shadow: 0px 8px 0px #4ec887;
+  transition: all 0.5s;
 }
 
 .shop-border:hover {
@@ -148,6 +183,7 @@ span {
 .settings-border {
   border-color: #5c91f6;
   box-shadow: 0px 8px 0px #5c91f6;
+  transition: all 0.5s;
 }
 
 .settings-border:hover {
