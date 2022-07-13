@@ -11,12 +11,71 @@ import {
   getDoc,
 } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-firestore.js";
 
-let menu = document.getElementById("menuBtn");
-let closeBtn = document.getElementById("clsBtn");
+// In-game status
+let inGame = false;
 
-menu.addEventListener("click", function () {
-  document.getElementById("st-sidenavId").style.width = "100%";
-});
+// Connect to Firebase
+const db = getFirestore();
+
+// Get list of progress
+const getProgress = async () => {
+  const progressRef = collection(db, "progress");
+  const progressQuery = query(
+    progressRef,
+    where("user_email", "==", userEmail),
+    orderBy("date_started", "desc")
+  );
+
+  const snapshot = await getDocs(progressQuery);
+  try {
+    snapshot.forEach((doc) => {
+      if (
+        !datesAreOnSameDay(
+          new Date(doc.data().date_started.seconds * 1000),
+          new Date()
+        )
+      ) {
+        const fullDate = timestampToDate(doc.data().date_started);
+        renderDOM(
+          fullDate,
+          doc.data().resolved,
+          doc.data().tries,
+          doc.id,
+          doc.data().word,
+          snapshot.docs.length
+        );
+      } else {
+        if (doc.data().resolved) {
+          const fullDate = timestampToDate(doc.data().date_started);
+          renderDOM(
+            fullDate,
+            doc.data().resolved,
+            doc.data().tries,
+            doc.id,
+            doc.data().word,
+            snapshot.docs.length
+          );
+        } else {
+          if (doc.data().tries >= 5) {
+            const fullDate = timestampToDate(doc.data().date_started);
+            renderDOM(
+              fullDate,
+              doc.data().resolved,
+              doc.data().tries,
+              doc.id,
+              doc.data().word,
+              snapshot.docs.length
+            );
+          } else {
+            inGame = true;
+          }
+        }
+      }
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 closeBtn.addEventListener("click", function () {
   document.getElementById("st-sidenavId").style.width = "0%";
@@ -82,39 +141,39 @@ function init() {
     } catch (error) {
       console.log(error);
     }
-  };
 
-  // Convert timestamp to date
-  const timestampToDate = (timestamp) => {
-    const MONTHS = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
-    let date = timestamp.toDate();
-    date = `${date.getDate()} ${MONTHS[date.getMonth()]} ${date.getFullYear()}`;
-    return date;
-  };
+    // Render progress history into DOM
+    const renderDOM = (date, resolved, tries, id, word, totalGames) => {
+      let message = "";
+      let boxElement = "";
+      let elementClass = "";
 
-  const datesAreOnSameDay = (first, second) => {
-    if (
-      first.getFullYear() === second.getFullYear() &&
-      first.getMonth() === second.getMonth() &&
-      first.getDate() === second.getDate()
-    ) {
-      return true;
-    } else {
-      return false;
-    }
+      if (resolved) {
+        message = messages.win;
+        elementClass = "status-win";
+      } else {
+        message = messages.lose;
+        elementClass = "status-lose";
+      }
+
+      if (inGame) {
+        totalGames = totalGames - 1;
+      }
+
+      boxElement += `<div class="box box-${id} ${elementClass}">`;
+      boxElement += `<h3>${date}</h3>`;
+      boxElement += `<p>${message}</p>`;
+      boxElement += `<div>Hints used: ${tries}</div>`;
+      boxElement += `</div>`;
+
+      document.querySelector(".total-games-counter").innerHTML = totalGames;
+      document.querySelector(".history-wrapper__body").innerHTML += boxElement;
+      setTimeout(() => {
+        document.querySelector(".box-" + id).addEventListener("click", () => {
+          showPopup(date, message, resolved, tries, word);
+        });
+      }, 100);
+    };
   };
 
   // Render progress history into DOM
