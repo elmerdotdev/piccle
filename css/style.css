@@ -75,7 +75,10 @@ img {
   width: 1px;
 }
 
-header,
+header {
+  padding: 0.5rem 1rem;
+}
+
 .signup-banner {
   padding: 0.5rem 1rem;
   background-color: #fff;
