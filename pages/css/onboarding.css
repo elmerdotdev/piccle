@@ -1,0 +1,127 @@
+header {
+    visibility: hidden;
+}
+
+.header-border button {
+    margin-left: 0;
+}
+
+.onboarding-banner-1 {
+    background-color: #FF90E8;
+}
+
+.onboarding-banner-2 {
+    background-color: #B470ED;
+}
+
+.onboarding-banner-3 {
+    background-color: #5C91F6;
+}
+
+.onboarding-banner-4 {
+    background-color: #4EC887;
+}
+
+.desktop-left {
+    display: grid;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.desktop-left h2 {
+    font-size: 1.8rem;
+}
+
+.image-wrapper   {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.card {
+    padding: 0;
+    background: unset;
+    border: unset;
+    box-shadow: unset;
+    border-radius: unset;
+}
+
+.desktop-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    gap: 4rem;
+    padding: 0 5%;
+    background-color: white;
+    margin: 3rem 0;
+}
+
+
+.share-icn {
+    transform: rotate(-20deg);
+}
+
+p {
+    font-size: 2rem;
+}
+
+.skip-next {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    /* margin: 5rem 0; */
+    gap: 4rem;
+}
+
+.skip-next a {
+    font-size: 1.6rem;
+    font-weight: bold;
+    text-decoration: underline;
+    color: #000;
+}
+
+
+
+@media screen and (min-width: 1100px) {
+    .card {
+        min-height: 595px;
+        background: #fafafc;
+        border: 2px solid #1d1d1f;
+        box-shadow: 0px 8px 0px #1d1d1d;
+        border-radius: 24px;
+    }
+
+
+    .header-border {
+        border-bottom: unset;
+        border-radius: 40px 100px;
+        box-shadow: unset;
+        padding: unset;
+    }
+
+    .onboarding-wrapper {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        /* border: 1px solid black; */
+        border-radius: 20px;
+        box-shadow: 5px 5px;
+        padding: 0;
+        background: linear-gradient(to right, #FF90E8 20%, transparent 20% 80%);
+    }
+    
+    .desktop-left {
+        margin-bottom: 0;
+        height: unset;
+        gap: 0;
+    }
+
+    .desktop-left button {
+        margin: 1rem
+    }
+
+    .desktop-left .image-wrapper {
+        order: 3;
+        padding-bottom: 2rem;
+    }
+}
