@@ -9,6 +9,10 @@
   margin-bottom: 5rem;
 }
 
+.main-menu {
+  display: none;
+}
+
 .header-border {
   background-color: #fed235;
 }
