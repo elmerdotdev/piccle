@@ -502,6 +502,7 @@ li.main-menu-active a span {
 
 .hs-header {
   text-shadow: 0px 4px 0px #1d1d1d;
+  text-transform: capitalize;
 }
 /* .left-menu h1 {
   margin-left: 60%;
