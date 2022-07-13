@@ -13,9 +13,9 @@ window.onload = function () {
         if (
           window.location.href == "http://127.0.0.1:5500/" ||
           window.location.href == "http://127.0.0.1:5500/#home" ||
-          window.location.href == "https://dev.piccle.fun/" ||
+          window.location.href == "https://dev.piccle.fun" ||
           window.location.href == "https://dev.piccle.fun/#home" ||
-          window.location.href == "https://demo.piccle.fun/" ||
+          window.location.href == "https://demo.piccle.fun" ||
           window.location.href == "https://demo.piccle.fun/#home" ||
           pageName == "home" ||
           pageName == "signup" ||
