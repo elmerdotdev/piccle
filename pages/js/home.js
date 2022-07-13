@@ -112,6 +112,10 @@ function init () {
         console.log(err.message)
     })
     
+    document.querySelectorAll('.hide').forEach(card => {
+        card.classList.remove('hide')
+    })
+
 }
     
 function ordinalSuffixOf(i) {

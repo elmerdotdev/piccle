@@ -57,6 +57,7 @@ body {
   font-family: "Rubik", Helvetica, sans-serif;
   margin: 0;
   background-image: url(./../images/pattern.png);
+  animation: movingBackground 90s infinite linear;
 }
 
 img {
@@ -509,6 +510,26 @@ li.main-menu-active a span {
 } */
 /* end of settings page */
 
+.go-play.hide {
+  transform: translateX(-100vw);
+}
+
+.leaderboard-border.hide {
+  transform: translateY(-100vw);
+}
+
+.history-border.hide {
+  transform: translateX(100vw);
+}
+
+.shop-border.hide {
+  transform: translateY(100vw);
+}
+
+.settings-border.hide {
+  transform: translateX(100vw);
+}
+
 @media only screen and (min-width: 600px) {
   .st-main {
     border: 0;
@@ -575,5 +596,16 @@ li.main-menu-active a span {
 
   .st-card img {
     width: 4rem;
+  }
+}
+
+/* KEYFRAMES ================================ */
+
+@keyframes movingBackground {
+  from {
+    background-position: 0 0
+  }
+  to {
+    background-position: 100vw 100vh
   }
 }
