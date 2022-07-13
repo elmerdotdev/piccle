@@ -54,9 +54,10 @@
 /* new css for login screen */
 body {
   line-height: 1.5;
-  font-family: "Poppins", Helvetica, sans-serif;
+  font-family: "Rubik", Helvetica, sans-serif;
   margin: 0;
   background-image: url(./../images/pattern.png);
+  animation: movingBackground 90s infinite linear;
 }
 
 img {
@@ -469,20 +470,6 @@ li.main-menu-active a span {
   padding-top: 5rem;
 }
 
-.st-card {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
-  background: #ffffff;
-  border: 1px solid #616161;
-  box-shadow: 4px 4px 0px #474747;
-  border-radius: 10px;
-  margin: 1rem 0;
-  padding: 0.5rem 1rem;
-  justify-content: space-between;
-}
-
 .st-card span {
   font-size: 1.5rem;
   font-weight: 600;
@@ -514,10 +501,34 @@ li.main-menu-active a span {
   display: none;
 }
 
-.left-menu h1 {
-  margin-left: 60%;
+.hs-header {
+  text-shadow: 0px 4px 0px #1d1d1d;
+  text-transform: capitalize;
 }
+/* .left-menu h1 {
+  margin-left: 60%;
+} */
 /* end of settings page */
+
+.go-play.hide {
+  transform: translateX(-100vw);
+}
+
+.leaderboard-border.hide {
+  transform: translateY(-100vw);
+}
+
+.history-border.hide {
+  transform: translateX(100vw);
+}
+
+.shop-border.hide {
+  transform: translateY(100vw);
+}
+
+.settings-border.hide {
+  transform: translateX(100vw);
+}
 
 @media only screen and (min-width: 600px) {
   .st-main {
@@ -544,6 +555,7 @@ li.main-menu-active a span {
     flex-flow: column-reverse nowrap;
     height: 210px;
     justify-content: center;
+    padding: 0;
   }
 
   footer.visually-hidden {
@@ -571,7 +583,7 @@ li.main-menu-active a span {
     justify-content: space-around;
   }
 
-  .main-menu li {
+  .main-menu li a {
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;
@@ -584,5 +596,16 @@ li.main-menu-active a span {
 
   .st-card img {
     width: 4rem;
+  }
+}
+
+/* KEYFRAMES ================================ */
+
+@keyframes movingBackground {
+  from {
+    background-position: 0 0
+  }
+  to {
+    background-position: 100vw 100vh
   }
 }
