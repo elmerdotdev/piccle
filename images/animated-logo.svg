@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?><svg id="Layer_2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 836.65 354.17"><defs><style>.cls-1,.cls-2,.cls-3,.cls-4{stroke:#231f20;stroke-miterlimit:10;}.cls-1,.cls-3{fill:none;}.cls-1,.cls-4{stroke-width:6px;}.cls-5,.cls-2{fill:#ff90e8;}.cls-6,.cls-4{fill:#231f20;}.cls-2,.cls-3{stroke-width:4px;}
 
 #Layer_1-2 > g > g > g {
-    animation: bounce .25s forwards linear;
+    animation: bounce 3s infinite linear;
 }
 
 /* P */
@@ -34,11 +34,11 @@
 }
 
 @keyframes bounce {
-    0%, 100% {
+    0%, 10%, 11% {
         transform: translateY(0);
     }
-    50% {
-        transform: translateY(-8px);
+    5% {
+        transform: translateY(-10px);
     }
 }
 
