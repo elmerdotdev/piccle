@@ -21,6 +21,7 @@
   line-height: 99px;
   letter-spacing: -0.025em;
   color: #1d1d1f;
+  margin-left: 1rem;
 }
 
 .position-wrapper-body,
@@ -35,7 +36,7 @@
 }
 
 .share-wrapper-body button {
-  margin-right: 0.5rem;
+  margin: 0 1rem;
 }
 
 .lt__header__wrapper_head {
