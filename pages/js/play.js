@@ -170,13 +170,37 @@ function init() {
   }
 
   function challengeCompleteWaitTomorrow() {
-    alert(`you have completed today's challenge. come back tomorrow`);
-    location.hash = "#home";
+    let domContent = "<h2>Today's challenge completed!</h2>";
+    domContent += `<div style="font-size: 4rem;">✔️</div>`;
+    domContent += `<p>Hold your horses! Next challenge isn't until tomorrow.</p>`;
+    domContent += `<hr><button class="btn btn-primary"><a href="#home" class="home-btn">Home</a></button>`;
+    document.querySelector(".popup-window").innerHTML = domContent;
+
+    document.querySelector('.play-wrapper_progress_bar').classList.add("fade");
+    document.querySelector('.play-wrapper_card').classList.add("fade");
+    document.querySelector(".popup-window").classList.add("show");
+
+    setTimeout(() => {
+      webcam.stop()
+    }, 1000)
   }
 
   function noMoreTries() {
-    alert(`you ran out of chances`);
-    location.hash = "#home";
+    let domContent = "<h2>Out of chances!</h2>";
+    domContent += `<svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M90 9.06428L80.9357 0L45 35.9357L9.06428 0L0 9.06428L35.9357 45L0 80.9357L9.06428 90L45 54.0643L80.9357 90L90 80.9357L54.0643 45L90 9.06428Z" fill="#E76057"/>
+    </svg>`;
+    domContent += `<p>Sorry you have no more tries remaining.<br />Wait for tomorrow's challenge.</p>`;
+    domContent += `<hr><button class="btn btn-primary"><a href="#home" class="home-btn">Home</a></button>`;
+    document.querySelector(".popup-window").innerHTML = domContent;
+
+    document.querySelector('.play-wrapper_progress_bar').classList.add("fade");
+    document.querySelector('.play-wrapper_card').classList.add("fade");
+    document.querySelector(".popup-window").classList.add("show");
+
+    setTimeout(() => {
+      webcam.stop()
+    }, 1000)
   }
 
   async function updateTries() {
@@ -201,12 +225,46 @@ function init() {
     });
 
     webcam.stop();
-    let domContent = `<h2>&ldquo;${theword}&rdquo; <span>is the correct answer!</span></h2>`;
-    domContent += `<div><img src="${image}" /></div>`;
-    domContent += `<a href="index.html#home">Home</a>`;
+    let domContent = `<h2 class="results-success-title">Congratulations!</h2>`
+    domContent += `<div class="results-inner">`
+    domContent += `<div class="statistics"><h2>Statistics</h2>`
+    domContent += `<table><tr><th>Points Earned</th><td><strong>${wordPoints} Piccles</strong></td></tr></table>`
+    domContent += `</div>`
+    domContent += `<div class="results-details">`
+    domContent += `<h2><span>&ldquo;${theword}&rdquo;</span> <span>is the correct answer!</span></h2>`;
+    domContent += `<div class="results-trivia"><strong>Did you know?</strong><p>${currentHint}</p></div>`
+    domContent += `<div class="results-img"><img src="${image}" /></div>`;
+    domContent += `</div>`
+    domContent += `</div>`
+    domContent += `<div class="home-btn"><button class="btn btn-primary"><a href="index.html#home">Home</a></button></div>`;
     document.querySelector(".results-wrapper").innerHTML = domContent;
 
     document.querySelector(".wrapper").classList.add('correct-answer');
+    setTimeout(() => {
+      document.querySelector('.results-success-title').classList.add('bounceMe')
+    }, 300)
+  }
+
+  function answerIncorrect() {
+    let domContent = "<h2>Try Again!</h2>";
+    domContent += `<svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M90 9.06428L80.9357 0L45 35.9357L9.06428 0L0 9.06428L35.9357 45L0 80.9357L9.06428 90L45 54.0643L80.9357 90L90 80.9357L54.0643 45L90 9.06428Z" fill="#E76057"/>
+    </svg>`;
+    domContent += `<p>Sorry that is incorrect. You have ${
+      5 - usedTries
+    } tries remaining.</p>`;
+    domContent += `<hr><button class="btn btn-primary"><a href="#play" class="next-clue-btn">Next Clue</a></button>`;
+    document.querySelector(".popup-window").innerHTML = domContent;
+
+    setTimeout(() => {
+      document.querySelector('.next-clue-btn').addEventListener('click', () => {
+        location.reload()
+      })
+    }, 100)
+
+    document.querySelector('.play-wrapper_progress_bar').classList.add("fade");
+    document.querySelector('.play-wrapper_card').classList.add("fade");
+    document.querySelector(".popup-window").classList.add("show");
   }
 
   // Camera functions ==========================
@@ -239,25 +297,7 @@ function init() {
     if (results.includes(currentWord.toLowerCase())) {
       answerCorrect(currentWord, nonStrippedImage);
     } else {
-      let domContent = "<h2>Try Again!</h2>";
-      domContent += `<svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M90 9.06428L80.9357 0L45 35.9357L9.06428 0L0 9.06428L35.9357 45L0 80.9357L9.06428 90L45 54.0643L80.9357 90L90 80.9357L54.0643 45L90 9.06428Z" fill="#E76057"/>
-      </svg>`;
-      domContent += `<p>Sorry that is incorrect. You have ${
-        5 - usedTries
-      } tries remaining.</p>`;
-      domContent += `<hr><button class="btn btn-primary"><a href="#play" class="next-clue-btn">Next Clue</a></button>`;
-      document.querySelector(".popup-window").innerHTML = domContent;
-
-      setTimeout(() => {
-        document.querySelector('.next-clue-btn').addEventListener('click', () => {
-          location.reload()
-        })
-      }, 100)
-
-      document.querySelector('.play-wrapper_progress_bar').classList.add("fade");
-      document.querySelector('.play-wrapper_card').classList.add("fade");
-      document.querySelector(".popup-window").classList.add("show");
+      answerIncorrect();
     }
     updateTries();
   }
@@ -332,7 +372,23 @@ function init() {
 
       waitForVisionResponse(base64Image, strippedBase64Image);
     } else {
-      alert("need photo");
+      let domContent = "<h2>Need photo</h2>";
+      domContent += `<svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M90 9.06428L80.9357 0L45 35.9357L9.06428 0L0 9.06428L35.9357 45L0 80.9357L9.06428 90L45 54.0643L80.9357 90L90 80.9357L54.0643 45L90 9.06428Z" fill="#E76057"/></svg>`;
+      domContent += `<p>Take a picture of something first before submitting!</p>`;
+      domContent += `<hr><button class="btn btn-primary"><a href="#play" class="close-btn">Close</a></button>`;
+      document.querySelector(".popup-window").innerHTML = domContent;
+  
+      document.querySelector('.play-wrapper_progress_bar').classList.add("fade");
+      document.querySelector('.play-wrapper_card').classList.add("fade");
+      document.querySelector(".popup-window").classList.add("show");
+
+      setTimeout(() => {
+        document.querySelector('.close-btn').addEventListener('click', () => {
+          document.querySelector('.play-wrapper_progress_bar').classList.remove("fade");
+          document.querySelector('.play-wrapper_card').classList.remove("fade");
+          document.querySelector(".popup-window").classList.remove("show");
+        })
+      }, 100)
     }
   });
 
