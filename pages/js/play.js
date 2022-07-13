@@ -170,9 +170,9 @@ function init() {
   }
 
   function challengeCompleteWaitTomorrow() {
-    let domContent = "<h2>Today's challenge completed!</h2>";
+    let domContent = "<h2>Challenge completed!</h2>";
     domContent += `<div style="font-size: 4rem;">✔️</div>`;
-    domContent += `<p>Hold your horses! Next challenge isn't until tomorrow.</p>`;
+    domContent += `<p>Hold your horses! Next challenge isn't until tomorrow :)</p>`;
     domContent += `<hr><button class="btn btn-primary"><a href="#home" class="home-btn">Home</a></button>`;
     document.querySelector(".popup-window").innerHTML = domContent;
 
