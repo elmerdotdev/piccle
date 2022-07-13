@@ -1,75 +1,3 @@
-<!-- navbar start -->
-<header class="nav-bar">
-  <div class="left-menu">
-    <button type="button" class="btn btn-icon">
-      <img src="./../images/icons/arrow_back_ios.svg" />
-    </button>
-    <h1 class="setting-header">Play</h1>
-  </div>
-  <ul class="main-menu">
-    <li>
-      <div class="menu-icon">
-        <img src="./../images/icons/home-2-fill.svg" alt="" />
-      </div>
-      <a href="#home"><span>Home</span></a>
-    </li>
-    <li>
-      <div class="menu-icon">
-        <img src="./../images/icons/camera-3-fill.svg" alt="" />
-      </div>
-      <a href="#play"><span>Play Now</span></a>
-    </li>
-    <li>
-      <div class="menu-icon">
-        <img src="./../images/icons/fire-fill.svg" alt="" />
-      </div>
-      <a href="#history"><span>History</span></a>
-    </li>
-    <li>
-      <div class="menu-icon">
-        <img src="./../images/icons/P.svg" alt="" />
-      </div>
-      <a href="#shop"><span>Piccle Shop</span></a>
-    </li>
-    <li class="main-menu-active">
-      <div class="menu-icon">
-        <img src="./../images/icons/settings-white.svg" alt="" />
-      </div>
-      <a href="#settings"><span>Settings</span></a>
-    </li>
-  </ul>
-  <button type="button" class="btn btn-icon" id="menuBtn">
-    <img src="./../images/icons/menu-3-line.svg" />
-  </button>
-</header>
-
-<div class="st-sidenav" id="st-sidenavId">
-  <ul class="st-main-menu">
-    <li class="sd-menu-header">
-      <a style="color: transparent">.</a>
-      <a href="#home"><span>Menu</span></a>
-      <button type="button" class="btn btn-icon" id="clsBtn">
-        <img src="./../images/icons/cancel.svg" />
-      </button>
-    </li>
-    <li>
-      <a href="#home"><span>Home</span></a>
-    </li>
-    <li>
-      <a href="#play"><span>Play Now</span></a>
-    </li>
-    <li>
-      <a href="#history"><span>History</span></a>
-    </li>
-    <li>
-      <a href="#shop"><span>Piccle Shop</span></a>
-    </li>
-    <li class="main-menu-active">
-      <a href="#settings"><span>Settings</span></a>
-    </li>
-  </ul>
-</div>
-
 <!-- navbar end -->
 <div class="wrapper">
   <div class="play-wrapper">
@@ -134,10 +62,10 @@
 
   @keyframes movingBackground {
     from {
-      background-position: 0 0
+      background-position: 0 0;
     }
     to {
-      background-position: 100vw 100vh
+      background-position: 100vw 100vh;
     }
   }
 
@@ -146,9 +74,9 @@
     grid-template-columns: repeat(2, 1fr);
     width: 200%;
     transform: translateX(0);
-    transition: transform .5s ease-in-out;
+    transition: transform 0.5s ease-in-out;
   }
-  
+
   .wrapper.correct-answer {
     transform: translateX(-50%);
   }
@@ -275,7 +203,7 @@
   }
 
   .fade {
-    opacity: .2;
+    opacity: 0.2;
   }
 
   .popup-window {
@@ -288,12 +216,12 @@
     text-align: center;
     padding: 1.5rem 0;
     /*background-color: white;
-    border: 5px solid #333; */
+      border: 5px solid #333; */
   }
 
   .popup-window.show {
     display: block;
-    animation: shake .5s linear;
+    animation: shake 0.5s linear;
   }
 
   .popup-window h2 {
@@ -336,7 +264,7 @@
     max-width: 800px;
     border-radius: 25px;
     transform: translateX(0);
-    transition: transform .5s linear;
+    transition: transform 0.5s linear;
   }
 
   .results-inner {
@@ -349,9 +277,9 @@
   }
 
   .results-success-title {
-    color: #FF90E8;
+    color: #ff90e8;
     font-size: 2.4rem;
-    -webkit-text-stroke: .01rem black;
+    -webkit-text-stroke: 0.01rem black;
   }
 
   .results-success-title.bounceMe {
@@ -360,7 +288,7 @@
 
   .statistics {
     padding: 4rem 2rem;
-    background-color: #FED235;
+    background-color: #fed235;
     text-align: center;
     border: 1px solid black;
     border-radius: 25px 50px 50px 20px;
@@ -437,28 +365,41 @@
   }
 
   @keyframes shake {
-    0%, 40%, 80% {
+    0%,
+    40%,
+    80% {
       transform: translate(-45%, -50%);
     }
-    20%, 60%, 100% {
+    20%,
+    60%,
+    100% {
       transform: translate(-50%, -50%);
     }
   }
 
   @keyframes bounce {
-    0%, 100% {
+    0%,
+    100% {
       transform: rotate(0);
     }
-    10%, 30%, 50%, 70%, 90% {
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
       transform: rotate(3deg);
     }
-    20%, 40%, 60%, 80% {
+    20%,
+    40%,
+    60%,
+    80% {
       transform: rotate(-3deg);
     }
   }
 
   @keyframes glow {
-    0%, 100% {
+    0%,
+    100% {
       background-color: #fed235;
     }
     50% {
