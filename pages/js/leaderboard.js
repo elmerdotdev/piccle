@@ -1,12 +1,16 @@
-import { getAuth, 
-} from 'https://www.gstatic.com/firebasejs/9.8.3/firebase-auth.js'
+import { getAuth } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-auth.js";
 
 import {
-    getFirestore, collection, 
-    query, orderBy, limit,    
-    doc, getDocs, setDoc,
-    getDoc,
-} from 'https://www.gstatic.com/firebasejs/9.8.3/firebase-firestore.js'
+  getFirestore,
+  collection,
+  query,
+  orderBy,
+  limit,
+  doc,
+  getDocs,
+  setDoc,
+  getDoc,
+} from "https://www.gstatic.com/firebasejs/9.8.3/firebase-firestore.js";
 
 // initialize firebase services
 const auth = getAuth();
@@ -22,115 +26,110 @@ const user = localStorage.piccleUID;
 // }
 
 // Check if UID stored in browser exists in "users" collection
-async function checkUIDinBrowser () {
-    const uIDInBrowser = localStorage.getItem('piccleUID');
-    if ( uIDInBrowser != null ) {
-        const docRef = doc(db, "users", uIDInBrowser);
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-            return true;
-        } else {
-            return false;
-        }
+async function checkUIDinBrowser() {
+  const uIDInBrowser = localStorage.getItem("piccleUID");
+  if (uIDInBrowser != null) {
+    const docRef = doc(db, "users", uIDInBrowser);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return true;
     } else {
-        return false;
-    };
-};
-
-checkUIDinBrowser()
-    .then((resp) => {
-        if (!resp) {
-            alert("Please sign-in. Redirecting...");
-            window.location.hash = "signin";
-        }
-    })
-    .catch((err) => {console.log(err.message)})
-
-console.log('hello from leaderboard.js');
-
-// reference to collections
-const colRefUsers = collection(db, "users")
-const q = query(colRefUsers, orderBy("score", "desc"));
-
-
-class UserRank {
- 
-    constructor (rank, name, score, curUser) {
-        this.rank = rank + ".";
-        this.name = name;
-        this.score = score;
-        this.curUser = curUser;
+      return false;
     }
- 
-    static createRow (rowItems) {
-        const rowItemsSliced = rowItems.slice(0,3);
-        const row = document.createElement('tr');
-        if (rowItems[3] === true) {
-            row.classList.add('highlighted');
-        }
-        rowItemsSliced.forEach((rowItem) => {
-            const cell = row.insertCell();
-            cell.innerHTML = rowItem;
-
-            // // temporary styling
-            // cell.style = "border: 1px solid black;"
-        });
-        return row;
-    }
-
-    static createTable () {
-        const newTable = document.createElement('table');
-        const headerRow = newTable.createTHead().insertRow();
-        const rowHeaders = ["Rank", "Name", "Total Points"];
-        rowHeaders.forEach((headerItem) => {
-            const headerCell = headerRow.insertCell();
-            headerCell.innerHTML = headerItem;
-        })
-
-        // temporary styling
-        // newTable.style = "border-collapse: collapse;"
-
-        return newTable;
-    }
- 
-    getAsList () {
-        return [this.rank, this.name, this.score, this.curUser];
-    }
-
-    getAsRow () {
-        const valuesList = this.getAsList(); 
-        return UserRank.createRow(valuesList);
-    }
- 
+  } else {
+    return false;
+  }
 }
 
-const leaderboardTable = UserRank.createTable();
-document.querySelector('.order1-main .card').appendChild(leaderboardTable);
-const leaderboardTBody = leaderboardTable.createTBody();
+checkUIDinBrowser()
+  .then((resp) => {
+    if (!resp) {
+      alert("Please sign-in. Redirecting...");
+      window.location.hash = "signin";
+    }
+  })
+  .catch((err) => {
+    console.log(err.message);
+  });
+
+console.log("hello from leaderboard.js");
+
+// reference to collections
+const colRefUsers = collection(db, "users");
+const q = query(colRefUsers, orderBy("score", "desc"));
+
+class Ranking {
+  constructor(rank, name, score, curUser) {
+    this.rank = rank;
+    this.name = name;
+    this.score = score;
+    this.curUser = curUser;
+  }
+}
+
+const leaderboardTable = [];
+const leaderboardList = document.getElementById("leaderboard");
 
 getDocs(q)
-.then((snapshot) => {
+  .then((snapshot) => {
     snapshot.forEach((doc) => {
-        const userInfo = doc.data();
-        const userName = displayPublicName(userInfo.firstname, userInfo.lastname);
-        const curUserFlag = (user === userInfo.user_email) ? true : false;
-        const userObj = new UserRank((leaderboardTBody.rows.length + 1), userName, userInfo.score, curUserFlag);
-        leaderboardTBody.appendChild(userObj.getAsRow());
-    })
-    
-})
-.catch((err) => {
-    console.log(err.message);
-})
+      const userInfo = doc.data();
+      const userName = displayPublicName(userInfo.firstname, userInfo.lastname);
+      const curUserFlag = user === userInfo.user_email ? true : false;
+      leaderboardTable.push(
+        new Ranking(
+          leaderboardTable.length + 1,
+          userName,
+          userInfo.score,
+          curUserFlag
+        )
+      );
+    });
+    console.table(leaderboardTable);
 
-function displayPublicName (firstname, lastname) {
-    if ( (firstname.length + lastname.length + 1) > 10 ) {
-        return firstname
+    leaderboardTable.forEach((row) => {
+      if (row.curUser == true) {
+        const userPosition = document.getElementById("userPosition");
+        userPosition.innerHTML = ordinalSuffixOf(row.rank);
+        leaderboardList.innerHTML += `<tr class="current-user">
+        <td>${row.rank}</td>
+        <td>${row.name}</td>
+        <td>${row.score}</td></tr>`;
+      } else {
+        leaderboardList.innerHTML += `<tr>
+        <td>${row.rank}</td>
+        <td>${row.name}</td>
+        <td>${row.score}</td></tr>`;
+      }
+    });
+  })
+  .catch((err) => {
+    console.log(err.message);
+  });
+
+function displayPublicName(firstname, lastname) {
+  if (firstname.length + lastname.length + 1 > 10) {
+    return firstname;
+  } else {
+    if (lastname === "") {
+      return firstname;
     } else {
-        if ( (lastname === "") ) {
-            return firstname
-        } else {
-            return firstname + " " + lastname
-        }
+      return firstname + " " + lastname;
     }
-};
+  }
+}
+
+function ordinalSuffixOf(i) {
+  let j = i % 10;
+  let k = i % 100;
+  if (j == 1 && k != 11) {
+    return i + "st";
+  }
+  if (j == 2 && k != 12) {
+    return i + "nd";
+  }
+  if (j == 3 && k != 13) {
+    return i + "rd";
+  }
+  return i + "th";
+}

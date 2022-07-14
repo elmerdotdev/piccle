@@ -1,75 +1,3 @@
-<!-- navbar start -->
-<header class="nav-bar">
-  <div class="left-menu">
-    <button type="button" class="btn btn-icon">
-      <img src="./../images/icons/arrow_back_ios.svg" />
-    </button>
-    <h1 class="setting-header">Play</h1>
-  </div>
-  <ul class="main-menu">
-    <li>
-      <div class="menu-icon">
-        <img src="./../images/icons/home-2-fill.svg" alt="" />
-      </div>
-      <a href="#home"><span>Home</span></a>
-    </li>
-    <li>
-      <div class="menu-icon">
-        <img src="./../images/icons/camera-3-fill.svg" alt="" />
-      </div>
-      <a href="#play"><span>Play Now</span></a>
-    </li>
-    <li>
-      <div class="menu-icon">
-        <img src="./../images/icons/fire-fill.svg" alt="" />
-      </div>
-      <a href="#history"><span>History</span></a>
-    </li>
-    <li>
-      <div class="menu-icon">
-        <img src="./../images/icons/P.svg" alt="" />
-      </div>
-      <a href="#piccleshop"><span>Piccle Shop</span></a>
-    </li>
-    <li class="main-menu-active">
-      <div class="menu-icon">
-        <img src="./../images/icons/settings-white.svg" alt="" />
-      </div>
-      <a href="#settings"><span>Settings</span></a>
-    </li>
-  </ul>
-  <button type="button" class="btn btn-icon" id="menuBtn">
-    <img src="./../images/icons/menu-3-line.svg" />
-  </button>
-</header>
-
-<div class="st-sidenav" id="st-sidenavId">
-  <ul class="st-main-menu">
-    <li class="sd-menu-header">
-      <a style="color: transparent">.</a>
-      <a href="#home"><span>Menu</span></a>
-      <button type="button" class="btn btn-icon" id="clsBtn">
-        <img src="./../images/icons/cancel.svg" />
-      </button>
-    </li>
-    <li>
-      <a href="#home"><span>Home</span></a>
-    </li>
-    <li>
-      <a href="#play"><span>Play Now</span></a>
-    </li>
-    <li>
-      <a href="#history"><span>History</span></a>
-    </li>
-    <li>
-      <a href="#shop"><span>Piccle Shop</span></a>
-    </li>
-    <li class="main-menu-active">
-      <a href="#settings"><span>Settings</span></a>
-    </li>
-  </ul>
-</div>
-
 <!-- navbar end -->
 <div class="wrapper">
   <div class="play-wrapper">
@@ -128,7 +56,17 @@
 
 <style>
   body {
-    overflow: hidden
+    overflow: hidden;
+    animation: movingBackground 90s infinite linear;
+  }
+
+  @keyframes movingBackground {
+    from {
+      background-position: 0 0;
+    }
+    to {
+      background-position: 100vw 100vh;
+    }
   }
 
   .wrapper {
@@ -136,9 +74,9 @@
     grid-template-columns: repeat(2, 1fr);
     width: 200%;
     transform: translateX(0);
-    transition: transform .5s ease-in-out;
+    transition: transform 0.5s ease-in-out;
   }
-  
+
   .wrapper.correct-answer {
     transform: translateX(-50%);
   }
@@ -147,6 +85,7 @@
     position: relative;
     display: flex;
     flex-flow: column wrap;
+    align-self: flex-start;
   }
 
   .play-wrapper__numbers {
@@ -186,6 +125,7 @@
 
   .play-wrapper__numbers .current-hint .circle {
     background-color: #fed235;
+    animation: glow 1.5s infinite ease-in-out;
   }
 
   .play-wrapper_progress_bar {
@@ -222,6 +162,7 @@
 
   .play-wrapper__hint {
     /* font-size: 1.5rem; */
+    min-height: 56px;
     text-align: center;
     background-color: #fed235;
     border-radius: 20px 20px 0 0;
@@ -262,7 +203,7 @@
   }
 
   .fade {
-    opacity: .2;
+    opacity: 0.2;
   }
 
   .popup-window {
@@ -275,12 +216,12 @@
     text-align: center;
     padding: 1.5rem 0;
     /*background-color: white;
-    border: 5px solid #333; */
+      border: 5px solid #333; */
   }
 
   .popup-window.show {
     display: block;
-    animation: shake .5s linear;
+    animation: shake 0.5s linear;
   }
 
   .popup-window h2 {
@@ -300,7 +241,7 @@
   }
 
   .popup-window p {
-    padding: 2rem 1rem;
+    padding: 2rem;
   }
 
   .popup-window hr {
@@ -308,20 +249,92 @@
     margin-bottom: 1rem;
   }
 
+  .btn a {
+    display: block;
+    color: inherit;
+  }
+
   .results-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-self: flex-start;
+    row-gap: 1.6rem;
     margin: auto;
-    padding: 2rem;
     width: 100%;
-    max-width: 700px;
-    background-color: white;
-    border: 5px solid #333;
+    max-width: 800px;
+    border-radius: 25px;
     transform: translateX(0);
-    transition: transform .5s linear;
+    transition: transform 0.5s linear;
+  }
+
+  .results-inner {
+    display: flex;
+    width: 100%;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 30px;
+    box-shadow: 0px 8px 0px #1d1d1d;
+  }
+
+  .results-success-title {
+    color: #ff90e8;
+    font-size: 2.4rem;
+    -webkit-text-stroke: 0.01rem black;
+  }
+
+  .results-success-title.bounceMe {
+    animation: bounce 1s ease-in-out;
+  }
+
+  .statistics {
+    padding: 4rem 2rem;
+    background-color: #fed235;
+    text-align: center;
+    border: 1px solid black;
+    border-radius: 25px 50px 50px 20px;
+  }
+
+  .statistics h2 {
+    margin-bottom: 2rem;
+  }
+
+  .statistics th {
+    padding-right: 1.5rem;
+    text-align: right;
+  }
+
+  .results-details {
+    flex: 1;
+    padding: 2rem 4rem;
+  }
+
+  .results-details h2 {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
+  }
+
+  .results-details h2 span:first-child {
+    font-size: 1.4em;
+  }
+
+  .results-trivia {
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+
+  .results-img {
+    text-align: center;
   }
 
   .results-wrapper img {
     max-width: 100%;
     height: auto;
+    border: 2px solid black;
+  }
+
+  .home-btn {
+    text-align: center;
   }
 
   @media only screen and (min-width: 600px) {
@@ -338,7 +351,7 @@
     }
 
     .play_wrapper__card_body {
-      padding: 1rem 8rem;
+      padding: 2rem 8rem;
     }
 
     .play-wrapper__camera {
@@ -352,12 +365,45 @@
   }
 
   @keyframes shake {
-    0%, 40%, 80% {
+    0%,
+    40%,
+    80% {
       transform: translate(-45%, -50%);
     }
-    20%, 60%, 100% {
+    20%,
+    60%,
+    100% {
       transform: translate(-50%, -50%);
     }
+  }
 
+  @keyframes bounce {
+    0%,
+    100% {
+      transform: rotate(0);
+    }
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+      transform: rotate(3deg);
+    }
+    20%,
+    40%,
+    60%,
+    80% {
+      transform: rotate(-3deg);
+    }
+  }
+
+  @keyframes glow {
+    0%,
+    100% {
+      background-color: #fed235;
+    }
+    50% {
+      background-color: #fffaea;
+    }
   }
 </style>

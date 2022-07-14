@@ -7,32 +7,37 @@
     <link rel="manifest" href="manifest.json" />
     <title>Piccle</title>
     <link rel="icon" type="image/x-icon" href="./images/favicon.png" />
-    
+
     <link rel="stylesheet" href="./css/style.css" />
     <link rel="stylesheet" href="./css/components.css" />
     <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-    integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
-    crossorigin="anonymous"
-    referrerpolicy="no-referrer"
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
     />
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Rammetto+One&display=swap"
-    rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Rammetto+One&family=Rubik:wght@400;600;700&display=swap"
+      rel="stylesheet"
     />
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-DNP3DE1WFP"></script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-DNP3DE1WFP"
+    ></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
 
-      gtag('config', 'G-DNP3DE1WFP');
+      gtag("config", "G-DNP3DE1WFP");
     </script>
 
     <script src="./pwa.js"></script>
@@ -40,6 +45,92 @@
     <script src="./firebase.js" type="module"></script>
   </head>
   <body>
+    <header class="nav-bar" id="nav-bar">
+      <div class="left-menu">
+        <h1 id="pageName" class="hs-header"></h1>
+      </div>
+      <ul class="main-menu">
+        <li>
+          <a href="#home">
+            <div class="menu-icon">
+              <img src="./../images/icons/home-2-fill.svg" alt="" />
+            </div>
+            <span>Home</span>
+          </a>
+        </li>
+        <li>
+          <a href="#play">
+            <div class="menu-icon">
+              <img src="./../images/icons/camera-3-fill.svg" alt="" />
+            </div>
+            <span>Play</span></a
+          >
+        </li>
+        <li>
+          <a href="#leaderboard">
+            <div class="menu-icon">
+              <img src="./../images/icons/trophy-fill.svg" alt="" />
+            </div>
+            <span>Ranking</span></a
+          >
+        </li>
+        <li>
+          <a href="#history">
+            <div class="menu-icon">
+              <img src="./../images/icons/fire-fill.svg" alt="" />
+            </div>
+            <span>History</span></a
+          >
+        </li>
+        <li>
+          <a href="#shop">
+            <div class="menu-icon">
+              <img src="./../images/icons/P.svg" alt="" />
+            </div>
+            <span>Shop</span></a
+          >
+        </li>
+        <li>
+          <a href="#settings">
+            <div class="menu-icon">
+              <img src="./../images/icons/settings.svg" alt="" />
+            </div>
+            <span>Settings</span></a
+          >
+        </li>
+      </ul>
+      <button type="button" class="btn btn-icon" id="menuBtn">
+        <img src="./../images/icons/menu-3-line.svg" />
+      </button>
+    </header>
+
+    <div class="st-sidenav" id="st-sidenavId">
+      <ul class="st-main-menu">
+        <li class="sd-menu-header">
+          <a style="color: transparent">.</a>
+          <a href="#home"><span>Menu</span></a>
+          <button type="button" class="btn btn-icon" id="clsBtn">
+            <img src="./../images/icons/cancel.svg" />
+          </button>
+        </li>
+        <li>
+          <a href="#home"><span>Home</span></a>
+        </li>
+        <li>
+          <a href="#play"><span>Play</span></a>
+        </li>
+        <li>
+          <a href="#history"><span>History</span></a>
+        </li>
+        <li>
+          <a href="#shop"><span>Shop</span></a>
+        </li>
+        <li class="main-menu-active">
+          <a href="#settings"><span>Settings</span></a>
+        </li>
+      </ul>
+    </div>
+
     <div id="mainArea">
       <!-- the main part will be dynamically updated as each page loads -->
     </div>
@@ -47,6 +138,7 @@
     <footer class="visually-hidden">
       <p>© Sunshine Corp, 2022</p>
     </footer>
+    <script src="./main.js" defer></script>
     <script src="./sw.js"></script>
     <script src="./routing.js"></script>
     <script src="./routing-module.js"></script>

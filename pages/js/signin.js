@@ -17,8 +17,24 @@ const db = getFirestore();
 // reference to collections
 const colRefUsers = collection(db, "users")
 
+// Redirect user to home if previous account already detected in browser
+document.querySelector('body').style.display = "none";
+checkUIDinBrowser()
+.then((resp) => {
+    if (resp) {
+        // alert("Previous sign-in detected, logging in...")
+        window.location.hash = "home";
+    } else {
+        window.location.has = "signin";
+    }
+    document.querySelector('body').style.display = "block";
+})
+.catch((err) => {
+    console.log(err.message);
+})
+
+
 // Check if email id exists in user collection
-    
 function checkEmailInUserCol (email) {
     
     const testDoc = doc(db, 'users', email);
@@ -173,19 +189,6 @@ googleLoginButton.addEventListener('click', (e) => {
         console.log(err.message);
     })
 })
-
-checkUIDinBrowser()
-    .then((resp) => {
-        if (resp) {
-            // alert("Previous sign-in detected, logging in...")
-            window.location.hash = "home";
-        } else {
-            window.location.has = "signin";
-        }
-    })
-    .catch((err) => {
-        console.log(err.message);
-    })
 
 
 // =============== SHOW PW  

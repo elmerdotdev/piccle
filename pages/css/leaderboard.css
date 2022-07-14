@@ -1,59 +1,97 @@
-
-.left-menu h1 {
-    margin-left: 0;
+.ranking-header {
+  color: #e76057;
+  text-shadow: 0px 4px 0px #1d1d1d;
 }
 
-main {
-    align-items: center;
+.lt-main {
+  flex-flow: column nowrap;
+  border: 0;
+  box-shadow: 0 0;
 }
 
-.leaderboard-title {
-    display: flex;
-    flex-flow: row wrap;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
+.lt__header {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
 }
 
-.leaderboard-title h2 {
-    flex-basis: 100%;
+.lt__header__position_wrapper .position {
+  font-weight: 400;
+  font-size: 66px;
+  line-height: 99px;
+  letter-spacing: -0.025em;
+  color: #1d1d1f;
+  margin-left: 1rem;
 }
 
-main > .card {
-    margin-top: 2rem;
-    padding: 0;
+.position-wrapper-body,
+.share-wrapper-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.icon-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    justify-content: center;
+.share-wrapper-body {
+  padding: 1.2rem 0;
 }
 
-table {
-    border-collapse: collapse;
+.share-wrapper-body button {
+  margin: 0 1rem;
 }
 
-/* highlight */
-.highlighted td {
-    background: yellow;
+.lt__header__wrapper_head {
+  width: 100%;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 33px;
+  letter-spacing: -0.025em;
+
+  color: #1d1d1f;
 }
 
-td, th {
-    text-align: center;
-    padding: 1rem;
+.lt-table {
+  width: 100%;
+  text-align: center;
+  border-spacing: 0;
+  height: 30rem;
+  overflow: scroll;
 }
 
-
-.socialmedia-icons {
-    margin-top: 5rem;
+.lt_card {
+  padding: 0;
 }
 
-@media screen and (min-width: 1100px) {
-    main {
-        flex-flow: column nowrap;
-        padding-bottom: 2rem;
-    }
+.lt-table th {
+  background-color: #e76057;
+  padding: 1rem;
+  border-bottom: 2px solid #1d1d1f;
+}
 
+.lt-table th:first-child {
+  border-radius: 22px 0 0 0;
+}
+
+.lt-table th:last-child {
+  border-radius: 0 22px 0 0;
+}
+
+.lt-table td {
+  padding: 1rem;
+}
+
+.lt-table .current-user td {
+  border-top: 2px solid #1d1d1f;
+  border-bottom: 2px solid #1d1d1f;
+  box-shadow: 0px 4px 0px #d95f44;
+}
+
+.lt-table .current-user td:first-child {
+  border-left: 2px solid #1d1d1f;
+  border-radius: 50rem 0 0 50rem;
+}
+
+.lt-table .current-user td:last-child {
+  border-right: 2px solid #1d1d1f;
+  border-radius: 0 50rem 50rem 0;
 }

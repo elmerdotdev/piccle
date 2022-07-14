@@ -89,12 +89,33 @@ function init () {
 
     getDocs(queries["userGames"])
     .then(snapshot => {
-        document.querySelector('span.player-history').innerHTML = snapshot.size;
+        let pastGames = snapshot.size;
+        snapshot.forEach(docSnap => {
+            const pastGameDate = new Date(docSnap.get('date_started').seconds * 1000)
+            
+            // Exclude unfinished game today in history count
+            // Check if this game record was started today
+            if (datesAreOnSameDay(pastGameDate, new Date())) {
+                
+                // Check if this game record is unfinished
+                if (!(userHints === 0 || userCurrentGame.resolved)) {
+                    
+                    // If this game record was started today and is unfinished,
+                    // subtract 1 from pastGames
+                    pastGames -= 1;
+                }
+            }
+        });
+        document.querySelector('span.player-history').innerHTML = pastGames;
     })
     .catch(err => {
         console.log(err.message)
     })
     
+    document.querySelectorAll('.hide').forEach(card => {
+        card.classList.remove('hide')
+    })
+
 }
     
 function ordinalSuffixOf(i) {
