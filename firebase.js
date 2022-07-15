@@ -1,6 +1,6 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.8.3/firebase-app.js'
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-analytics.js"
-import { getMessaging } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-messaging.js";
+import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-messaging.js";
 
 import { getAuth, signOut,
     createUserWithEmailAndPassword, signInWithEmailAndPassword,
@@ -21,3 +21,30 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const messaging = getMessaging(app);
+
+getToken(messaging, {vapidKey: "BImddxEb7T0PKBfC7dIteWyZ37ea7pJjUJlNqlc7YMxEdl7zkAr0KPrywc5R7iO3zz59Em6vk-Wo_EtO6mU_IhY"})
+.then(currentToken => {
+    if (currentToken) {
+        console.log(currentToken);
+    } else {
+        console.log("No registration token.")
+    }
+})
+.catch(err => {console.log(err.message)});
+
+// function requestPermission() {
+//     console.log('Requesting permission...');
+//     Notification.requestPermission().then((permission) => {
+//       if (permission === 'granted') {
+//         console.log('Notification permission granted.')}}};
+
+function requestPermission() {
+    console.log('Requesting permission...');
+    Notification.requestPermission().then(permission => {
+        if (permission === 'granted') {
+            console.log('Notification permission granted.');
+        }
+    })
+};
+
+requestPermission();
