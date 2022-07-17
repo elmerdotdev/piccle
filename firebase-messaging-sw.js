@@ -14,14 +14,13 @@ importScripts("https://www.gstatic.com/firebasejs/9.8.3/firebase-messaging-compa
 // your app's Firebase config object.
 // https://firebase.google.com/docs/web/setup#config-object
 firebase.initializeApp({
-  apiKey: 'api-key',
-  authDomain: 'project-id.firebaseapp.com',
-  databaseURL: 'https://project-id.firebaseio.com',
-  projectId: 'project-id',
-  storageBucket: 'project-id.appspot.com',
-  messagingSenderId: 'sender-id',
-  appId: 'app-id',
-  measurementId: 'G-measurement-id',
+    apiKey: "AIzaSyBz55X3M4wdtYiW7EsbFwGz98K1Mw4xOOo",
+    authDomain: "wmdd-4885-integrated-project.firebaseapp.com",
+    projectId: "wmdd-4885-integrated-project",
+    storageBucket: "wmdd-4885-integrated-project.appspot.com",
+    messagingSenderId: "65956786490",
+    appId: "1:65956786490:web:329f96ce8f75152a06e003",
+    measurementId: 'G-measurement-id',
 });
 
 // Retrieve an instance of Firebase Messaging so that it can handle background
@@ -40,4 +39,6 @@ messaging.onMessage((payload) => {
 messaging.onBackgroundMessage(payload => {
     console.log('BG message received. ', payload);
 });
+
+console.log("hello from fcm sw.")
 

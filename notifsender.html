@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Piccle Notif Sender</title>
+</head>
+<body>
+    <h1>Piccle Notification Sender Tool</h1>
+    <p>Send notifications to Piccle users here.</p>
+    <form action="" id="messageForm">
+        <div class="row-1">
+            <label for="userToken">Optional: Enter user token id</label>
+            <input type="text" id="userToken">
+        </div>
+        <div class="row-2">
+            <label for="msgTitle">Message Title</label>
+            <input type="text" id="msgTitle">
+        </div>
+        <div class="row-3">
+            <label for="msgContent">Content</label>
+            <input type="textarea" id="msgContent">
+        </div>
+        <input type="submit" value="Submit">
+    </form>
+
+</body>
+<script>
+    // import { auth } from "https://cdn.jsdelivr.net/npm/google-auth-library@8.1.1/build/src/index.min.js";
+
+    // const PROJECT_ID = '<YOUR-PROJECT-ID>';
+    // const HOST = 'fcm.googleapis.com';
+    // const PATH = '/v1/projects/' + PROJECT_ID + '/messages:send';
+    // const MESSAGING_SCOPE = 'https://www.googleapis.com/auth/firebase.messaging';
+    // const SCOPES = [MESSAGING_SCOPE];
+
+    // /**
+    //  * Get a valid access token.
+    //  */
+    // // [START retrieve_access_token]
+    // function getAccessToken() {
+    // return new Promise(function(resolve, reject) {
+    //     const key = require('../placeholders/service-account.json');
+    //     const jwtClient = new google.auth.JWT(
+    //     key.client_email,
+    //     null,
+    //     key.private_key,
+    //     SCOPES,
+    //     null
+    //     );
+    //     jwtClient.authorize(function(err, tokens) {
+    //     if (err) {
+    //         reject(err);
+    //         return;
+    //     }
+    //     resolve(tokens.access_token);
+    //     });
+    // });
+    // }
+    
+
+    const messageForm = document.getElementById('messageForm');
+    function sendNotification() {
+        let body = {
+            to: messageForm.userToken.value,
+            notifcation: {
+                title: messageForm.msgTitle.value,
+                body: messageForm.msgContent.value,
+                click_action: "https://demo.piccle.fun"
+            }
+        }
+
+        let options = {
+            method: "POST",
+            headers: new Headers({
+                Authorization: `Bearer f-I2gyxMrnyjTvNHyeoDzP:APA91bEkw8y1sI5Rn3QLrM6vJu3Prot0ANiY44plxIu9E7EF2B_2JU-8MrETWp36v5ADyWsTDYTIRKoJ1Ufajs9IwX2lkGNaVkM-QzknlpRy_xM9PmiAN1RRUeVUPWUQd_3u6Mgj5SHr`,
+                "Content-Type": "application/json"
+            }),
+            body: JSON.stringify(body)
+        }
+
+        console.log("Options", options)
+
+        fetch("https://fcm.googleapis.com/v1/projects/wmdd-4885-integrated-project/messages:send", options)
+        .then(res => {
+            console.log(res);
+            console.log("SENT");
+            
+        })
+        .catch(e => console.log(e.message));
+
+        console.log(body)
+    }
+
+    messageForm.addEventListener('submit', e => {
+        e.preventDefault();
+        sendNotification();
+    })
+
+    messageForm.msgTitle.value = "Test";
+    messageForm.msgContent.value = "Hello from Notif Tool";
+</script>
+</html>
