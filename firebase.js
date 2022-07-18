@@ -1,7 +1,7 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.8.3/firebase-app.js'
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-analytics.js"
-import { getMessaging, getToken } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-messaging.js";
-import { getFirestore, doc, getDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-firestore.js";
+import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-messaging.js";
+import { getFirestore, doc, getDoc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-firestore.js";
 
 // import { getAuth, signOut,
 //     createUserWithEmailAndPassword, signInWithEmailAndPassword,
@@ -35,49 +35,64 @@ function requestPermission() {
 };
 
 // Request notification approval if in home page
-if (window.location.hash === "#home" ) {
-    requestPermission();
-    getToken(messaging, {vapidKey: "BImddxEb7T0PKBfC7dIteWyZ37ea7pJjUJlNqlc7YMxEdl7zkAr0KPrywc5R7iO3zz59Em6vk-Wo_EtO6mU_IhY"})
-    .then(currentToken => {
-        console.log(currentToken);
-        // check if token exists
-        // true: try to store token in doc
-        // false: log no registration token
-        if (currentToken) {
-            const userDoc = doc(db, "users", localStorage.piccleUID);
-            getDoc( userDoc )
-            .then(res => {
-                // check if field "webpushtokens" is in doc
-                // true: create field and add client token
-                // false: check if client token is NOT in doc
-                if (res.get("webpushtokens") === undefined) {
-                    updateDoc( userDoc, {
-                        webpushtokens: [currentToken]
-                    } )
-                    .then(() => {
-                        console.log("Field 'webpushtokens' created. Token stored.")
-                    })
-                } else {
-                    let tokenArray = res.get("webpushtokens");
-                    // check if client token is NOT in doc
-                    // true: add client token to doc
-                    // false: log token already exists
-                    if (! tokenArray.includes(currentToken) ) {
-                        const newTokenArray = tokenArray.push(currentToken);
-                        updateDoc(userDoc, {
-                            webpushtokens: newTokenArray
-                        })
+window.addEventListener('hashchange', () => {
+    if (window.location.hash === "#home" ) {
+        requestPermission();
+        getToken(messaging, {vapidKey: "BImddxEb7T0PKBfC7dIteWyZ37ea7pJjUJlNqlc7YMxEdl7zkAr0KPrywc5R7iO3zz59Em6vk-Wo_EtO6mU_IhY"})
+        .then(currentToken => {
+            console.log(currentToken);
+            // check if token exists
+            // true: try to store token in doc
+            // false: log no registration token
+            if (currentToken) {
+                const userDoc = doc(db, "users", localStorage.piccleUID);
+                getDoc( userDoc )
+                .then(res => {
+                    // check if field "webpushtokens" is in doc
+                    // true: create field and add client token
+                    // false: check if client token is NOT in doc
+                    if (res.get("webpushtokens") === undefined) {
+                        updateDoc( userDoc, {
+                            webpushtokens: [currentToken]
+                        } )
                         .then(() => {
-                            console.log("Token stored.")
+                            console.log("Field 'webpushtokens' created. Token stored.")
                         })
                     } else {
-                        console.log("Token already exists.")
-                    }
-                };
-            });
-        } else {
-            console.log("No registration token.")
-        }
-    })
-    .catch(err => {console.log(err.message)});
-}
+                        let tokenArray = res.get("webpushtokens");
+                        // check if client token is NOT in doc
+                        // true: add client token to doc
+                        // false: log token already exists
+                        if (! tokenArray.includes(currentToken) ) {
+                            updateDoc(userDoc, {
+                                webpushtokens: arrayUnion(currentToken)
+                            })
+                            .then(() => {
+                                console.log("Token stored.")
+                            })
+                        } else {
+                            console.log("Token already exists.")
+                        }
+                    };
+                });
+            } else {
+                console.log("No registration token.")
+            }
+        })
+        .catch(err => {console.log(err.message)});
+    }
+});
+
+onMessage(messaging, payload => {
+    const broadCaster = new BroadcastChannel("sw-messages")
+    console.log(new Date);
+    console.log("Foreground Message Received: ", payload);
+    const notification = payload.notification;
+    
+    broadCaster.postMessage({ 
+        type: "fcm-notif",
+        title: notification.title,
+        body: notification.body
+    });
+    console.log('sent to FCM SW.');
+})

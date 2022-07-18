@@ -4,101 +4,90 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Piccle Notif Sender</title>
+    <title>Sender Tool</title>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-messaging.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 </head>
 <body>
-    <h1>Piccle Notification Sender Tool</h1>
-    <p>Send notifications to Piccle users here.</p>
-    <form action="" id="messageForm">
-        <div class="row-1">
-            <label for="userToken">Optional: Enter user token id</label>
-            <input type="text" id="userToken">
-        </div>
-        <div class="row-2">
-            <label for="msgTitle">Message Title</label>
-            <input type="text" id="msgTitle">
-        </div>
-        <div class="row-3">
-            <label for="msgContent">Content</label>
-            <input type="textarea" id="msgContent">
-        </div>
-        <input type="submit" value="Submit">
+    <h1>Send Notification</h1>
+    <form onsubmit="event.preventDefault(); sendNotification(this.token.value);" id="sendform">
+        <input type="text" id="token" placeholder="Enter User Token ID">
+        <input type="text" id="title" placeholder="Title">
+        <input type="text" id="msg" placeholder="MSG">
+        <input type="submit" value="Send">
     </form>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <button onclick="sendToAll();">Send to All</button>
 
-</body>
-<script>
-    // import { auth } from "https://cdn.jsdelivr.net/npm/google-auth-library@8.1.1/build/src/index.min.js";
+    <script>
+        firebase.initializeApp({
+            apiKey: "AIzaSyBz55X3M4wdtYiW7EsbFwGz98K1Mw4xOOo",
+            authDomain: "wmdd-4885-integrated-project.firebaseapp.com",
+            projectId: "wmdd-4885-integrated-project",
+            storageBucket: "wmdd-4885-integrated-project.appspot.com",
+            messagingSenderId: "65956786490",
+            appId: "1:65956786490:web:329f96ce8f75152a06e003",
+            measurementId: 'G-measurement-id',
+        });
 
-    // const PROJECT_ID = '<YOUR-PROJECT-ID>';
-    // const HOST = 'fcm.googleapis.com';
-    // const PATH = '/v1/projects/' + PROJECT_ID + '/messages:send';
-    // const MESSAGING_SCOPE = 'https://www.googleapis.com/auth/firebase.messaging';
-    // const SCOPES = [MESSAGING_SCOPE];
+        const db = firebase.firestore();
 
-    // /**
-    //  * Get a valid access token.
-    //  */
-    // // [START retrieve_access_token]
-    // function getAccessToken() {
-    // return new Promise(function(resolve, reject) {
-    //     const key = require('../placeholders/service-account.json');
-    //     const jwtClient = new google.auth.JWT(
-    //     key.client_email,
-    //     null,
-    //     key.private_key,
-    //     SCOPES,
-    //     null
-    //     );
-    //     jwtClient.authorize(function(err, tokens) {
-    //     if (err) {
-    //         reject(err);
-    //         return;
-    //     }
-    //     resolve(tokens.access_token);
-    //     });
-    // });
-    // }
-    
-
-    const messageForm = document.getElementById('messageForm');
-    function sendNotification() {
-        let body = {
-            to: messageForm.userToken.value,
-            notifcation: {
-                title: messageForm.msgTitle.value,
-                body: messageForm.msgContent.value,
-                click_action: "https://demo.piccle.fun"
-            }
-        }
-
-        let options = {
-            method: "POST",
-            headers: new Headers({
-                Authorization: `Bearer f-I2gyxMrnyjTvNHyeoDzP:APA91bEkw8y1sI5Rn3QLrM6vJu3Prot0ANiY44plxIu9E7EF2B_2JU-8MrETWp36v5ADyWsTDYTIRKoJ1Ufajs9IwX2lkGNaVkM-QzknlpRy_xM9PmiAN1RRUeVUPWUQd_3u6Mgj5SHr`,
-                "Content-Type": "application/json"
-            }),
-            body: JSON.stringify(body)
-        }
-
-        console.log("Options", options)
-
-        fetch("https://fcm.googleapis.com/v1/projects/wmdd-4885-integrated-project/messages:send", options)
-        .then(res => {
-            console.log(res);
-            console.log("SENT");
+        function sendToAll() {
+            const pushTokenList = [];
             
-        })
-        .catch(e => console.log(e.message));
+            db.collection("users").where("webpushtokens", "!=", null)
+                .get()
+                .then(querySnapshot => {
+                    querySnapshot.forEach(doc => {
+                        doc.data().webpushtokens.forEach(token => {
+                            pushTokenList.push(token);
+                        });
+                        console.log("pushTokenList: ", pushTokenList);
+                    })
+                    pushTokenList.forEach(token => {
+                        sendNotification(token);
+                    })
+                })
+                .catch(err => {console.log(error.message)})
+        }
 
-        console.log(body)
-    }
+        function sendNotification(clientToken) {
+            // console.log('test');
+            const sendForm = document.getElementById('sendform');
+            
+            let body = {
+                to: clientToken,
+                notification: {
+                    title: sendForm.title.value,
+                    body: sendForm.msg.value
+                }
+            }
 
-    messageForm.addEventListener('submit', e => {
-        e.preventDefault();
-        sendNotification();
-    })
+            console.log(body)
 
-    messageForm.msgTitle.value = "Test";
-    messageForm.msgContent.value = "Hello from Notif Tool";
-</script>
+            const options = {
+                method: "POST",
+                headers: new Headers({
+                    Authorization:"key=AAAAD1tUsTo:APA91bGPvmte6GXPrRp3CczCGZVKR0OdmLiztgDGoyWr-yOjiZycpS85-pZcZCjCv18TO3EHxdo63gE9TIb8rGs-9eOQvi5TaGOOJ3tr1fRjekqREGvEIUJ8DBkEYTmBr6KY_E5gLc8f",
+                    "Content-Type":"application/json"
+                }),
+                body:JSON.stringify(body)
+            }
+
+            fetch("https://fcm.googleapis.com/fcm/send", options).then(res=>res.json()).then(data=>{
+                    // console.log(data)
+            }).catch(e=>console.log(e))
+        };
+
+        
+
+
+    </script>
+</body>
 </html>
