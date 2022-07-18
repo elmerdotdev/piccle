@@ -10,6 +10,14 @@ if ("serviceWorker" in navigator) {
     .catch(function (error) {
       console.log(`Service Worker Error (${error})`);
     });
+  navigator.serviceWorker
+    .register("./firebase-messaging-sw.js", { scope: "/"})
+    .then(reg => {
+      console.log(`Firebase Messaging Service Worker Registration (Scope: ${reg.scope})`);
+    })
+    .catch(err => {
+      console.log(err.message);
+    });
 } else {
   console.warn("Service Worker not available");
 }
