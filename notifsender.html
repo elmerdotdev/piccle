@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sender Tool</title>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-messaging.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+</head>
+<body>
+    <h1>Send Notification</h1>
+    <form onsubmit="event.preventDefault(); sendNotification(this.token.value);" id="sendform">
+        <input type="text" id="token" placeholder="Enter User Token ID">
+        <input type="text" id="title" placeholder="Title">
+        <input type="text" id="msg" placeholder="MSG">
+        <input type="submit" value="Send">
+    </form>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <button onclick="sendToAll();">Send to All</button>
+
+    <script>
+        firebase.initializeApp({
+            apiKey: "AIzaSyBz55X3M4wdtYiW7EsbFwGz98K1Mw4xOOo",
+            authDomain: "wmdd-4885-integrated-project.firebaseapp.com",
+            projectId: "wmdd-4885-integrated-project",
+            storageBucket: "wmdd-4885-integrated-project.appspot.com",
+            messagingSenderId: "65956786490",
+            appId: "1:65956786490:web:329f96ce8f75152a06e003",
+            measurementId: 'G-measurement-id',
+        });
+
+        const db = firebase.firestore();
+
+        function sendToAll() {
+            const pushTokenList = [];
+            
+            db.collection("users").where("webpushtokens", "!=", null)
+                .get()
+                .then(querySnapshot => {
+                    querySnapshot.forEach(doc => {
+                        doc.data().webpushtokens.forEach(token => {
+                            pushTokenList.push(token);
+                        });
+                        console.log("pushTokenList: ", pushTokenList);
+                    })
+                    pushTokenList.forEach(token => {
+                        sendNotification(token);
+                    })
+                })
+                .catch(err => {console.log(error.message)})
+        }
+
+        function sendNotification(clientToken) {
+            // console.log('test');
+            const sendForm = document.getElementById('sendform');
+            
+            let body = {
+                to: clientToken,
+                notification: {
+                    title: sendForm.title.value,
+                    body: sendForm.msg.value
+                }
+            }
+
+            console.log(body)
+
+            const options = {
+                method: "POST",
+                headers: new Headers({
+                    Authorization:"key=AAAAD1tUsTo:APA91bGPvmte6GXPrRp3CczCGZVKR0OdmLiztgDGoyWr-yOjiZycpS85-pZcZCjCv18TO3EHxdo63gE9TIb8rGs-9eOQvi5TaGOOJ3tr1fRjekqREGvEIUJ8DBkEYTmBr6KY_E5gLc8f",
+                    "Content-Type":"application/json"
+                }),
+                body:JSON.stringify(body)
+            }
+
+            fetch("https://fcm.googleapis.com/fcm/send", options).then(res=>res.json()).then(data=>{
+                    // console.log(data)
+            }).catch(e=>console.log(e))
+        };
+
+        
+
+
+    </script>
+</body>
+</html>
