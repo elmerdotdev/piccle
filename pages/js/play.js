@@ -15,8 +15,6 @@ import {
 } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-firestore.js";
 import Vision from "../../vision.js";
 
-
-
 function init() {
   const userEmail = localStorage.getItem("piccleUID");
   if (!userEmail) {
@@ -26,9 +24,10 @@ function init() {
   let currentHint = [];
   let currentWord = "";
   let wordPoints = 0;
-  let wordId = "";
+
   let progressId = "";
   let usedTries = 0;
+
   let userScore = 0;
   let userPoints = 0;
 
@@ -64,6 +63,9 @@ function init() {
       let dateStarted = new Date(
         recentProgress.data().date_started.seconds * 1000
       );
+      
+      progressId = recentProgress.id;
+      usedTries = recentProgress.data().tries;
 
       if (recentProgress.data().resolved === false) {
         if (datesAreOnSameDay(dateStarted, new Date())) {
@@ -72,7 +74,6 @@ function init() {
               recentProgress.data().word,
               recentProgress.data().tries
             );
-            progressId = recentProgress.id;
             usedTries = recentProgress.data().tries + 1;
           } else {
             noMoreTries();
@@ -118,7 +119,6 @@ function init() {
     getDoc(docRef).then((doc) => {
       currentWord = doc.data().name;
       currentHint = doc.data().hints[tries];
-      wordId = doc.id;
       wordPoints = doc.data().points;
 
       document.querySelector(".play-wrapper__hint").innerHTML = currentHint;
@@ -185,22 +185,45 @@ function init() {
     }, 1000)
   }
 
-  function noMoreTries() {
-    let domContent = "<h2>Out of chances!</h2>";
-    domContent += `<svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M90 9.06428L80.9357 0L45 35.9357L9.06428 0L0 9.06428L35.9357 45L0 80.9357L9.06428 90L45 54.0643L80.9357 90L90 80.9357L54.0643 45L90 9.06428Z" fill="#E76057"/>
-    </svg>`;
-    domContent += `<p>Sorry you have no more tries remaining.<br />Wait for tomorrow's challenge.</p>`;
-    domContent += `<hr><button class="btn btn-primary"><a href="#home" class="home-btn">Home</a></button>`;
-    document.querySelector(".popup-window").innerHTML = domContent;
+  async function noMoreTries(title, message) {
+    const snapshotChance = await checkHasExtraChance()
+    const totalChances = snapshotChance.size
+    const domTitle = title || "Out of guesses!"
+    const domMessage = message || "Sorry, you ran out of guesses. You can use or buy extra chances to continue playing."
+    
+    try {
+      let domContent = `<h2>${domTitle}</h2>`;
+      domContent += `<svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M90 9.06428L80.9357 0L45 35.9357L9.06428 0L0 9.06428L35.9357 45L0 80.9357L9.06428 90L45 54.0643L80.9357 90L90 80.9357L54.0643 45L90 9.06428Z" fill="#E76057"/>
+      </svg>`;
+      domContent += `<p>${domMessage}</p>`;
+      
+      if (totalChances > 0) {
+        const chance = snapshotChance.docs[0].id
 
-    document.querySelector('.play-wrapper_progress_bar').classList.add("fade");
-    document.querySelector('.play-wrapper_card').classList.add("fade");
-    document.querySelector(".popup-window").classList.add("show");
+        domContent += `<hr><button class="btn btn-primary use-chance-btn"><a href="#play" class="home-btn">Use extra chance</a></button>`;
+        domContent += `<div class="remaining-chances"><small><em>You have ${totalChances} chance(s) available.</em></small></div>`;
 
-    setTimeout(() => {
-      webcam.stop()
-    }, 1000)
+        setTimeout(() => {
+          document.querySelector(".use-chance-btn").addEventListener('click', () => {
+            usePlayerChances(chance)
+          }, 100)
+        })
+      } else {
+        domContent += `<hr><button class="btn btn-primary"><a href="#shop" class="home-btn">Shop</a></button>`;
+      }
+      document.querySelector(".popup-window").innerHTML = domContent;
+
+      document.querySelector('.play-wrapper_progress_bar').classList.add("fade");
+      document.querySelector('.play-wrapper_card').classList.add("fade");
+      document.querySelector(".popup-window").classList.add("show");
+
+      setTimeout(() => {
+        webcam.stop()
+      }, 1000)
+    } catch (error) {
+      console.log(error.message)
+    }
   }
 
   async function updateTries() {
@@ -246,25 +269,56 @@ function init() {
   }
 
   function answerIncorrect() {
-    let domContent = "<h2>Try Again!</h2>";
-    domContent += `<svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M90 9.06428L80.9357 0L45 35.9357L9.06428 0L0 9.06428L35.9357 45L0 80.9357L9.06428 90L45 54.0643L80.9357 90L90 80.9357L54.0643 45L90 9.06428Z" fill="#E76057"/>
-    </svg>`;
-    domContent += `<p>Sorry that is incorrect. You have ${
-      5 - usedTries
-    } tries remaining.</p>`;
-    domContent += `<hr><button class="btn btn-primary"><a href="#play" class="next-clue-btn">Next Clue</a></button>`;
-    document.querySelector(".popup-window").innerHTML = domContent;
+    if (usedTries < 5) {
+      let domContent = "<h2>Try Again!</h2>";
+      domContent += `<svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M90 9.06428L80.9357 0L45 35.9357L9.06428 0L0 9.06428L35.9357 45L0 80.9357L9.06428 90L45 54.0643L80.9357 90L90 80.9357L54.0643 45L90 9.06428Z" fill="#E76057"/>
+      </svg>`;
+      domContent += `<p>Sorry that is incorrect. You have ${
+        5 - usedTries
+      } tries remaining.</p>`;
+      domContent += `<hr><button class="btn btn-primary"><a href="#play" class="next-clue-btn">Next Clue</a></button>`;
+      document.querySelector(".popup-window").innerHTML = domContent;
 
-    setTimeout(() => {
-      document.querySelector('.next-clue-btn').addEventListener('click', () => {
-        location.reload()
-      })
-    }, 100)
+      setTimeout(() => {
+        document.querySelector('.next-clue-btn').addEventListener('click', () => {
+          location.reload()
+        })
+      }, 100)
 
-    document.querySelector('.play-wrapper_progress_bar').classList.add("fade");
-    document.querySelector('.play-wrapper_card').classList.add("fade");
-    document.querySelector(".popup-window").classList.add("show");
+      document.querySelector('.play-wrapper_progress_bar').classList.add("fade");
+      document.querySelector('.play-wrapper_card').classList.add("fade");
+      document.querySelector(".popup-window").classList.add("show");
+    } else {
+      noMoreTries('Incorrect answer', 'Unfortunately, that was your last guess. You can use or buy extra chances to continue playing.')
+    }
+  }
+
+  async function checkHasExtraChance() {
+    const purchasesRef = collection(db, "purchases")
+    const purchaseQuery = query(
+      purchasesRef,
+      where("user_email", "==", userEmail),
+      where("item", "==", "extra-chance"),
+      where("used", "==", false)
+    )
+
+    const snapshot = await getDocs(purchaseQuery)
+    return snapshot
+  }
+
+  async function usePlayerChances(purchaseId) {
+    const purchaseRef = doc(db, "purchases", purchaseId)
+    await updateDoc(purchaseRef, {
+      used: true
+    })
+
+    const progressRef = doc(db, "progress", progressId)
+    await updateDoc(progressRef, {
+      tries: usedTries - 1
+    })
+
+    location.reload()
   }
 
   // Camera functions ==========================
@@ -390,7 +444,7 @@ function init() {
         })
       }, 100)
     }
-  });
+  })
 
   document.querySelectorAll('.main-menu li a').forEach(link => {
     link.addEventListener('click', () => {
