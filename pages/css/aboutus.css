@@ -1,0 +1,57 @@
+main { 
+    border: unset;
+    border-radius: unset;
+    box-shadow: unset;
+    display: unset;
+}
+
+.lt__header__position_wrapper h3 {
+    text-align: center;
+}
+
+.lt__header__team{
+    display: grid;
+    grid-template-columns: repeat(7,1fr);
+}
+
+.member-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+}
+
+.card {
+
+}
+
+.lt_card {
+    background-color: #FED235;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+
+    box-shadow: unset;
+    border: unset;
+    border-bottom-left-radius: unset;
+    border-bottom-right-radius: unset;
+}
+
+.lt_card h3 {
+    text-align: center;
+}
+
+@media screen and (min-width: 1100px) {
+    .visually-hidden,
+    footer {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+    }
+}
+
