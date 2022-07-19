@@ -24,7 +24,6 @@ function init() {
   let currentHint = [];
   let currentWord = "";
   let wordPoints = 0;
-  let wordID = "";
 
   let progressId = "";
   let usedTries = 0;
@@ -120,7 +119,6 @@ function init() {
     getDoc(docRef).then((doc) => {
       currentWord = doc.data().name;
       currentHint = doc.data().hints[tries];
-      wordID = doc.id;
       wordPoints = doc.data().points;
 
       document.querySelector(".play-wrapper__hint").innerHTML = currentHint;
