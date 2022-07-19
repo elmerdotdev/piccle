@@ -146,6 +146,7 @@
   .play-wrapper_card {
     margin: 1rem;
     padding: 0;
+    width: 100%;
   }
 
   .play-wrapper__controls {
@@ -213,6 +214,8 @@
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 9999;
+    max-width: 430px;
+    width: 100%;
     text-align: center;
     padding: 1.5rem 0;
     /*background-color: white;
@@ -252,6 +255,10 @@
   .btn a {
     display: block;
     color: inherit;
+  }
+
+  .remaining-chances {
+    margin-top: .5rem;
   }
 
   .results-wrapper {
@@ -342,7 +349,7 @@
       width: 450px;
     }
     .play-wrapper_card {
-      /* max-width: 900px; */
+      max-width: 640px;
       margin: auto;
     }
 
@@ -401,9 +408,11 @@
     0%,
     100% {
       background-color: #fed235;
+      transform: scale(1);
     }
     50% {
       background-color: #fffaea;
+      transform: scale(1.1);
     }
   }
 </style>
