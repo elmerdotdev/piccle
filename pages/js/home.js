@@ -111,30 +111,28 @@ function init() {
     }
   });
 
-  getDocs(queries["userGames"])
-    .then((snapshot) => {
-      let pastGames = snapshot.size;
-      snapshot.forEach((docSnap) => {
-        const pastGameDate = new Date(
-          docSnap.get("date_started").seconds * 1000
-        );
+  getDocs(queries["userGames"]).then((snapshot) => {
+    let pastGames = snapshot.size;
+    snapshot.forEach((docSnap) => {
+      const pastGameDate = new Date(docSnap.get("date_started").seconds * 1000);
 
-        // Exclude unfinished game today in history count
-        // Check if this game record was started today
-        if (datesAreOnSameDay(pastGameDate, new Date())) {
-          // Check if this game record is unfinished
-          if (!(userHints === 0 || userCurrentGame.resolved)) {
-            // If this game record was started today and is unfinished,
-            // subtract 1 from pastGames
-            pastGames -= 1;
-          }
+      // Exclude unfinished game today in history count
+      // Check if this game record was started today
+      if (datesAreOnSameDay(pastGameDate, new Date())) {
+        // Check if this game record is unfinished
+        if (!(userHints === 0 || userCurrentGame.resolved)) {
+          // If this game record was started today and is unfinished,
+          // subtract 1 from pastGames
+          pastGames -= 1;
         }
-      });
-      document.querySelector("span.player-history").innerHTML = pastGames;
-    })
-    .catch((err) => {
-      console.log(err.message);
+      }
     });
+    document.querySelector("span.player-history").innerHTML = pastGames;
+  });
+
+  document.querySelectorAll(".hide").forEach((card) => {
+    card.classList.remove("hide");
+  });
 }
 
 function ordinalSuffixOf(i) {
@@ -164,20 +162,20 @@ function datesAreOnSameDay(first, second) {
   }
 }
 
-const fb = document.getElementById("fbs");
-fb.addEventListener("click", () => {
-  var url =
-    "https://www.dailymail.co.uk/news/article-11026067/Boris-Johnsons-Government-WINS-late-night-confidence-vote-349-votes-238.html"; //Set desired URL here
-  var img =
-    "https://i.dailymail.co.uk/1s/2022/07/18/23/60419705-0-image-a-154_1658182060740.jpg"; //Set Desired Image here
-  var totalurl = encodeURIComponent(url + "?img=" + img);
-  console.log(totalurl);
-  window.open(
-    "http://www.facebook.com/sharer.php?u=" + totalurl,
-    "",
-    "width=500, height=500, scrollbars=yes, resizable=no"
-  );
-});
+// const fb = document.getElementById("fbs");
+// fb.addEventListener("click", () => {
+//   var url =
+//     "https://www.dailymail.co.uk/news/article-11026067/Boris-Johnsons-Government-WINS-late-night-confidence-vote-349-votes-238.html"; //Set desired URL here
+//   var img =
+//     "https://i.dailymail.co.uk/1s/2022/07/18/23/60419705-0-image-a-154_1658182060740.jpg"; //Set Desired Image here
+//   var totalurl = encodeURIComponent(url + "?img=" + img);
+//   console.log(totalurl);
+//   window.open(
+//     "http://www.facebook.com/sharer.php?u=" + totalurl,
+//     "",
+//     "width=500, height=500, scrollbars=yes, resizable=no"
+//   );
+// });
 
 //screen shot
 const ss = document.getElementById("screenShot");

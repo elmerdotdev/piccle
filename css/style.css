@@ -57,6 +57,8 @@ body {
   font-family: "Rubik", Helvetica, sans-serif;
   margin: 0;
   background-image: url(./../images/pattern.png);
+  background-size: 300px;
+  animation: movingBackground 90s infinite linear;
 }
 
 img {
@@ -74,7 +76,10 @@ img {
   width: 1px;
 }
 
-header,
+header {
+  padding: 0.5rem 1rem;
+}
+
 .signup-banner {
   padding: 0.5rem 1rem;
   background-color: #fff;
@@ -397,6 +402,7 @@ input.pw-checkbox {
 }
 
 .menu-icon {
+  background-color: white;
   border-radius: 50rem;
   border: 2px solid #000;
   box-shadow: 0px 4px 0px 0px #000000;
@@ -509,6 +515,26 @@ li.main-menu-active a span {
 } */
 /* end of settings page */
 
+.go-play.hide {
+  transform: translateX(-100vw);
+}
+
+.leaderboard-border.hide {
+  transform: translateY(-100vw);
+}
+
+.history-border.hide {
+  transform: translateX(100vw);
+}
+
+.shop-border.hide {
+  transform: translateY(100vw);
+}
+
+.settings-border.hide {
+  transform: translateX(100vw);
+}
+
 @media only screen and (min-width: 600px) {
   .st-main {
     border: 0;
@@ -575,5 +601,16 @@ li.main-menu-active a span {
 
   .st-card img {
     width: 4rem;
+  }
+}
+
+/* KEYFRAMES ================================ */
+
+@keyframes movingBackground {
+  from {
+    background-position: 0 0
+  }
+  to {
+    background-position: 100vw 100vh
   }
 }
