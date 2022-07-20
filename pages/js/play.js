@@ -15,12 +15,10 @@ import {
 } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-firestore.js";
 import Vision from "../../vision.js";
 
-
-
 function init() {
   const userEmail = localStorage.getItem("piccleUID");
   if (!userEmail) {
-    location.hash = "#signin"
+    location.hash = "#signin";
   }
 
   let currentHint = [];
@@ -38,11 +36,10 @@ function init() {
   const userRef = collection(db, "users");
   const userDetails = query(userRef, where("user_email", "==", userEmail));
 
-  getDocs(userDetails)
-  .then((snapshot) => {
+  getDocs(userDetails).then((snapshot) => {
     userScore = snapshot.docs[0].data().score;
     userPoints = snapshot.docs[0].data().points;
-  })
+  });
 
   // Get all words in database
   const wordsRef = collection(db, "words");
@@ -126,9 +123,11 @@ function init() {
         .querySelectorAll(".play-wrapper__numbers li")
         [tries].classList.add("current-hint");
 
-        for (let i = 0; i < tries; i++) {
-          document.querySelectorAll(".play-wrapper__numbers li")[i].classList.add("used-hint")
-        }
+      for (let i = 0; i < tries; i++) {
+        document
+          .querySelectorAll(".play-wrapper__numbers li")
+          [i].classList.add("used-hint");
+      }
     });
   }
 
@@ -176,13 +175,13 @@ function init() {
     domContent += `<hr><button class="btn btn-primary"><a href="#home" class="home-btn">Home</a></button>`;
     document.querySelector(".popup-window").innerHTML = domContent;
 
-    document.querySelector('.play-wrapper_progress_bar').classList.add("fade");
-    document.querySelector('.play-wrapper_card').classList.add("fade");
+    document.querySelector(".play-wrapper_progress_bar").classList.add("fade");
+    document.querySelector(".play-wrapper_card").classList.add("fade");
     document.querySelector(".popup-window").classList.add("show");
 
     setTimeout(() => {
-      webcam.stop()
-    }, 1000)
+      webcam.stop();
+    }, 1000);
   }
 
   function noMoreTries() {
@@ -194,13 +193,13 @@ function init() {
     domContent += `<hr><button class="btn btn-primary"><a href="#home" class="home-btn">Home</a></button>`;
     document.querySelector(".popup-window").innerHTML = domContent;
 
-    document.querySelector('.play-wrapper_progress_bar').classList.add("fade");
-    document.querySelector('.play-wrapper_card').classList.add("fade");
+    document.querySelector(".play-wrapper_progress_bar").classList.add("fade");
+    document.querySelector(".play-wrapper_card").classList.add("fade");
     document.querySelector(".popup-window").classList.add("show");
 
     setTimeout(() => {
-      webcam.stop()
-    }, 1000)
+      webcam.stop();
+    }, 1000);
   }
 
   async function updateTries() {
@@ -220,29 +219,32 @@ function init() {
 
     const currentUserRef = doc(db, "users", userEmail);
     await updateDoc(currentUserRef, {
-      points: (Number(userPoints) + Number(wordPoints)),
-      score: (Number(userScore) + Number(wordPoints))
+      points: Number(userPoints) + Number(wordPoints),
+      score: Number(userScore) + Number(wordPoints),
     });
 
     webcam.stop();
-    let domContent = `<h2 class="results-success-title">Congratulations!</h2>`
-    domContent += `<div class="results-inner">`
-    domContent += `<div class="statistics"><h2>Statistics</h2>`
-    domContent += `<table><tr><th>Points Earned</th><td><strong>${wordPoints} Piccles</strong></td></tr></table>`
-    domContent += `</div>`
-    domContent += `<div class="results-details">`
+    let domContent = `<h2 class="results-success-title">Congratulations!</h2>`;
+    domContent += `<div class="results-inner">`;
+    domContent += `<div class="statistics"><h2>Statistics</h2>`;
+    domContent += `<table><tr><th>Points Earned</th><td><strong>${wordPoints} Piccles</strong></td></tr></table>`;
+    domContent += `</div>`;
+    domContent += `<div class="results-details">`;
     domContent += `<h2><span>&ldquo;${theword}&rdquo;</span> <span>is the correct answer!</span></h2>`;
-    domContent += `<div class="results-trivia"><strong>Did you know?</strong><p>${currentHint}</p></div>`
+    domContent += `<div class="results-trivia"><strong>Did you know?</strong><p>${currentHint}</p></div>`;
     domContent += `<div class="results-img"><img src="${image}" /></div>`;
-    domContent += `</div>`
-    domContent += `</div>`
+    domContent += `</div>`;
+    domContent += `</div>`;
+    domContent += `<a id="screenShot"><button class="btn btn-primary">Share on facebook</button></a>`;
     domContent += `<div class="home-btn"><button class="btn btn-primary"><a href="index.html#home">Home</a></button></div>`;
     document.querySelector(".results-wrapper").innerHTML = domContent;
 
-    document.querySelector(".wrapper").classList.add('correct-answer');
+    document.querySelector(".wrapper").classList.add("correct-answer");
     setTimeout(() => {
-      document.querySelector('.results-success-title').classList.add('bounceMe')
-    }, 300)
+      document
+        .querySelector(".results-success-title")
+        .classList.add("bounceMe");
+    }, 300);
   }
 
   function answerIncorrect() {
@@ -257,13 +259,13 @@ function init() {
     document.querySelector(".popup-window").innerHTML = domContent;
 
     setTimeout(() => {
-      document.querySelector('.next-clue-btn').addEventListener('click', () => {
-        location.reload()
-      })
-    }, 100)
+      document.querySelector(".next-clue-btn").addEventListener("click", () => {
+        location.reload();
+      });
+    }, 100);
 
-    document.querySelector('.play-wrapper_progress_bar').classList.add("fade");
-    document.querySelector('.play-wrapper_card').classList.add("fade");
+    document.querySelector(".play-wrapper_progress_bar").classList.add("fade");
+    document.querySelector(".play-wrapper_card").classList.add("fade");
     document.querySelector(".popup-window").classList.add("show");
   }
 
@@ -377,28 +379,61 @@ function init() {
       domContent += `<p>Take a picture of something first before submitting!</p>`;
       domContent += `<hr><button class="btn btn-primary"><a href="#play" class="close-btn">Close</a></button>`;
       document.querySelector(".popup-window").innerHTML = domContent;
-  
-      document.querySelector('.play-wrapper_progress_bar').classList.add("fade");
-      document.querySelector('.play-wrapper_card').classList.add("fade");
+
+      document
+        .querySelector(".play-wrapper_progress_bar")
+        .classList.add("fade");
+      document.querySelector(".play-wrapper_card").classList.add("fade");
       document.querySelector(".popup-window").classList.add("show");
 
       setTimeout(() => {
-        document.querySelector('.close-btn').addEventListener('click', () => {
-          document.querySelector('.play-wrapper_progress_bar').classList.remove("fade");
-          document.querySelector('.play-wrapper_card').classList.remove("fade");
+        document.querySelector(".close-btn").addEventListener("click", () => {
+          document
+            .querySelector(".play-wrapper_progress_bar")
+            .classList.remove("fade");
+          document.querySelector(".play-wrapper_card").classList.remove("fade");
           document.querySelector(".popup-window").classList.remove("show");
-        })
-      }, 100)
+        });
+      }, 100);
     }
   });
 
-  document.querySelectorAll('.main-menu li a').forEach(link => {
-    link.addEventListener('click', () => {
-      if (link.getAttribute('href') != "#play") {
-        webcam.stop()
+  document.querySelectorAll(".main-menu li a").forEach((link) => {
+    link.addEventListener("click", () => {
+      if (link.getAttribute("href") != "#play") {
+        webcam.stop();
       }
-    })
-  })
+    });
+  });
 }
+
+const fb = document.getElementById("fbs");
+fb.addEventListener("click", () => {
+  var url =
+    "https://www.dailymail.co.uk/news/article-11026067/Boris-Johnsons-Government-WINS-late-night-confidence-vote-349-votes-238.html"; //Set desired URL here
+  var img =
+    "https://i.dailymail.co.uk/1s/2022/07/18/23/60419705-0-image-a-154_1658182060740.jpg"; //Set Desired Image here
+  var totalurl = encodeURIComponent(url + "?img=" + img);
+  console.log(totalurl);
+  window.open(
+    "http://www.facebook.com/sharer.php?u=" + totalurl,
+    "",
+    "width=500, height=500, scrollbars=yes, resizable=no"
+  );
+});
+
+//screen shot
+const ss = document.getElementById("screenShot");
+ss.addEventListener("click", () => {
+  const screenshotTarget = document.querySelector("results-inner");
+
+  html2canvas(screenshotTarget).then((canvas) => {
+    const base64image = canvas.toDataURL("image/png");
+    var image = new Image();
+    image.src = base64image;
+    document.getElementById("mImageBox").appendChild(image);
+  });
+});
+//
 
 init();
