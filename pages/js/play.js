@@ -60,6 +60,7 @@ function init() {
       // user progress found
       let allProgress = snapshot.docs;
       let recentProgress = allProgress[0];
+      console.log(`Progress ID: ${recentProgress.id}`)
       let dateStarted = new Date(
         recentProgress.data().date_started.seconds * 1000
       );
