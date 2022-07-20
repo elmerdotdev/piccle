@@ -188,8 +188,8 @@ ss.addEventListener("click", () => {
     console.log(base64image);
     var image = new Image();
     image.src = base64image;
-    console.log(base64image);
-    document.getElementById("mImageBox").appendChild(image);
+    // console.log(base64image);
+    // document.getElementById("mImageBox").appendChild(image);
     urltoFile(base64image, userEmail + ".png").then(function (file) {
       console.log(file);
       UploadProcess(file, userEmail + ".png");
