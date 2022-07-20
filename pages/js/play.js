@@ -424,6 +424,10 @@ function init() {
   });
 
   document.querySelector(".capture-btn").addEventListener("click", () => {
+    document.querySelector('.play-wrapper__camera').classList.add('shutter')
+    setTimeout(() => {
+      document.querySelector('.play-wrapper__camera').classList.remove('shutter')
+    }, 200)
     base64Image = webcam.snap();
     document.querySelector("#previewImage").setAttribute("src", base64Image);
     document.querySelector("#previewImage").style.zIndex = 2;
