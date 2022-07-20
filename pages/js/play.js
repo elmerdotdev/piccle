@@ -60,6 +60,7 @@ function init() {
       // user progress found
       let allProgress = snapshot.docs;
       let recentProgress = allProgress[0];
+      console.log(`Progress ID: ${recentProgress.id}`)
       let dateStarted = new Date(
         recentProgress.data().date_started.seconds * 1000
       );
@@ -285,9 +286,7 @@ function init() {
       domContent += `<svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M90 9.06428L80.9357 0L45 35.9357L9.06428 0L0 9.06428L35.9357 45L0 80.9357L9.06428 90L45 54.0643L80.9357 90L90 80.9357L54.0643 45L90 9.06428Z" fill="#E76057"/>
       </svg>`;
-      domContent += `<p>Sorry that is incorrect. You have ${
-        5 - usedTries
-      } tries remaining.</p>`;
+      domContent += `<p>That is incorrect. You have ${5 - usedTries} tries remaining.</p>`;
       domContent += `<hr><button class="btn btn-primary"><a href="#play" class="next-clue-btn">Next Clue</a></button>`;
       document.querySelector(".popup-window").innerHTML = domContent;
 
