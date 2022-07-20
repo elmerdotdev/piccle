@@ -467,7 +467,7 @@ function init() {
       let domContent = "<h2>Need photo</h2>";
       domContent += `<svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M90 9.06428L80.9357 0L45 35.9357L9.06428 0L0 9.06428L35.9357 45L0 80.9357L9.06428 90L45 54.0643L80.9357 90L90 80.9357L54.0643 45L90 9.06428Z" fill="#E76057"/></svg>`;
       domContent += `<p>Take a picture of something first before submitting!</p>`;
-      domContent += `<hr><button class="btn btn-primary"><a href="#play" class="close-btn">Close</a></button>`;
+      domContent += `<hr><button class="btn btn-secondary"><a href="#play" class="close-btn">Close</a></button>`;
       document.querySelector(".popup-window").innerHTML = domContent;
   
       document.querySelector('.play-wrapper_progress_bar').classList.add("fade");
