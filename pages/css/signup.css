@@ -1,3 +1,12 @@
+input {
+    padding: 0 1rem;
+    font-family: 'Rubik', sans-serif;
+  }
+  
+  input::placeholder {
+    padding: 0rem;
+  }
+
 
 @media screen and (min-width: 1100px) {
     header {
