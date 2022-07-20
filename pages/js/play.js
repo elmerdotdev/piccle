@@ -173,7 +173,7 @@ function init() {
     let domContent = "<h2>Challenge completed!</h2>";
     domContent += `<div style="font-size: 4rem;">✔️</div>`;
     domContent += `<p>Hold your horses! Next challenge isn't until tomorrow :)</p>`;
-    domContent += `<hr><button class="btn btn-primary"><a href="#home" class="home-btn">Home</a></button>`;
+    domContent += `<hr><button class="btn btn-primary"><a href="#home">Home</a></button>`;
     document.querySelector(".popup-window").innerHTML = domContent;
 
     document.querySelector('.play-wrapper_progress_bar').classList.add("fade");
@@ -182,14 +182,15 @@ function init() {
 
     setTimeout(() => {
       webcam.stop()
-    }, 1000)
+    }, 2000)
   }
 
   async function noMoreTries(title, message) {
     const snapshotChance = await checkHasExtraChance()
     const totalChances = snapshotChance.size
+    const chanceShopItem = await getChanceFromShop()
     const domTitle = title || "Out of guesses!"
-    const domMessage = message || "Sorry, you ran out of guesses. You can use or buy extra chances to continue playing."
+    const domMessage = message || "However, you can use or buy extra chances to continue playing if you have enough piccles."
     
     try {
       let domContent = `<h2>${domTitle}</h2>`;
@@ -200,17 +201,27 @@ function init() {
       
       if (totalChances > 0) {
         const chance = snapshotChance.docs[0].id
-
-        domContent += `<hr><button class="btn btn-primary use-chance-btn"><a href="#play" class="home-btn">Use extra chance</a></button>`;
+        domContent += `<hr><div class="popup-btns"><button class="btn btn-primary use-chance-btn"><a href="#play">Use Extra Chance</a></button>`;
+        domContent += `<button class="btn btn-primary"><a href="#home">Home</a></button></div>`;
         domContent += `<div class="remaining-chances"><small><em>You have ${totalChances} chance(s) available.</em></small></div>`;
-
         setTimeout(() => {
           document.querySelector(".use-chance-btn").addEventListener('click', () => {
             usePlayerChances(chance)
           }, 100)
         })
       } else {
-        domContent += `<hr><button class="btn btn-primary"><a href="#shop" class="home-btn">Shop</a></button>`;
+        if (userPoints >= chanceShopItem.data().price) {
+          domContent += `<hr><div class="popup-btns"><button class="btn btn-primary buy-chance-btn"><a href="#play">Buy Extra Chance</a></button>`;
+          domContent += `<button class="btn btn-primary"><a href="#home">Home</a></button></div>`;
+          domContent += `<div class="remaining-chances"><small><em>Each extra chance cost 50 Piccles</em></small></div>`;
+          setTimeout(() => {
+            document.querySelector(".buy-chance-btn").addEventListener('click', () => {
+              buyShopItem(chanceShopItem.data().price, chanceShopItem.id)
+            }, 100)
+          })
+        } else {
+          domContent += `<hr><div class="popup-btns not-enough-piccles"><button class="btn btn-primary"><a href="#home">Home</a></button>`;
+        }
       }
       document.querySelector(".popup-window").innerHTML = domContent;
 
@@ -319,6 +330,30 @@ function init() {
     })
 
     location.reload()
+  }
+
+  async function getChanceFromShop() {
+    const chanceRef = doc(db, "shop", "extra-chance")
+    const snapshot = await getDoc(chanceRef)
+
+    return snapshot
+  }
+
+  async function buyShopItem(price, itemId) {
+    const userRef = doc(db, "users", userEmail)
+    await updateDoc(userRef, {
+      points: userPoints - price,
+    })
+    
+    const purchaseRef = await addDoc(collection(db, "purchases"), {
+      cost: price,
+      date_purchased: Timestamp.fromDate(new Date()),
+      item: itemId,
+      used: false,
+      user_email: userEmail,
+    })
+
+    usePlayerChances(purchaseRef.id)
   }
 
   // Camera functions ==========================

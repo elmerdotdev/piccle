@@ -252,9 +252,30 @@
     margin-bottom: 1rem;
   }
 
+  .popup-btns {
+    display: flex;
+    justify-content: center;
+    column-gap: .5rem;
+    padding: 0 1rem;
+  }
+
+  .popup-btns button:first-child {
+    flex: 1;
+  }
+
+  .popup-btns button:last-child {
+    min-width: auto;
+  }
+
+  .popup-btns.not-enough-piccles button {
+    flex: 0;
+    min-width: 200px;
+  }
+
   .btn a {
     display: block;
     color: inherit;
+    text-align: center;
   }
 
   .remaining-chances {
@@ -338,10 +359,6 @@
     max-width: 100%;
     height: auto;
     border: 2px solid black;
-  }
-
-  .home-btn {
-    text-align: center;
   }
 
   @media only screen and (min-width: 600px) {
