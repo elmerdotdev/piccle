@@ -9,6 +9,10 @@
   margin-bottom: 5rem;
 }
 
+.main-menu {
+  display: none;
+}
+
 .header-border {
   background-color: #fed235;
 }
@@ -26,6 +30,11 @@
 
 input {
   padding: 0 1rem;
+  font-family: 'Rubik', sans-serif;
+}
+
+input::placeholder {
+  padding: 0rem;
 }
 
 .or {

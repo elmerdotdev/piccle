@@ -115,7 +115,7 @@ function init() {
     const currentPoints = await getAvailablePoints(email);
     const item = await getSpecificItem(itemId);
 
-    if (currentPoints > item.data().price) {
+    if (currentPoints >= item.data().price) {
       await updateDoc(userRef, {
         points: currentPoints - item.data().price,
       });
