@@ -202,7 +202,7 @@ function init() {
       if (totalChances > 0) {
         const chance = snapshotChance.docs[0].id
         domContent += `<hr><div class="popup-btns"><button class="btn btn-primary use-chance-btn"><a href="#play">Use Extra Chance</a></button>`;
-        domContent += `<button class="btn btn-primary"><a href="#home">Home</a></button></div>`;
+        domContent += `<button class="btn btn-secondary"><a href="#home">Home</a></button></div>`;
         domContent += `<div class="remaining-chances"><small><em>You have ${totalChances} chance(s) available.</em></small></div>`;
         setTimeout(() => {
           document.querySelector(".use-chance-btn").addEventListener('click', () => {
@@ -212,7 +212,7 @@ function init() {
       } else {
         if (userPoints >= chanceShopItem.data().price) {
           domContent += `<hr><div class="popup-btns"><button class="btn btn-primary buy-chance-btn"><a href="#play">Buy Extra Chance</a></button>`;
-          domContent += `<button class="btn btn-primary"><a href="#home">Home</a></button></div>`;
+          domContent += `<button class="btn btn-secondary"><a href="#home">Home</a></button></div>`;
           domContent += `<div class="remaining-chances"><small><em>Each extra chance cost 50 Piccles</em></small></div>`;
           setTimeout(() => {
             document.querySelector(".buy-chance-btn").addEventListener('click', () => {
@@ -220,7 +220,7 @@ function init() {
             }, 100)
           })
         } else {
-          domContent += `<hr><div class="popup-btns not-enough-piccles"><button class="btn btn-primary"><a href="#home">Home</a></button>`;
+          domContent += `<hr><div class="popup-btns not-enough-piccles"><button class="btn btn-secondary"><a href="#home">Home</a></button>`;
         }
       }
       document.querySelector(".popup-window").innerHTML = domContent;
