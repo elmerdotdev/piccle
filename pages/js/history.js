@@ -9,7 +9,7 @@ import {
   getDocs,
   doc,
   getDoc,
-} from "https://www.gstatic.com/firebasejs/9.8.3/firebase-firestore.js";
+} from "../../firebase-lib/firebase-firestore.js";
 
 function init() {
   // If not logged in, redirect to login page
