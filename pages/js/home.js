@@ -1,7 +1,7 @@
 'use strict';
 
 import { getFirestore, collection, query, where, 
-    getDocs, getDoc, doc, orderBy, limit  } from 'https://www.gstatic.com/firebasejs/9.8.3/firebase-firestore.js'
+    getDocs, getDoc, doc, orderBy, limit  } from '../../firebase-lib/firebase-firestore.js'
 
 function init () {
     
