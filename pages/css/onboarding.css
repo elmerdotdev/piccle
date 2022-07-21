@@ -1,0 +1,470 @@
+
+body {
+    /* max-width: 37.5rem; */
+    margin: 0 auto;
+    height: 100vh;
+    width: 100vw;
+  }
+  
+  * {
+    box-sizing: border-box;
+    scrollbar-color: transparent transparent; /* thumb and track color */
+    scrollbar-width: 0px;
+  }
+  
+  *::-webkit-scrollbar {
+    width: 0;
+  }
+  
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  *::-webkit-scrollbar-thumb {
+    background: transparent;
+    border: none;
+  }
+  
+  * {
+    -ms-overflow-style: none;
+  }
+
+
+
+header {
+    visibility: hidden;
+}
+
+main {
+    display: block;
+}
+
+ol, li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.carousel {
+    position: relative;
+    padding-top: 75%;
+    filter: drop-shadow(0 0 10px #0003);
+    perspective: 100px;
+  }
+  
+  .carousel__viewport {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    counter-reset: item;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+  }
+  
+  .carousel__slide {
+    position: relative;
+    flex: 0 0 100%;
+    width: 100%;
+    counter-increment: item;
+  }
+  
+  .carousel__slide:before {
+    content: counter(item);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate3d(-50%,-40%,70px);
+    color: #fff;
+    font-size: 2em;
+  }
+  
+  .carousel__snapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    scroll-snap-align: center;
+  }
+  
+
+.header-border button {
+    margin-left: 0;
+}
+
+.onboarding-banner-1 {
+    background-color: #FF90E8;
+}
+
+.onboarding-banner-2 {
+    background-color: #B470ED;
+}
+
+.onboarding-banner-3 {
+    background-color: #5C91F6;
+}
+
+.onboarding-banner-4 {
+    background-color: #4EC887;
+}
+
+.desktop-left {
+    display: grid;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    height: 35vh;
+    /* align-content: center; */
+}
+
+.desktop-left h2 {
+    padding: 1.5rem 3rem;
+    font-size: 2.4rem;
+}
+
+.image-wrapper   {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.card {
+    padding: 0;
+    background: unset;
+    border: unset;
+    box-shadow: unset;
+    border-radius: unset;
+}
+
+.desktop-right {
+    height: 45vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    gap: 4rem;
+    padding: 0 5%;
+}
+
+
+.share-icn {
+    transform: rotate(-20deg);
+}
+
+p {
+    font-size: 2rem;
+}
+
+.skip-next {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    /* margin: 5rem 0; */
+    gap: 4rem;
+}
+
+.skip-next a {
+    font-size: 1.6rem;
+    font-weight: bold;
+    text-decoration: underline;
+    color: #000;
+}
+
+/* extra ================= */
+.play-wrapper {
+    display: flex;
+    flex-flow: column wrap;
+  }
+
+  .play-wrapper__numbers {
+    display: flex;
+    column-gap: 5rem;
+    list-style: none;
+    margin: 1rem auto;
+    padding: 0;
+  }
+
+  .play-wrapper__numbers li {
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    z-index: 1;
+  }
+
+  .play-wrapper__numbers li .number {
+    font-weight: 600;
+  }
+
+  .play-wrapper__numbers li .circle {
+    font-size: 2rem;
+    width: 37px;
+    height: 37px;
+    background-color: rgb(255, 255, 255);
+    color: white;
+    text-align: center;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 2px solid #000000;
+    box-shadow: 0px 2px 0px #1d1d1d;
+  }
+
+
+  .play-wrapper_progress_bar {
+    display: flex;
+    flex-flow: column nowrap;
+    position: relative;
+  }
+
+  .play-wrapper__progress_line {
+    border: 1px solid #000;
+    width: 60%;
+    align-self: center;
+    position: absolute;
+    /* bottom: 33px;
+    z-index: -1; */
+    top: 33px;
+  }
+
+  .onboarding-banner-1 > .play-wrapper_progress_bar {
+    justify-content: flex-end;
+  }
+    
+  .onboarding-banner-1 .play-wrapper__progress_line{
+    top: 80px;
+  }
+
+  
+  /* .carousel::before,
+  .carousel::after,
+  .carousel__prev,
+  .carousel__next {
+    position: absolute;
+    top: 0;
+    margin-top: 37.5%;
+    width: 4rem;
+    height: 4rem;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    font-size: 0;
+    outline: 0;
+  } */
+  
+  .carousel::before,
+  .carousel__prev {
+    left: -1rem;
+  }
+  
+  .carousel::after,
+  .carousel__next {
+    right: -1rem;
+  }
+  
+  .carousel::before,
+  .carousel::after {
+    content: '';
+    z-index: 1;
+    background-color: #333;
+    background-size: 1.5rem 1.5rem;
+    background-repeat: no-repeat;
+    background-position: center center;
+    color: #fff;
+    font-size: 2.5rem;
+    line-height: 4rem;
+    text-align: center;
+    pointer-events: none;
+  }
+
+
+
+@media screen and (min-width: 414px) {
+    .onboarding-banner-1 .play-wrapper__progress_line {
+        top: 35px;
+    }
+
+    .play-wrapper__progress_line {
+        width: 81%;
+    }
+}
+
+@media screen and (min-width: 443px) {
+    span.play-wrapper__progress_line {
+        width: 78%;
+    }
+}
+
+@media screen and (min-width: 526px) {
+    span.play-wrapper__progress_line {
+        width: 65%;
+    }
+}
+
+
+
+@media screen and (min-width: 506px) {
+    .onboarding-banner-1 .play-wrapper__progress_line {
+        top: 62px;
+    }
+
+    .play-wrapper__progress_line {
+        width: 61%;
+    }
+}
+
+
+@media screen and (min-width: 613px) {
+    .play-wrapper__progress_line {
+        width: 55%;
+    }
+}
+
+@media screen and (min-width: 639px) {
+    span.play-wrapper__progress_line {
+        width: 53%;
+    }
+}
+
+
+
+
+@media screen and (min-width: 671px) {
+    .play-wrapper__progress_line {
+        width: 49%;
+    }
+}
+
+@media screen and (min-width: 765px) {
+    span.play-wrapper__progress_line {
+        width: 43%;
+    }
+}
+
+@media screen and (min-width: 815px) {
+    .play-wrapper__progress_line {
+        width: 40%;
+    }
+}
+
+@media screen and (min-width: 816px) {
+    .onboarding-banner-1 .play-wrapper__progress_line  {
+        top: 91px;
+    }
+}
+
+@media screen and (min-width: 939px) {
+    span.play-wrapper__progress_line {
+        width: 35%;
+    }
+}
+
+@media screen and (min-width: 1004px) {
+    /* .onboarding-banner-1 .play-wrapper__progress_line  {
+        top: 182px;
+    }
+    .play-wrapper__progress_line {
+        width: 31%;
+    } */
+
+    .onboarding-banner-1 .play-wrapper__progress_line {
+        top: 91px;
+    }
+
+    .onboarding-banner-1 .play-wrapper__progress_line {
+        width: 33%;
+    }
+
+    
+}
+
+
+@media screen and (min-width: 1100px) {
+    main {
+        border: unset;
+        border-radius: unset; 
+        box-shadow: unset;
+    }
+
+    .carousel {
+        padding-top: 100%;
+    }
+
+    .carousel__viewport {
+        overflow-x: scroll;
+    }
+    
+    .card {
+        min-height: 595px;
+        background: #fafafc;
+        border: 2px solid #1d1d1f;
+        box-shadow: 0px 8px 0px #1d1d1d;
+        border-radius: 24px;
+    }
+
+
+    .header-border {
+        border-bottom: unset;
+        border-radius: 40px 100px;
+        box-shadow: unset;
+        padding: unset;
+    }
+    
+
+    .onboarding-wrapper {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: center;
+        border: 1px solid black;
+        border-radius: 20px;
+        box-shadow: 5px 5px;
+        padding: 0;
+        
+        max-height: 65vh;
+        background-color: white;
+    }
+
+    #carousel__slide1 .onboarding-wrapper {
+        background: linear-gradient(to right, #FF90E8 20%, #ffff 20% 80%);
+    }
+
+    #carousel__slide2 .onboarding-wrapper {
+        background: linear-gradient(to right, #B470ED 20%, #ffff 20% 80%);
+    }
+
+    #carousel__slide3 .onboarding-wrapper {
+        background: linear-gradient(to right, #5C91F6 20%, #ffff 20% 80%);
+    }
+
+    #carousel__slide4 .onboarding-wrapper {
+        background: linear-gradient(to right, #4EC887 20%, #ffff 20% 80%);
+    }
+    
+    .desktop-left {
+        margin-bottom: 0;
+        height: unset;
+        gap: 0;
+        grid-template-rows: repeat(3,1fr);
+    }
+
+    .desktop-left button {
+        margin: 1rem
+    }
+
+    .desktop-left .play-wrapper_progress_bar {
+        order: 3;
+        padding-bottom: 2rem;
+        grid-row: 3/-1;
+    }
+
+    .desktop-left h2 {
+        grid-row: 2/3;
+    }
+
+    .desktop-right {
+        height: 70vh;
+    }
+
+    .onboarding-banner-1 .play-wrapper__progress_line {
+        top: 166px;
+        width: 65%;
+    }
+}
