@@ -1,0 +1,144 @@
+section {
+    padding: 1rem;
+    min-width: 200px;
+}
+
+.account {
+    display: flex;
+    gap: 2rem;
+    flex-direction: column;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+input {
+    height: 3rem;
+    border-radius: 10px;
+    padding: 0 1rem;
+    font-family: 'Rubik', sans-serif;
+}
+
+.info-holder {
+    display: flex;
+    flex-direction: column;
+}
+
+.account-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+}
+
+span, label {
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+.social-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.social-holder {
+    display: grid;
+}
+
+.account-buttons .btn-secondary,
+.account-buttons .btn-primary,
+.social-holder .btn-secondary,
+.social-holder .btn-primary {
+    min-width: unset;
+}
+
+.account-buttons .btn,
+    .social-holder .btn {
+    padding: 0.75rem 0;
+}
+
+@media screen and (min-width: 383px) {
+    .account-buttons .btn-secondary,
+    .account-buttons .btn-primary {
+        flex: 0 0 45%;
+    }                               
+    .account-buttons {
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        flex-direction: row;
+        align-items: center;
+        align-content: center;
+        justify-content: space-between;
+    }
+
+    .social-holder {
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        gap: 1rem;
+    }
+/* 
+    .account-buttons .btn,
+    .social-holder .btn {
+        padding: 0.75rem 2rem; */
+}
+
+@media screen and (min-width: 600px) {
+    section {
+        margin: 0 5%;
+    }
+    
+    .account {
+        padding: 1rem 3rem;
+    }
+}
+
+
+@media screen and (min-width: 760px) {
+    section {
+        margin: auto;
+        max-width: 800px;
+    }
+
+    .account {
+        padding: 2rem 8rem;
+    }
+    
+    
+    .info-holder {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .account-buttons  {
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        gap: 1rem;
+        justify-items: center;
+        align-items: center;
+        justify-content: center;
+        align-content: center;
+    }
+
+    button {
+        width: 200px;
+    }
+
+    footer.visually-hidden {
+        clip: unset;
+        clip-path: unset;
+        height: 5rem;
+        overflow: unset;
+        position: unset;
+        white-space: unset;
+        width: 100%;
+        bottom: 0;
+        background-color: transparent;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 2rem 0;
+    }
+}
