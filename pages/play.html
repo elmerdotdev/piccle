@@ -110,7 +110,7 @@
   }
 
   .play-wrapper__numbers .used-hint .circle {
-    background-color: #E76057;
+    background-color: #e76057;
   }
 
   .play-wrapper__numbers .current-hint .circle {
@@ -194,7 +194,7 @@
   }
 
   .play-wrapper__camera.shutter::before {
-    animation: shutter .2s ease-in;
+    animation: shutter 0.2s ease-in;
     z-index: 9999;
   }
 
@@ -265,7 +265,7 @@
   .popup-btns {
     display: flex;
     justify-content: center;
-    column-gap: .5rem;
+    column-gap: 0.5rem;
     padding: 0 1rem;
   }
 
@@ -289,7 +289,7 @@
   }
 
   .remaining-chances {
-    margin-top: .5rem;
+    margin-top: 0.5rem;
   }
 
   .results-wrapper {
@@ -330,6 +330,10 @@
     text-align: center;
     border: 1px solid black;
     border-radius: 25px 50px 50px 20px;
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    justify-content: space-between;
   }
 
   .statistics h2 {
@@ -365,7 +369,7 @@
     text-align: center;
   }
 
-  .results-wrapper img {
+  .results-details img {
     max-width: 100%;
     height: auto;
     border: 2px solid black;
@@ -439,11 +443,12 @@
   }
 
   @keyframes shutter {
-    0%, 100% {
-      opacity: 0
+    0%,
+    100% {
+      opacity: 0;
     }
     50% {
-      opacity: 1
+      opacity: 1;
     }
   }
 </style>

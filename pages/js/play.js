@@ -275,8 +275,12 @@ function init() {
     webcam.stop();
     let domContent = `<h2 class="results-success-title">Congratulations!</h2>`;
     domContent += `<div class="results-inner">`;
-    domContent += `<div class="statistics"><h2>Statistics</h2>`;
-    domContent += `<table><tr><th>Points Earned</th><td><strong>${wordPoints} Piccles</strong></td></tr></table>`;
+    domContent += `<div class="statistics"><div>`;
+    domContent += `<h2>Statistics</h2>`;
+    domContent += `<table><tr><th>Points Earned</th><td><strong>${wordPoints} Piccles</strong></td></tr></table></div>`;
+    domContent += `<div class="shareButtons">`;
+    domContent += `<button class="btn btn-icon round shareFacebook"><img src="./../images/icons/facebook-fill.svg" /></button><button class="btn btn-icon round shareTwitter"><img src="./../images/icons/twitter-fill.svg" /></button>`;
+    domContent += `</div>`;
     domContent += `</div>`;
     domContent += `<div class="results-details">`;
     domContent += `<h2><span>&ldquo;${theword}&rdquo;</span> <span>is the correct answer!</span></h2>`;
@@ -284,7 +288,6 @@ function init() {
     domContent += `<div class="results-img"><img src="${image}" /></div>`;
     domContent += `</div>`;
     domContent += `</div>`;
-    domContent += `<a id="screenShot"><button class="btn btn-primary">Share on facebook</button></a>`;
     domContent += `<div class="home-btn"><button class="btn btn-primary"><a href="index.html#home">Home</a></button></div>`;
     document.querySelector(".results-wrapper").innerHTML = domContent;
 
@@ -293,6 +296,28 @@ function init() {
       document
         .querySelector(".results-success-title")
         .classList.add("bounceMe");
+
+      const shareTwitter = document.querySelector(".shareTwitter");
+      shareTwitter.addEventListener("click", () => {
+        var url = "https://dev.piccle.fun/";
+        window.open(
+          "https://twitter.com/intent/tweet?url=" +
+            url +
+            "&text=" +
+            "I have scored " +
+            userPoints
+        );
+      });
+
+      const shareFacebook = document.querySelector(".shareFacebook");
+      shareFacebook.addEventListener("click", () => {
+        var url = "https://dev.piccle.fun/";
+        window.open(
+          "http://www.facebook.com/sharer.php?u=" + url,
+          "",
+          "width=1200, height=630, scrollbars=yes, resizable=no"
+        );
+      });
     }, 300);
   }
 
@@ -524,34 +549,6 @@ function init() {
   });
 }
 
-const fb = document.getElementById("fbs");
-fb.addEventListener("click", () => {
-  var url =
-    "https://www.dailymail.co.uk/news/article-11026067/Boris-Johnsons-Government-WINS-late-night-confidence-vote-349-votes-238.html"; //Set desired URL here
-  var img =
-    "https://i.dailymail.co.uk/1s/2022/07/18/23/60419705-0-image-a-154_1658182060740.jpg"; //Set Desired Image here
-  var totalurl = encodeURIComponent(url + "?img=" + img);
-  console.log(totalurl);
-  window.open(
-    "http://www.facebook.com/sharer.php?u=" + totalurl,
-    "",
-    "width=500, height=500, scrollbars=yes, resizable=no"
-  );
-});
-
-//screen shot
-const ss = document.getElementById("screenShot");
-ss.addEventListener("click", () => {
-  const screenshotTarget = document.querySelector("results-inner");
-
-  html2canvas(screenshotTarget).then((canvas) => {
-    const base64image = canvas.toDataURL("image/png");
-    var image = new Image();
-    image.src = base64image;
-    document.getElementById("mImageBox").appendChild(image);
-  });
-});
-//
 document.getElementById("pageName").innerHTML = "play";
 document.getElementById("pageName").style.color = "#FF90E8";
 document.querySelector('[href="#play"]').innerHTML =
