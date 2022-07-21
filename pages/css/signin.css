@@ -1,3 +1,14 @@
+
+header, .visually-hidden {
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+  }
+
 .header.visually-hidden {
   clip: unset;
   clip-path: unset;
@@ -19,13 +30,18 @@
 
 .login-field {
   padding: 2rem 8%;
-  background-color: #fff;
+  background-color: unset;
   border-radius: 0 22px 22px 0;
 }
 
 .signup-label {
   font-weight: bold;
   text-decoration: underline;
+  color: #000;
+}
+
+form .formfield-wrapper:nth-child(3) {
+  align-items: center;
 }
 
 input {
@@ -35,6 +51,10 @@ input {
 
 input::placeholder {
   padding: 0rem;
+}
+
+input[type=submit] {
+  width: 10rem;
 }
 
 .or {
@@ -63,7 +83,7 @@ input::placeholder {
 
   main {
     margin-top: 5rem;
-    background: linear-gradient(to right, #fed235 20%, transparent 20% 80%);
+    background: linear-gradient(to right, #fed235 20%, #ffff 20% 80%);
   }
 
   .desktop-left .logo-img {
@@ -85,5 +105,9 @@ input::placeholder {
     border-bottom: 0;
     display: block;
     position: relative;
+  }
+
+  .desktop-right {
+    background-color: #ffff;
   }
 }
