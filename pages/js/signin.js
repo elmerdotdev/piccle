@@ -2,12 +2,12 @@ import { getAuth, signOut,
     createUserWithEmailAndPassword, signInWithEmailAndPassword,
     signInWithPopup, FacebookAuthProvider,
     GoogleAuthProvider, TwitterAuthProvider,
-} from 'https://www.gstatic.com/firebasejs/9.8.3/firebase-auth.js'
+} from '../../firebase-lib/firebase-auth.js'
 
 import {
     getFirestore, collection, doc, getDoc,
     setDoc,
-} from 'https://www.gstatic.com/firebasejs/9.8.3/firebase-firestore.js'
+} from '../../firebase-lib/firebase-firestore.js'
 
 // initialize firebase services
 const auth = getAuth();

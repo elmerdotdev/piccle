@@ -1,4 +1,4 @@
-import { getAuth } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-auth.js";
+import { getAuth } from "../../firebase-lib/firebase-auth.js";
 
 import {
   getFirestore,
@@ -10,7 +10,7 @@ import {
   getDocs,
   setDoc,
   getDoc,
-} from "https://www.gstatic.com/firebasejs/9.8.3/firebase-firestore.js";
+} from "../../firebase-lib/firebase-firestore.js";
 
 // initialize firebase services
 const auth = getAuth();

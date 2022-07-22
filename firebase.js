@@ -1,7 +1,7 @@
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.8.3/firebase-app.js'
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-analytics.js"
-import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-messaging.js";
-import { getFirestore, doc, getDoc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-firestore.js";
+import { initializeApp } from './firebase-lib/firebase-app.js'
+import { getAnalytics } from "./firebase-lib/firebase-analytics.js"
+import { getMessaging, getToken, onMessage } from "./firebase-lib/firebase-messaging.js";
+import { getFirestore, doc, getDoc, updateDoc, arrayUnion } from "./firebase-lib/firebase-firestore.js";
 
 // import { getAuth, signOut,
 //     createUserWithEmailAndPassword, signInWithEmailAndPassword,

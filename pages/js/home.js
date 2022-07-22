@@ -10,13 +10,7 @@ import {
   doc,
   orderBy,
   limit,
-} from "https://www.gstatic.com/firebasejs/9.8.3/firebase-firestore.js";
-import {
-  getStorage,
-  ref as sRef,
-  uploadBytesResumable,
-  getDownloadURL,
-} from "https://www.gstatic.com/firebasejs/9.8.3/firebase-storage.js";
+} from "../../firebase-lib/firebase-firestore.js";
 
 function init() {
   let loggedInUser = localStorage.getItem("piccleUID");
@@ -160,92 +154,6 @@ function datesAreOnSameDay(first, second) {
   } else {
     return false;
   }
-}
-
-// const fb = document.getElementById("fbs");
-// fb.addEventListener("click", () => {
-//   var url =
-//     "https://www.dailymail.co.uk/news/article-11026067/Boris-Johnsons-Government-WINS-late-night-confidence-vote-349-votes-238.html"; //Set desired URL here
-//   var img =
-//     "https://i.dailymail.co.uk/1s/2022/07/18/23/60419705-0-image-a-154_1658182060740.jpg"; //Set Desired Image here
-//   var totalurl = encodeURIComponent(url + "?img=" + img);
-//   console.log(totalurl);
-//   window.open(
-//     "http://www.facebook.com/sharer.php?u=" + totalurl,
-//     "",
-//     "width=500, height=500, scrollbars=yes, resizable=no"
-//   );
-// });
-
-//screen shot
-const ss = document.getElementById("screenShot");
-ss.addEventListener("click", () => {
-  const screenshotTarget = document.getElementById("results-inner");
-  html2canvas(screenshotTarget).then((canvas) => {
-    const userEmail = localStorage.getItem("piccleUID").split("@")[0];
-    // userEmail = userEmail.split("@")[0];
-    const base64image = canvas.toDataURL("image/png");
-    console.log(base64image);
-    var image = new Image();
-    image.src = base64image;
-    // console.log(base64image);
-    // document.getElementById("mImageBox").appendChild(image);
-    urltoFile(base64image, userEmail + ".png").then(function (file) {
-      console.log(file);
-      UploadProcess(file, userEmail + ".png");
-    });
-  });
-});
-//
-
-function urltoFile(url, filename, mimeType) {
-  mimeType = mimeType || (url.match(/^data:([^;]+);/) || "")[1];
-  return fetch(url)
-    .then(function (res) {
-      return res.arrayBuffer();
-    })
-    .then(function (buf) {
-      return new File([buf], filename, { type: mimeType });
-    });
-}
-
-async function UploadProcess(files, fileName) {
-  var ImgToUpload = files;
-  var ImgName = fileName;
-  const metaData = {
-    contentType: ImgToUpload.type,
-  };
-  const storage = getStorage();
-  const stroageRef = sRef(storage, "Images/" + ImgName);
-  // const stroageRef = sRef(storage, "Images/" + ImgName);
-  const UploadTask = uploadBytesResumable(stroageRef, ImgToUpload, metaData);
-  UploadTask.on(
-    "state-changed",
-    (snapshot) => {
-      console.log(snapshot, "snapshot");
-    },
-    (error) => {
-      alert("error: image not uploaded!");
-    },
-    () => {
-      getDownloadURL(UploadTask.snapshot.ref).then((downloadURL) => {
-        console.log(downloadURL);
-        facebookShare(downloadURL);
-      });
-    }
-  );
-}
-
-function facebookShare(ImageURL) {
-  var url = "https://demo.piccle.fun/";
-  var img = ImageURL;
-  var totalurl = encodeURIComponent(url + "?img=" + img);
-  console.log(totalurl);
-  window.open(
-    "http://www.facebook.com/sharer.php?u=" + totalurl,
-    "",
-    "width=1200, height=630, scrollbars=yes, resizable=no"
-  );
 }
 
 init();
