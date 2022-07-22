@@ -45,6 +45,7 @@ class Router {
   static async goToPage(page) {
     try {
       const response = await fetch(page.htmlName);
+      console.log(response)
       const txt = await response.text();
       Router.rootElem.innerHTML = txt;
       //append JS part to run.
