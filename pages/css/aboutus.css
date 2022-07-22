@@ -97,12 +97,6 @@ a {
     white-space: nowrap;
     width: 1px;
     }
-
-    .aboutus-profile ul {
-        /* overflow-x: unset;
-        scroll-snap-type: unset; */
-    }
-
     .member--wrapper {
         max-width: 123px;
     }

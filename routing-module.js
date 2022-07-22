@@ -62,5 +62,11 @@ Router.init("mainArea", [
     "pages/aboutus.html",
     "pages/js/aboutus.js",
     "pages/css/aboutus.css"
+    ),
+  new Page(
+    "#onboarding",
+    "pages/onboarding.html",
+    "pages/js/onboarding.js",
+    "pages/css/onboarding.css"
   ),
 ]);
