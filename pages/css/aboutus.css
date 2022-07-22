@@ -21,6 +21,7 @@ section.aboutus-profile {
     overflow-x: scroll;
     scroll-snap-type: x mandatory;
     padding: 1rem;
+    justify-items: center;
 }
 
 .member--wrapper {
@@ -29,7 +30,7 @@ section.aboutus-profile {
     justify-content: flex-start;
     align-items: center;
     align-content: center;
-    scroll-snap-align: center;
+    scroll-snap-align: start;
     width: 123px;
     text-align: center;
 }
@@ -122,6 +123,14 @@ a {
         padding: 0 5%;        
     }
 
+    aboutus-profile {
+        padding: 0 5%;
+    }
+    
+
+    .aboutus-profile ul {
+        overflow-x: unset;
+    }
 
     .profile-links {
         display: grid;
