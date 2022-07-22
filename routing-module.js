@@ -1,4 +1,4 @@
-"use strict";
+import { Router, Page } from './routing.js'
 
 Router.init("mainArea", [
   new Page(

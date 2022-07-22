@@ -15,7 +15,7 @@ import {
   Timestamp,
 } from "../../firebase-lib/firebase-firestore.js";
 
-function init() {
+export function init () {
   // If not logged in, redirect to login page
   const userEmail = localStorage.getItem("piccleUID");
   if (!userEmail) {
@@ -163,5 +163,3 @@ function init() {
 
   renderShop(userEmail);
 }
-
-init();

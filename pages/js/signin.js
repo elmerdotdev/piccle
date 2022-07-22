@@ -11,6 +11,7 @@ import {
     setDoc,
 } from '../../firebase-lib/firebase-firestore.js'
 
+export function init () {
 // initialize firebase services
 const auth = getAuth();
 // console.log(auth)
@@ -204,3 +205,5 @@ function revealPW() {
         x.type = "password";
     }
   }
+  
+}

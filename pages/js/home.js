@@ -4,9 +4,9 @@ import { db } from "../../firebase.js"
 
 import { getFirestore, collection, query, where, 
     getDocs, getDoc, doc, orderBy, limit  } from '../../firebase-lib/firebase-firestore.js'
-
-function init () {
     
+export function init () {
+
     let loggedInUser = localStorage.getItem('piccleUID');
     let userPoints = null;
     let userHints = 5;
@@ -117,9 +117,11 @@ function init () {
     document.querySelector("span.player-history").innerHTML = pastGames;
   });
 
-  document.querySelectorAll(".hide").forEach((card) => {
-    card.classList.remove("hide");
-  });
+  setTimeout(() => {
+    document.querySelectorAll(".hide").forEach((card) => {
+      card.classList.remove("hide");
+    });
+  }, 300)
 }
 
 function ordinalSuffixOf(i) {
@@ -148,5 +150,3 @@ function datesAreOnSameDay(first, second) {
     return false;
   }
 }
-    
-init()
