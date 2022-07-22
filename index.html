@@ -52,12 +52,12 @@
       href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&family=Rammetto+One&display=swap"
       rel="stylesheet"
     />
-
-    <!-- Global site tag (gtag.js) - Google Analytics -->
     <script
       async
       src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"
     ></script>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
     <script
       async
       src="https://www.googletagmanager.com/gtag/js?id=G-DNP3DE1WFP"
@@ -72,9 +72,25 @@
       gtag("config", "G-DNP3DE1WFP");
     </script>
 
-    <script src="./pwa.js"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.ready.then((reg) => {
+        console.log(`Service Worker ready (Scope: ${reg.scope})`);
+      });
+      navigator.serviceWorker
+        .register("./firebase-messaging-sw.js", { scope: "/"})
+        .then(reg => {
+          console.log(`Firebase Messaging Service Worker Registration (Scope: ${reg.scope})`);
+        })
+        .catch(err => {
+          console.log(err.message);
+        });
+      } else {
+        console.warn("Service Worker not available");
+      }
+    </script>
     <!-- <script src="./notifications.js"></script> -->
-    <script src="./firebase.js" type="module"></script>
+    <script src="./firebase.js" type="module" defer></script>
   </head>
   <body>
     <header class="nav-bar" id="nav-bar">
@@ -175,7 +191,7 @@
       <p>© Sunshine Corp, 2022</p>
     </footer>
     <script src="./main.js" defer></script>
-    <script src="./sw.js"></script>
+    <script type="./routing.js" type="module"></script>
     <script src="./routing-module.js" type="module"></script>
     <script src="./vision.js" type="module"></script>
     <script src="https://unpkg.com/webcam-easy/dist/webcam-easy.min.js"></script>
