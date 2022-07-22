@@ -1,5 +1,7 @@
 'use strict';
 
+import { db } from "../../firebase.js"
+
 import { getFirestore, collection, query, where, 
     getDocs, getDoc, doc, orderBy, limit  } from '../../firebase-lib/firebase-firestore.js'
 
@@ -10,7 +12,6 @@ function init () {
     let userHints = 5;
     let userCurrentGame = null;
     let userGameWord = null;
-    const db = getFirestore();
 
     const userRef = collection(db, "users");
     const progressColRef = collection(db, "progress");
@@ -141,6 +142,4 @@ function datesAreOnSameDay (first, second) {
     }
 }
     
-init();
-    
-
+init()

@@ -1,3 +1,5 @@
+import { db } from "../../firebase.js"
+
 import { getAuth } from "../../firebase-lib/firebase-auth.js";
 
 import {
@@ -14,7 +16,6 @@ import {
 
 // initialize firebase services
 const auth = getAuth();
-const db = getFirestore();
 const user = localStorage.piccleUID;
 
 // const user = auth.currentUser;

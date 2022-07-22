@@ -1,5 +1,7 @@
 "use strict";
 
+import { db } from "../../firebase.js"
+
 import {
   getFirestore,
   collection,
@@ -19,9 +21,6 @@ function init() {
   if (!userEmail) {
     location.hash = "#signin";
   }
-
-  // Connect to Firebase
-  const db = getFirestore();
 
   // Build shop page
   const renderShop = async (email) => {
@@ -140,23 +139,14 @@ function init() {
     const shopRef = collection(db, "shop");
     const shopQuery = query(shopRef);
     const snapshot = await getDocs(shopQuery);
-
-    try {
-      return snapshot.docs;
-    } catch (error) {
-      console.log(error);
-    }
+    return snapshot.docs;
   };
 
   // Get specific shop item
   const getSpecificItem = async (itemId) => {
     const itemRef = doc(db, "shop", itemId);
     const snapshot = await getDoc(itemRef);
-    try {
-      return snapshot;
-    } catch (error) {
-      console.log(error);
-    }
+    return snapshot;
   };
 
   // Get purchases
@@ -167,11 +157,7 @@ function init() {
       where("user_email", "==", email)
     );
     const snapshot = await getDocs(purchasesQuery);
-    try {
-      return snapshot.docs;
-    } catch (error) {
-      console.log(error);
-    }
+    return snapshot.docs;
   };
   /*  END QUERY FUNCTIONS ========================================= */
 
