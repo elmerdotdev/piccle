@@ -1,5 +1,7 @@
 "use strict";
 
+import { db } from "../../firebase.js";
+
 import {
   getFirestore,
   collection,
@@ -9,7 +11,7 @@ import {
   getDocs,
   doc,
   getDoc,
-} from "https://www.gstatic.com/firebasejs/9.8.3/firebase-firestore.js";
+} from "../../firebase-lib/firebase-firestore.js";
 
 function init() {
   // If not logged in, redirect to login page
@@ -26,9 +28,6 @@ function init() {
 
   // In-game status
   let inGame = false;
-
-  // Connect to Firebase
-  const db = getFirestore();
 
   // Get list of progress
   const getProgress = async () => {

@@ -57,6 +57,7 @@ body {
   font-family: "Rubik", Helvetica, sans-serif;
   margin: 0;
   background-image: url(./../images/pattern.png);
+  background-size: 300px;
   animation: movingBackground 90s infinite linear;
 }
 
@@ -75,7 +76,10 @@ img {
   width: 1px;
 }
 
-header,
+header {
+  padding: 0.5rem 1rem;
+}
+
 .signup-banner {
   padding: 0.5rem 1rem;
   background-color: #fff;
@@ -398,6 +402,7 @@ input.pw-checkbox {
 }
 
 .menu-icon {
+  background-color: white;
   border-radius: 50rem;
   border: 2px solid #000;
   box-shadow: 0px 4px 0px 0px #000000;

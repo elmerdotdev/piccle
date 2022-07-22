@@ -1,5 +1,7 @@
 "use strict";
 
+import { db } from "../../firebase.js"
+
 import {
   getFirestore,
   collection,
@@ -11,7 +13,7 @@ import {
   updateDoc,
   addDoc,
   Timestamp,
-} from "https://www.gstatic.com/firebasejs/9.8.3/firebase-firestore.js";
+} from "../../firebase-lib/firebase-firestore.js";
 
 function init() {
   // If not logged in, redirect to login page
@@ -19,9 +21,6 @@ function init() {
   if (!userEmail) {
     location.hash = "#signin";
   }
-
-  // Connect to Firebase
-  const db = getFirestore();
 
   // Build shop page
   const renderShop = async (email) => {
@@ -115,7 +114,7 @@ function init() {
     const currentPoints = await getAvailablePoints(email);
     const item = await getSpecificItem(itemId);
 
-    if (currentPoints > item.data().price) {
+    if (currentPoints >= item.data().price) {
       await updateDoc(userRef, {
         points: currentPoints - item.data().price,
       });
@@ -140,23 +139,14 @@ function init() {
     const shopRef = collection(db, "shop");
     const shopQuery = query(shopRef);
     const snapshot = await getDocs(shopQuery);
-
-    try {
-      return snapshot.docs;
-    } catch (error) {
-      console.log(error);
-    }
+    return snapshot.docs;
   };
 
   // Get specific shop item
   const getSpecificItem = async (itemId) => {
     const itemRef = doc(db, "shop", itemId);
     const snapshot = await getDoc(itemRef);
-    try {
-      return snapshot;
-    } catch (error) {
-      console.log(error);
-    }
+    return snapshot;
   };
 
   // Get purchases
@@ -167,11 +157,7 @@ function init() {
       where("user_email", "==", email)
     );
     const snapshot = await getDocs(purchasesQuery);
-    try {
-      return snapshot.docs;
-    } catch (error) {
-      console.log(error);
-    }
+    return snapshot.docs;
   };
   /*  END QUERY FUNCTIONS ========================================= */
 
