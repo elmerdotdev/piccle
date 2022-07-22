@@ -10,13 +10,7 @@ import {
   doc,
   orderBy,
   limit,
-} from "https://www.gstatic.com/firebasejs/9.8.3/firebase-firestore.js";
-import {
-  getStorage,
-  ref as sRef,
-  uploadBytesResumable,
-  getDownloadURL,
-} from "https://www.gstatic.com/firebasejs/9.8.3/firebase-storage.js";
+} from "../../firebase-lib/firebase-firestore.js";
 
 function init() {
   let loggedInUser = localStorage.getItem("piccleUID");
