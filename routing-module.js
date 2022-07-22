@@ -56,6 +56,13 @@ Router.init("mainArea", [
     "pages/js/shop.js",
     "pages/css/shop.css"
   ),
+
+  new Page(
+    "#aboutus",
+    "pages/aboutus.html",
+    "pages/js/aboutus.js",
+    "pages/css/aboutus.css"
+    ),
   new Page(
     "#onboarding",
     "pages/onboarding.html",
