@@ -1,25 +1,24 @@
-"use strict";
+'use strict';
 
-class Page {
+export class Page {
   constructor(name, htmlName, jsName, cssName) {
     this.name = name;
     this.htmlName = htmlName;
     // if jsName is not given use the html name + '.js'
     this.jsName = jsName
       ? jsName
-      : htmlName.substring(0, htmlName.lastIndexOf(".")) + ".js";
-    // if Name is not given use the html name + '.js'
+      : htmlName.substring(0, htmlName.lastIndexOf('.')) + '.js';
     this.cssName = cssName
       ? cssName
       : htmlName.substring(0, htmlName.lastIndexOf(".")) + ".css";
   }
 }
 
-class Router {
+export class Router {
   static init(mainAreaId, pages) {
     Router.pages = pages;
     Router.rootElem = document.getElementById(mainAreaId);
-    window.addEventListener("hashchange", function (e) {
+    window.addEventListener('hashchange', function (e) {
       Router.handleHashChange();
     });
     Router.handleHashChange();
@@ -45,21 +44,22 @@ class Router {
   static async goToPage(page) {
     try {
       const response = await fetch(page.htmlName);
-      console.log(response)
       const txt = await response.text();
       Router.rootElem.innerHTML = txt;
-      //append JS part to run.
-      const script = document.createElement("script");
-      script.setAttribute("src", page.jsName + '?ver=' + Date.now());
-      script.setAttribute("type", "module");
-      Router.rootElem.appendChild(script);
+      //import the JS module
+      const module = await import('./' + page.jsName);
+      console.log('imported module :' + page.jsName);
+      //and invoke its init method of module if exists
+      if (module.init) {
+          module.init();
+      }
       //append CSS part to run.
       const pageCss = document.createElement("link");
-      pageCss.setAttribute("href", page.cssName + '?ver=' + Date.now());
+      pageCss.setAttribute("href", page.cssName);
       pageCss.setAttribute("rel", "stylesheet");
       Router.rootElem.appendChild(pageCss);
     } catch (error) {
-      console.error(error);
+      console.error(error.message);
     }
   }
 }
