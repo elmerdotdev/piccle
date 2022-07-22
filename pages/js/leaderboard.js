@@ -133,3 +133,8 @@ function ordinalSuffixOf(i) {
   }
   return i + "th";
 }
+
+document.getElementById("pageName").innerHTML = "Leaderboard";
+document.getElementById("pageName").style.color = "#E76057";
+document.querySelector('[href="#leaderboard"]').innerHTML =
+  '<div style="background: #E76057;" class="menu-icon"><img src="./../images/icons/trophy-fill-w.svg" alt=""></div><span>Leaderboard</span>';

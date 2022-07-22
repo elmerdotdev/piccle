@@ -176,6 +176,11 @@ function init() {
   /*  END QUERY FUNCTIONS ========================================= */
 
   renderShop(userEmail);
+
+  document.getElementById("pageName").innerHTML = "Shop";
+  document.getElementById("pageName").style.color = "#4EC887";
+  document.querySelector('[href="#shop"]').innerHTML =
+    '<div style="background: #4EC887;" class="menu-icon"><img src="./../images/icons/P-w.svg" alt=""></div><span>Shop</span>';
 }
 
 init();

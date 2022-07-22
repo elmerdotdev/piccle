@@ -222,6 +222,11 @@ function init() {
   };
 
   getProgress();
+
+  document.getElementById("pageName").innerHTML = "History";
+  document.getElementById("pageName").style.color = "#B470ED";
+  document.querySelector('[href="#history"]').innerHTML =
+    '<div style="background: #B470ED;" class="menu-icon"><img src="./../images/icons/fire-fill-w.svg" alt=""></div><span>History</span>';
 }
 
 init();
