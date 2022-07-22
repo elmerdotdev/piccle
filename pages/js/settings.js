@@ -9,13 +9,12 @@ closeBtn.addEventListener("click", function () {
   document.getElementById("st-sidenavId").style.width = "0%";
 });
 
-document.querySelector('.signout-btn').addEventListener('click', () => {
+document.querySelector(".signout-btn").addEventListener("click", () => {
   removeUIDinBrowser();
-  window.location.hash = 'signin';
+  window.location.hash = "signin";
 });
 
 // Remove piccleUID from browser localStorage
-function removeUIDinBrowser () {
-  localStorage.removeItem('piccleUID');
-};
-
+function removeUIDinBrowser() {
+  localStorage.removeItem("piccleUID");
+}
