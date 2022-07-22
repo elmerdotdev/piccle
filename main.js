@@ -79,3 +79,13 @@ function setNavBarIconColor() {
   document.querySelector('[href="#shop"]').innerHTML =
     '<div style="background: #fff;" class="menu-icon"><img src="./../images/icons/P.svg" alt=""></div><span>Shop</span>';
 }
+
+// Check internet status
+if (navigator.onLine) {
+  console.log('online');
+} else {
+  console.log('offline');
+}
+
+window.addEventListener('offline', function(e) { console.log('offline'); });
+window.addEventListener('online', function(e) { console.log('online'); });

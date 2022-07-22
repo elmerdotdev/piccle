@@ -1,5 +1,7 @@
 "use strict";
 
+import { db } from "../../firebase.js";
+
 import {
   getFirestore,
   collection,
@@ -26,9 +28,6 @@ function init() {
 
   // In-game status
   let inGame = false;
-
-  // Connect to Firebase
-  const db = getFirestore();
 
   // Get list of progress
   const getProgress = async () => {

@@ -1,5 +1,7 @@
 "use strict";
 
+import { db } from "../../firebase.js"
+
 import {
   getFirestore,
   collection,
@@ -13,6 +15,7 @@ import {
   updateDoc,
   Timestamp,
 } from "../../firebase-lib/firebase-firestore.js";
+
 import Vision from "../../vision.js";
 
 function init() {
@@ -30,8 +33,6 @@ function init() {
 
   let userScore = 0;
   let userPoints = 0;
-
-  const db = getFirestore();
 
   // Get User Details
   const userRef = collection(db, "users");
