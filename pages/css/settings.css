@@ -170,6 +170,7 @@ li.main-menu-active a span {
   }
 
   .st-card {
+    cursor: pointer;
     flex: 0 0 31%;
     flex-flow: column nowrap;
     height: 210px;
