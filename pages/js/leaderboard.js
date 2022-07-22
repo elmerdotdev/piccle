@@ -1,3 +1,5 @@
+import { db } from "../../firebase.js"
+
 import { getAuth } from "../../firebase-lib/firebase-auth.js";
 
 import {
@@ -12,9 +14,10 @@ import {
   getDoc,
 } from "../../firebase-lib/firebase-firestore.js";
 
+export function init () {
+
 // initialize firebase services
 const auth = getAuth();
-const db = getFirestore();
 const user = localStorage.piccleUID;
 
 // const user = auth.currentUser;
@@ -106,6 +109,7 @@ getDocs(q)
   .catch((err) => {
     console.log(err.message);
   });
+}
 
 function displayPublicName(firstname, lastname) {
   if (firstname.length + lastname.length + 1 > 10) {

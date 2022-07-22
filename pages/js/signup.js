@@ -1,3 +1,5 @@
+import { db } from "../../firebase.js"
+
 import { getAuth, signOut,
     createUserWithEmailAndPassword, signInWithEmailAndPassword,
     signInWithPopup, FacebookAuthProvider,
@@ -9,9 +11,9 @@ import {
     setDoc,
 } from '../../firebase-lib/firebase-firestore.js'
 
+export function init () {
 // initialize firebase services
 const auth = getAuth();
-const db = getFirestore();
 // console.log(auth)
 
 // reference to collections
@@ -141,4 +143,6 @@ function revealPW() {
         pwField2.type = "password";
     }     
 
-} 
+}
+
+}

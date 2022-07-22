@@ -1,5 +1,7 @@
 "use strict";
 
+import { db } from "../../firebase.js";
+
 import {
   getFirestore,
   collection,
@@ -11,7 +13,7 @@ import {
   getDoc,
 } from "../../firebase-lib/firebase-firestore.js";
 
-function init() {
+export function init () {
   // If not logged in, redirect to login page
   const userEmail = localStorage.getItem("piccleUID");
   if (!userEmail) {
@@ -26,9 +28,6 @@ function init() {
 
   // In-game status
   let inGame = false;
-
-  // Connect to Firebase
-  const db = getFirestore();
 
   // Get list of progress
   const getProgress = async () => {
@@ -228,5 +227,3 @@ function init() {
   document.querySelector('[href="#history"]').innerHTML =
     '<div style="background: #B470ED;" class="menu-icon"><img src="./../images/icons/fire-fill-w.svg" alt=""></div><span>History</span>';
 }
-
-init();

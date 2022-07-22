@@ -1,24 +1,17 @@
 "use strict";
 
-import {
-  getFirestore,
-  collection,
-  query,
-  where,
-  getDocs,
-  getDoc,
-  doc,
-  orderBy,
-  limit,
-} from "../../firebase-lib/firebase-firestore.js";
+import { db } from "../../firebase.js"
 
-function init() {
-  let loggedInUser = localStorage.getItem("piccleUID");
-  let userPoints = null;
-  let userHints = 5;
-  let userCurrentGame = null;
-  let userGameWord = null;
-  const db = getFirestore();
+import { getFirestore, collection, query, where, 
+    getDocs, getDoc, doc, orderBy, limit  } from '../../firebase-lib/firebase-firestore.js'
+    
+export function init () {
+
+    let loggedInUser = localStorage.getItem('piccleUID');
+    let userPoints = null;
+    let userHints = 5;
+    let userCurrentGame = null;
+    let userGameWord = null;
 
   const userRef = collection(db, "users");
   const progressColRef = collection(db, "progress");
@@ -124,9 +117,11 @@ function init() {
     document.querySelector("span.player-history").innerHTML = pastGames;
   });
 
-  document.querySelectorAll(".hide").forEach((card) => {
-    card.classList.remove("hide");
-  });
+  setTimeout(() => {
+    document.querySelectorAll(".hide").forEach((card) => {
+      card.classList.remove("hide");
+    });
+  }, 300)
 }
 
 function ordinalSuffixOf(i) {
@@ -155,5 +150,3 @@ function datesAreOnSameDay(first, second) {
     return false;
   }
 }
-
-init();
