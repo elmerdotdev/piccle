@@ -15,7 +15,7 @@ import {
   Timestamp,
 } from "../../firebase-lib/firebase-firestore.js";
 
-function init() {
+export function init () {
   // If not logged in, redirect to login page
   const userEmail = localStorage.getItem("piccleUID");
   if (!userEmail) {
@@ -162,6 +162,9 @@ function init() {
   /*  END QUERY FUNCTIONS ========================================= */
 
   renderShop(userEmail);
-}
 
-init();
+  document.getElementById("pageName").innerHTML = "Shop";
+  document.getElementById("pageName").style.color = "#4EC887";
+  document.querySelector('[href="#shop"]').innerHTML =
+    '<div style="background: #4EC887;" class="menu-icon"><img src="./../images/icons/P-w.svg" alt=""></div><span>Shop</span>';
+}

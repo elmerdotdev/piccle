@@ -14,18 +14,18 @@
   color: #1d1d1f;
   border: 2px solid #1d1d1f;
   box-shadow: 0px 4px 0px #000000;
-  transition: all .2s ease-in-out;
+  transition: all 0.2s ease-in-out;
 }
 
 .btn-primary::before {
-  content: '';
+  content: "";
   display: block;
   width: 40px;
   height: 100%;
   position: absolute;
   top: 0;
   left: -50px;
-  background-color: rgba(255,255,255,.6);
+  background-color: rgba(255, 255, 255, 0.6);
   transform: skewX(-10deg);
 }
 
@@ -35,7 +35,7 @@
 }
 
 .btn-primary:hover::before {
-  animation: shinySlide .3s forwards linear;
+  animation: shinySlide 0.3s forwards linear;
 }
 
 .btn-primary:disabled,
@@ -109,6 +109,10 @@
   background: #ff90e8;
 }
 
+.no-hover:hover {
+  background: #ffffff;
+}
+
 .switch {
   position: relative;
   display: inline-block;
@@ -180,7 +184,6 @@ input:checked + .slider:before {
   box-shadow: 0px 8px 0px #1d1d1d;
   border-radius: 24px;
 }
-
 
 .header-border {
   border-bottom: 1px solid black;

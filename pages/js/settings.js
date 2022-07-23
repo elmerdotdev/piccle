@@ -1,3 +1,8 @@
+document.getElementById("pageName").innerHTML = "Settings";
+document.getElementById("pageName").style.color = "#5C91F6";
+document.querySelector('[href="#settings"]').innerHTML =
+  '<div style="background: #5C91F6;" class="menu-icon"><img src="./../images/icons/settings-white.svg" alt=""></div><span>Settings</span>';
+
 let menu = document.getElementById("menuBtn");
 let closeBtn = document.getElementById("clsBtn");
 
@@ -12,6 +17,10 @@ closeBtn.addEventListener("click", function () {
 document.querySelector(".st-card.sign-out").addEventListener("click", () => {
   removeUIDinBrowser();
   window.location.hash = "signin";
+});
+
+document.querySelector(".about-us").addEventListener("click", () => {
+  window.location.hash = "aboutus";
 });
 
 document.querySelector(".st-card.account").addEventListener("click", () => {

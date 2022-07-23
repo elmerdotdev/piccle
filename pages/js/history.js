@@ -13,7 +13,7 @@ import {
   getDoc,
 } from "../../firebase-lib/firebase-firestore.js";
 
-function init() {
+export function init () {
   // If not logged in, redirect to login page
   const userEmail = localStorage.getItem("piccleUID");
   if (!userEmail) {
@@ -221,6 +221,9 @@ function init() {
   };
 
   getProgress();
-}
 
-init();
+  document.getElementById("pageName").innerHTML = "History";
+  document.getElementById("pageName").style.color = "#B470ED";
+  document.querySelector('[href="#history"]').innerHTML =
+    '<div style="background: #B470ED;" class="menu-icon"><img src="./../images/icons/fire-fill-w.svg" alt=""></div><span>History</span>';
+}
