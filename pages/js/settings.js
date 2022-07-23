@@ -14,14 +14,17 @@ closeBtn.addEventListener("click", function () {
   document.getElementById("st-sidenavId").style.width = "0%";
 });
 
-document.querySelector(".sign-out").addEventListener("click", () => {
+document.querySelector(".st-card.sign-out").addEventListener("click", () => {
   removeUIDinBrowser();
   window.location.hash = "signin";
 });
 
 document.querySelector(".about-us").addEventListener("click", () => {
-  removeUIDinBrowser();
   window.location.hash = "aboutus";
+});
+
+document.querySelector(".st-card.account").addEventListener("click", () => {
+  window.location.hash = "account";
 });
 
 // Remove piccleUID from browser localStorage

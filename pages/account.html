@@ -1,7 +1,8 @@
 <section>
     <div class="account card">
         <div class="info-section">
-            <form action='#'>
+
+            <form action='#' method="POST">
                 <div class="info-holder">
                     <label for='firstName'>First Name</label>
                     <input type='text' id='firstName'>
@@ -46,4 +47,51 @@
             </div>
         </div>
     </div>
+
+    <div class="account-wrapper__overlay">
+        <div class="card account-wrapper__popup">
+            <h2 class="popup-title">Message Here</h2>
+            <img class="popup-icon"></img>
+            <div class="popup-message"></div>
+            <div class="popup-buttons">
+                <button class="btn btn-secondary popup-cancel">Cancel</button>
+                <button class="btn btn-primary popup-proceed show">Okay</button>
+            </div>
+        </div>
+    </div>
 </section>
+
+<style>
+    .account-wrapper__overlay {
+        display: none;
+        place-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 9999;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    .account-wrapper__overlay.show {
+        display: grid;
+    }
+
+    .popup-title,
+    .popup-icon,
+    .popup-message,
+    .popup-buttons {
+        padding: 1rem;
+        background-color: #fafafc;
+        font-family: "Rubik", sans-serif;
+        text-align: center;
+    }
+
+    .popup-icon {
+        display: block;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+</style>
