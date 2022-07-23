@@ -1,6 +1,6 @@
 "use strict";
 
-import { db } from "../../firebase.js"
+import { db } from "../../firebase.js";
 
 import {
   getFirestore,
@@ -18,7 +18,7 @@ import {
 
 import Vision from "../../vision.js";
 
-export function init () {
+export function init() {
   const userEmail = localStorage.getItem("piccleUID");
   if (!userEmail) {
     location.hash = "#signin";
@@ -300,7 +300,7 @@ export function init () {
 
       const shareTwitter = document.querySelector(".shareTwitter");
       shareTwitter.addEventListener("click", () => {
-        var url = "https://dev.piccle.fun/";
+        var url = "https://demo.piccle.fun/";
         window.open(
           "https://twitter.com/intent/tweet?url=" +
             url +
@@ -312,7 +312,7 @@ export function init () {
 
       const shareFacebook = document.querySelector(".shareFacebook");
       shareFacebook.addEventListener("click", () => {
-        var url = "https://dev.piccle.fun/";
+        var url = "https://demo.piccle.fun/";
         window.open(
           "http://www.facebook.com/sharer.php?u=" + url,
           "",
@@ -554,4 +554,3 @@ document.getElementById("pageName").innerHTML = "play";
 document.getElementById("pageName").style.color = "#FF90E8";
 document.querySelector('[href="#play"]').innerHTML =
   '<div style="background: #FF90E8;" class="menu-icon"><img src="./../images/icons/camera-3-fill-w.svg" alt=""></div><span>Play</span>';
-
