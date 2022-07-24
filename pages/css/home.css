@@ -210,6 +210,10 @@ span.game-hint {
   text-align: center;
 }
 
+div.btn-icon:hover {
+  background-color: #fafafc;
+}
+
 @media screen and (min-width: 1100px) {
   main {
     border: unset;
