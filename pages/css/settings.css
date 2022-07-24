@@ -106,6 +106,7 @@ li.main-menu-active a span {
   border-radius: 10px;
   margin: 1rem 0;
   height: 150px;
+  cursor: pointer;
 }
 
 .st-card span {
@@ -170,6 +171,7 @@ li.main-menu-active a span {
   }
 
   .st-card {
+    cursor: pointer;
     flex: 0 0 31%;
     flex-flow: column nowrap;
     height: 210px;

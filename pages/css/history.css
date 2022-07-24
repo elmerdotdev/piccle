@@ -23,7 +23,7 @@
   padding: 1rem;
   text-align: center;
   max-height: calc(100vh - 210px);
-  overflow: scroll;
+  overflow: auto;
 }
 
 .history-wrapper__body .box {
