@@ -60,6 +60,7 @@
 
 .lt_card {
   padding: 0;
+  overflow: hidden;
 }
 
 .lt-table th {
@@ -74,6 +75,24 @@
 
 .lt-table th:last-child {
   border-radius: 0 22px 0 0;
+}
+
+.lt-table thead tr {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(3, 1fr) 15px;
+  color: #fff;
+}
+
+.lt-table tbody {
+  display: block;
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.lt-table tbody tr {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .lt-table td {
