@@ -10,29 +10,51 @@ export function init() {
     const formInfo = document.querySelector('.info-section > form');
     let userInfo = null;
     
+    // Show user information in UI
+    const saveBtn = document.querySelector('.account-buttons .btn-save');
     getDoc(userDoc)
         .then(res => {
-            formInfo.firstName.value = res.data().firstname;
-            formInfo.lastName.value = res.data().lastname;
-            formInfo.email.value = res.data().user_email;
             userInfo = res.data();
+            formInfo.firstName.value = userInfo.firstname;
+            formInfo.lastName.value = userInfo.lastname;
+            formInfo.email.value = userInfo.user_email;
+            if (! userInfo.providerIDs.includes("password")) {
+                formInfo.password.disabled = true;
+            }
+
+            // Change social buttons to show user's social auth providers
+            const socialSection = document.querySelector('.social-section');
+            if ( userInfo.providerIDs.includes("google.com") ) {
+                socialSection.querySelector(".btn-google button").classList.remove("btn-primary");
+                socialSection.querySelector(".btn-google button").classList.add("btn-secondary");
+                socialSection.querySelector(".btn-google button").innerHTML = "Disconnect";
+            }
+
+            if ( userInfo.providerIDs.includes("twitter.com") ) {
+                socialSection.querySelector(".btn-twitter button").classList.remove("btn-primary");
+                socialSection.querySelector(".btn-twitter button").classList.add("btn-secondary");
+                socialSection.querySelector(".btn-twitter button").innerHTML = "Disconnect";
+            }
+
+            if ( userInfo.providerIDs.includes("facebook.com") ) {
+                socialSection.querySelector(".btn-facebook button").classList.remove("btn-primary");
+                socialSection.querySelector(".btn-facebook button").classList.add("btn-secondary");
+                socialSection.querySelector(".btn-facebook button").innerHTML = "Disconnect";
+            }
             
             saveBtn.addEventListener('click', e => {
                 e.preventDefault();
                 updateUserInfo(userInfo);
-                
             })
         })
         .catch(err => {console.log(err.message)});
-        
-    const cancelBtn = document.querySelector('.account-buttons .btn-cancel');
     
+    // Add click listener to cancel that brings user back to settings
+    const cancelBtn = document.querySelector('.account-buttons .btn-cancel');
     cancelBtn.addEventListener('click', e => {
         e.preventDefault();
         window.location.hash = 'settings';
     })
-    
-    const saveBtn = document.querySelector('.account-buttons .btn-save');
     
     // Function: upload the updated user information and password.
     function updateUserInfo (userInfoObj) {
