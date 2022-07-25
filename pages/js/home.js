@@ -56,11 +56,11 @@ export function init () {
 
   getDocs(queries["userProgress"]).then((snapshot) => {
     if (snapshot.size === 0) {
-      document.querySelector("span.game-chance").innerHTML = "";
-      document.querySelector("span.game-hint").innerHTML = "";
+      document.querySelector("span.game-chance").style.display = "none";
+      document.querySelector("span.game-hint").innerHTML = playHintDisplay["ready"];
     } else {
       snapshot.forEach((docSnap) => {
-        console.log(docSnap.data());
+        console.log("Curr progress >>>>",docSnap.data());
         userCurrentGame = docSnap.data();
         userGameWord = userCurrentGame.word;
         const lastGameDate = new Date(
@@ -78,7 +78,7 @@ export function init () {
           if (userHints === 0 || userCurrentGame.resolved) {
             document.querySelector("span.game-hint").innerHTML =
               playHintDisplay["wait"];
-            document.querySelector("span.game-chance").innerHTML = "";
+            document.querySelector("span.game-chance").style.display = "none";
           } else {
             document.querySelector("span.game-chance").innerHTML = userHints;
             const wordDocRef = doc(db, "words", userGameWord);
@@ -91,7 +91,7 @@ export function init () {
         } else {
           document.querySelector("span.game-hint").innerHTML =
             playHintDisplay["ready"];
-          document.querySelector("span.game-chance").innerHTML = "";
+          document.querySelector("span.game-chance").style.display = "none";
           userHints = 0;
         }
       });

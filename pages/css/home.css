@@ -202,6 +202,18 @@ a .btn,
   box-shadow: 0px 8px 0px #1d1d1d;
 }
 
+span.game-chance.icon-label {
+  color: #fff;
+}
+
+span.game-hint {
+  text-align: center;
+}
+
+div.btn-icon:hover {
+  background-color: #fafafc;
+}
+
 @media screen and (min-width: 1100px) {
   main {
     border: unset;
