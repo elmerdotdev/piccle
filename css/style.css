@@ -276,6 +276,7 @@ input.pw-checkbox {
 
 .or p {
   padding: 2rem 0;
+  padding-top: 0;
 }
 
 .signup-banner button {
