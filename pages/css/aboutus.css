@@ -1,0 +1,151 @@
+main { 
+    border: unset;
+    border-radius: unset;
+    box-shadow: unset;
+    display: unset;
+}
+
+.aboutus--header,
+.aboutus--elem h3 {
+    text-align: center;
+}
+
+section.aboutus-profile {
+    margin-bottom: 3rem;
+}
+
+.aboutus-profile ul {
+    display: grid;
+    grid-template-columns: repeat(7,1fr);
+    gap: 1rem;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+    padding: 1rem;
+    justify-items: center;
+}
+
+.member--wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    align-content: center;
+    scroll-snap-align: start;
+    width: 123px;
+    text-align: center;
+}
+
+.aboutus-description {
+    position: fixed;
+    background-color: #FED235;
+    border-radius: 24px;
+}
+
+.aboutus--elem {
+    background-color: #FED235;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    box-shadow: unset;
+    border: unset;
+    max-height: 50vh;
+    overflow: auto;
+}
+
+.aboutus--elem h3 {
+    margin: 0;
+}
+
+.member--wrapper img {
+    width: 123px; 
+    height: 132px;
+    object-fit: cover;
+    position: relative;
+    top: 0;
+    margin-bottom: .5rem;
+}
+
+.member--wrapper:nth-child(3) img,
+.member--wrapper:nth-child(5) img,
+.member--wrapper:nth-child(6) img {
+    object-position: top;
+}
+
+img.card {
+    padding: 0;
+}
+
+.member--wrapper .name,
+.member--wrapper .role {
+    font-size: .75rem;
+}
+
+a {
+    color: black;
+    font-weight: 600;
+    font-size: .8rem;
+    text-decoration: underline;
+}
+
+@media screen and (min-width: 760px) {
+    .visually-hidden,
+    footer {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+    }
+    .member--wrapper {
+        max-width: 123px;
+    }
+
+    .aboutus-description {
+    background-color: unset;
+    border-radius: unset;
+    position: unset;
+    }
+
+    .aboutus-description {
+        overflow-y: unset;
+    }
+
+    .aboutus--elem {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+}
+
+@media screen and (min-width: 989px) {
+    main {
+        padding: 0 5%;        
+    }
+
+    aboutus-profile {
+        padding: 0 5%;
+    }
+    
+
+    .aboutus-profile ul {
+        overflow-x: unset;
+    }
+
+    .profile-links {
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        gap: 1rem;
+    }
+}
+
+
+@media screen and (min-width: 1100px) {
+    footer.visually-hidden {
+        clip: rect(0 0 0 0);
+        clip-path: inset(50%);
+        overflow: hidden;
+        position: unsabsoluteet;
+        white-space: nowrap;
+    }
+}

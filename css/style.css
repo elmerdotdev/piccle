@@ -57,6 +57,7 @@ body {
   font-family: "Rubik", Helvetica, sans-serif;
   margin: 0;
   background-image: url(./../images/pattern.png);
+  background-size: 300px;
   animation: movingBackground 90s infinite linear;
 }
 
@@ -275,6 +276,7 @@ input.pw-checkbox {
 
 .or p {
   padding: 2rem 0;
+  padding-top: 0;
 }
 
 .signup-banner button {
@@ -310,9 +312,6 @@ input.pw-checkbox {
   main {
     flex-flow: row nowrap;
     justify-content: center;
-    border: 1px solid black;
-    border-radius: 20px;
-    box-shadow: 5px 5px;
     padding: 0;
   }
 
@@ -592,6 +591,7 @@ li.main-menu-active a span {
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
+    color: #000;
   }
 
   .left-menu h1 {
@@ -607,9 +607,75 @@ li.main-menu-active a span {
 
 @keyframes movingBackground {
   from {
-    background-position: 0 0
+    background-position: 0 0;
   }
   to {
-    background-position: 100vw 100vh
+    background-position: 100vw 100vh;
   }
+}
+
+
+/* HOME LOGO SVG STYLING ====================== */
+
+.cls-1,.cls-2,.cls-3,.cls-4 {
+  stroke:#231f20;
+  stroke-miterlimit:10;
+}
+
+.cls-1,.cls-3 {
+  fill:none;
+}
+
+.cls-1,.cls-4 {
+  stroke-width:6px;
+}
+
+.cls-5,.cls-2 {
+  fill:#ff90e8;
+}
+
+.cls-6,.cls-4 {
+  fill:#231f20;
+}
+
+.cls-2,.cls-3 {
+  stroke-width:4px;
+}
+
+#Layer_1-2 > g > g > g {
+    animation: bounce 3s infinite linear;
+}
+
+/* I */
+#Layer_1-2 > g > g > g:nth-child(5) {
+    animation-delay: .1s
+}
+
+/* C */
+#Layer_1-2 > g > g > g:nth-child(1) {
+    animation-delay: .2s
+}
+
+/* C */
+#Layer_1-2 > g > g > g:nth-child(2) {
+    animation-delay: .3s
+}
+
+/* L */
+#Layer_1-2 > g > g > g:nth-child(3) {
+    animation-delay: .4s
+}
+
+/* E */
+#Layer_1-2 > g > g > g:nth-child(4) {
+    animation-delay: .5s
+}
+
+@keyframes bounce {
+    0%, 10%, 11% {
+        transform: translateY(0);
+    }
+    5% {
+        transform: translateY(-10px);
+    }
 }

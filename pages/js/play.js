@@ -1,5 +1,7 @@
 "use strict";
 
+import { db } from "../../firebase.js";
+
 import {
   getFirestore,
   collection,
@@ -12,37 +14,34 @@ import {
   addDoc,
   updateDoc,
   Timestamp,
-} from "https://www.gstatic.com/firebasejs/9.8.3/firebase-firestore.js";
+} from "../../firebase-lib/firebase-firestore.js";
+
 import Vision from "../../vision.js";
 
-
-
-function init() {
+export function init() {
   const userEmail = localStorage.getItem("piccleUID");
   if (!userEmail) {
-    location.hash = "#signin"
+    location.hash = "#signin";
   }
 
   let currentHint = [];
   let currentWord = "";
   let wordPoints = 0;
-  let wordId = "";
+
   let progressId = "";
   let usedTries = 0;
+
   let userScore = 0;
   let userPoints = 0;
-
-  const db = getFirestore();
 
   // Get User Details
   const userRef = collection(db, "users");
   const userDetails = query(userRef, where("user_email", "==", userEmail));
 
-  getDocs(userDetails)
-  .then((snapshot) => {
+  getDocs(userDetails).then((snapshot) => {
     userScore = snapshot.docs[0].data().score;
     userPoints = snapshot.docs[0].data().points;
-  })
+  });
 
   // Get all words in database
   const wordsRef = collection(db, "words");
@@ -61,9 +60,13 @@ function init() {
       // user progress found
       let allProgress = snapshot.docs;
       let recentProgress = allProgress[0];
+      console.log(`Progress ID: ${recentProgress.id}`);
       let dateStarted = new Date(
         recentProgress.data().date_started.seconds * 1000
       );
+
+      progressId = recentProgress.id;
+      usedTries = recentProgress.data().tries;
 
       if (recentProgress.data().resolved === false) {
         if (datesAreOnSameDay(dateStarted, new Date())) {
@@ -72,7 +75,6 @@ function init() {
               recentProgress.data().word,
               recentProgress.data().tries
             );
-            progressId = recentProgress.id;
             usedTries = recentProgress.data().tries + 1;
           } else {
             noMoreTries();
@@ -118,7 +120,6 @@ function init() {
     getDoc(docRef).then((doc) => {
       currentWord = doc.data().name;
       currentHint = doc.data().hints[tries];
-      wordId = doc.id;
       wordPoints = doc.data().points;
 
       document.querySelector(".play-wrapper__hint").innerHTML = currentHint;
@@ -126,9 +127,11 @@ function init() {
         .querySelectorAll(".play-wrapper__numbers li")
         [tries].classList.add("current-hint");
 
-        for (let i = 0; i < tries; i++) {
-          document.querySelectorAll(".play-wrapper__numbers li")[i].classList.add("used-hint")
-        }
+      for (let i = 0; i < tries; i++) {
+        document
+          .querySelectorAll(".play-wrapper__numbers li")
+          [i].classList.add("used-hint");
+      }
     });
   }
 
@@ -173,34 +176,80 @@ function init() {
     let domContent = "<h2>Challenge completed!</h2>";
     domContent += `<div style="font-size: 4rem;">✔️</div>`;
     domContent += `<p>Hold your horses! Next challenge isn't until tomorrow :)</p>`;
-    domContent += `<hr><button class="btn btn-primary"><a href="#home" class="home-btn">Home</a></button>`;
+    domContent += `<hr><button class="btn btn-primary"><a href="#home">Home</a></button>`;
     document.querySelector(".popup-window").innerHTML = domContent;
 
-    document.querySelector('.play-wrapper_progress_bar').classList.add("fade");
-    document.querySelector('.play-wrapper_card').classList.add("fade");
+    document.querySelector(".play-wrapper_progress_bar").classList.add("fade");
+    document.querySelector(".play-wrapper_card").classList.add("fade");
     document.querySelector(".popup-window").classList.add("show");
 
     setTimeout(() => {
-      webcam.stop()
-    }, 1000)
+      webcam.stop();
+    }, 2000);
   }
 
-  function noMoreTries() {
-    let domContent = "<h2>Out of chances!</h2>";
-    domContent += `<svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M90 9.06428L80.9357 0L45 35.9357L9.06428 0L0 9.06428L35.9357 45L0 80.9357L9.06428 90L45 54.0643L80.9357 90L90 80.9357L54.0643 45L90 9.06428Z" fill="#E76057"/>
-    </svg>`;
-    domContent += `<p>Sorry you have no more tries remaining.<br />Wait for tomorrow's challenge.</p>`;
-    domContent += `<hr><button class="btn btn-primary"><a href="#home" class="home-btn">Home</a></button>`;
-    document.querySelector(".popup-window").innerHTML = domContent;
+  async function noMoreTries(title, message) {
+    const snapshotChance = await checkHasExtraChance();
+    const totalChances = snapshotChance.size;
+    const chanceShopItem = await getChanceFromShop();
+    const domTitle = title || "Out of guesses!";
+    const domMessage =
+      message ||
+      "However, you can use or buy extra chances to continue playing if you have enough piccles.";
 
-    document.querySelector('.play-wrapper_progress_bar').classList.add("fade");
-    document.querySelector('.play-wrapper_card').classList.add("fade");
-    document.querySelector(".popup-window").classList.add("show");
+    try {
+      let domContent = `<h2>${domTitle}</h2>`;
+      domContent += `<svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M90 9.06428L80.9357 0L45 35.9357L9.06428 0L0 9.06428L35.9357 45L0 80.9357L9.06428 90L45 54.0643L80.9357 90L90 80.9357L54.0643 45L90 9.06428Z" fill="#E76057"/>
+      </svg>`;
+      domContent += `<p>${domMessage}</p>`;
 
-    setTimeout(() => {
-      webcam.stop()
-    }, 1000)
+      if (totalChances > 0) {
+        const chance = snapshotChance.docs[0].id;
+        domContent += `<hr><div class="popup-btns"><button class="btn btn-primary use-chance-btn"><a href="#play">Use Extra Chance</a></button>`;
+        domContent += `<button class="btn btn-secondary"><a href="#home">Home</a></button></div>`;
+        domContent += `<div class="remaining-chances"><small><em>You have ${totalChances} chance(s) available.</em></small></div>`;
+        setTimeout(() => {
+          document.querySelector(".use-chance-btn").addEventListener(
+            "click",
+            () => {
+              usePlayerChances(chance);
+            },
+            100
+          );
+        });
+      } else {
+        if (userPoints >= chanceShopItem.data().price) {
+          domContent += `<hr><div class="popup-btns"><button class="btn btn-primary buy-chance-btn"><a href="#play">Buy Extra Chance</a></button>`;
+          domContent += `<button class="btn btn-secondary"><a href="#home">Home</a></button></div>`;
+          domContent += `<div class="remaining-chances"><small><em>Each extra chance cost 50 Piccles</em></small></div>`;
+          setTimeout(() => {
+            document.querySelector(".buy-chance-btn").addEventListener(
+              "click",
+              () => {
+                buyShopItem(chanceShopItem.data().price, chanceShopItem.id);
+              },
+              100
+            );
+          });
+        } else {
+          domContent += `<hr><div class="popup-btns not-enough-piccles"><button class="btn btn-secondary"><a href="#home">Home</a></button>`;
+        }
+      }
+      document.querySelector(".popup-window").innerHTML = domContent;
+
+      document
+        .querySelector(".play-wrapper_progress_bar")
+        .classList.add("fade");
+      document.querySelector(".play-wrapper_card").classList.add("fade");
+      document.querySelector(".popup-window").classList.add("show");
+
+      setTimeout(() => {
+        webcam.stop();
+      }, 1000);
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 
   async function updateTries() {
@@ -220,51 +269,141 @@ function init() {
 
     const currentUserRef = doc(db, "users", userEmail);
     await updateDoc(currentUserRef, {
-      points: (Number(userPoints) + Number(wordPoints)),
-      score: (Number(userScore) + Number(wordPoints))
+      points: Number(userPoints) + Number(wordPoints),
+      score: Number(userScore) + Number(wordPoints),
     });
 
     webcam.stop();
-    let domContent = `<h2 class="results-success-title">Congratulations!</h2>`
-    domContent += `<div class="results-inner">`
-    domContent += `<div class="statistics"><h2>Statistics</h2>`
-    domContent += `<table><tr><th>Points Earned</th><td><strong>${wordPoints} Piccles</strong></td></tr></table>`
-    domContent += `</div>`
-    domContent += `<div class="results-details">`
+    let domContent = `<h2 class="results-success-title">Congratulations!</h2>`;
+    domContent += `<div class="results-inner">`;
+    domContent += `<div class="statistics"><div>`;
+    domContent += `<h2>Statistics</h2>`;
+    domContent += `<table><tr><th>Points Earned</th><td><strong>${wordPoints} Piccles</strong></td></tr></table></div>`;
+    domContent += `<div class="shareButtons">`;
+    domContent += `<button class="btn btn-icon round shareFacebook"><img src="./../images/icons/facebook-fill.svg" /></button><button class="btn btn-icon round shareTwitter"><img src="./../images/icons/twitter-fill.svg" /></button>`;
+    domContent += `</div>`;
+    domContent += `</div>`;
+    domContent += `<div class="results-details">`;
     domContent += `<h2><span>&ldquo;${theword}&rdquo;</span> <span>is the correct answer!</span></h2>`;
-    domContent += `<div class="results-trivia"><strong>Did you know?</strong><p>${currentHint}</p></div>`
+    domContent += `<div class="results-trivia"><strong>Did you know?</strong><p>${currentHint}</p></div>`;
     domContent += `<div class="results-img"><img src="${image}" /></div>`;
-    domContent += `</div>`
-    domContent += `</div>`
+    domContent += `</div>`;
+    domContent += `</div>`;
     domContent += `<div class="home-btn"><button class="btn btn-primary"><a href="index.html#home">Home</a></button></div>`;
     document.querySelector(".results-wrapper").innerHTML = domContent;
 
-    document.querySelector(".wrapper").classList.add('correct-answer');
+    document.querySelector(".wrapper").classList.add("correct-answer");
     setTimeout(() => {
-      document.querySelector('.results-success-title').classList.add('bounceMe')
-    }, 300)
+      document
+        .querySelector(".results-success-title")
+        .classList.add("bounceMe");
+
+      const shareTwitter = document.querySelector(".shareTwitter");
+      shareTwitter.addEventListener("click", () => {
+        var url = "https://demo.piccle.fun/";
+        window.open(
+          "https://twitter.com/intent/tweet?url=" +
+            url +
+            "&text=" +
+            "I have scored " +
+            userPoints
+        );
+      });
+
+      const shareFacebook = document.querySelector(".shareFacebook");
+      shareFacebook.addEventListener("click", () => {
+        var url = "https://demo.piccle.fun/";
+        window.open(
+          "http://www.facebook.com/sharer.php?u=" + url,
+          "",
+          "width=1200, height=630, scrollbars=yes, resizable=no"
+        );
+      });
+    }, 300);
   }
 
   function answerIncorrect() {
-    let domContent = "<h2>Try Again!</h2>";
-    domContent += `<svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M90 9.06428L80.9357 0L45 35.9357L9.06428 0L0 9.06428L35.9357 45L0 80.9357L9.06428 90L45 54.0643L80.9357 90L90 80.9357L54.0643 45L90 9.06428Z" fill="#E76057"/>
-    </svg>`;
-    domContent += `<p>Sorry that is incorrect. You have ${
-      5 - usedTries
-    } tries remaining.</p>`;
-    domContent += `<hr><button class="btn btn-primary"><a href="#play" class="next-clue-btn">Next Clue</a></button>`;
-    document.querySelector(".popup-window").innerHTML = domContent;
+    if (usedTries < 5) {
+      let domContent = "<h2>Try Again!</h2>";
+      domContent += `<svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M90 9.06428L80.9357 0L45 35.9357L9.06428 0L0 9.06428L35.9357 45L0 80.9357L9.06428 90L45 54.0643L80.9357 90L90 80.9357L54.0643 45L90 9.06428Z" fill="#E76057"/>
+      </svg>`;
+      domContent += `<p>That is incorrect. You have ${
+        5 - usedTries
+      } tries remaining.</p>`;
+      domContent += `<hr><button class="btn btn-primary"><a href="#play" class="next-clue-btn">Next Clue</a></button>`;
+      document.querySelector(".popup-window").innerHTML = domContent;
 
-    setTimeout(() => {
-      document.querySelector('.next-clue-btn').addEventListener('click', () => {
-        location.reload()
-      })
-    }, 100)
+      setTimeout(() => {
+        document
+          .querySelector(".next-clue-btn")
+          .addEventListener("click", () => {
+            location.reload();
+          });
+      }, 100);
 
-    document.querySelector('.play-wrapper_progress_bar').classList.add("fade");
-    document.querySelector('.play-wrapper_card').classList.add("fade");
-    document.querySelector(".popup-window").classList.add("show");
+      document
+        .querySelector(".play-wrapper_progress_bar")
+        .classList.add("fade");
+      document.querySelector(".play-wrapper_card").classList.add("fade");
+      document.querySelector(".popup-window").classList.add("show");
+    } else {
+      noMoreTries(
+        "Incorrect answer",
+        "Unfortunately, that was your last guess. You can use or buy extra chances to continue playing."
+      );
+    }
+  }
+
+  async function checkHasExtraChance() {
+    const purchasesRef = collection(db, "purchases");
+    const purchaseQuery = query(
+      purchasesRef,
+      where("user_email", "==", userEmail),
+      where("item", "==", "extra-chance"),
+      where("used", "==", false)
+    );
+
+    const snapshot = await getDocs(purchaseQuery);
+    return snapshot;
+  }
+
+  async function usePlayerChances(purchaseId) {
+    const purchaseRef = doc(db, "purchases", purchaseId);
+    await updateDoc(purchaseRef, {
+      used: true,
+    });
+
+    const progressRef = doc(db, "progress", progressId);
+    await updateDoc(progressRef, {
+      tries: usedTries - 1,
+    });
+
+    location.reload();
+  }
+
+  async function getChanceFromShop() {
+    const chanceRef = doc(db, "shop", "extra-chance");
+    const snapshot = await getDoc(chanceRef);
+
+    return snapshot;
+  }
+
+  async function buyShopItem(price, itemId) {
+    const userRef = doc(db, "users", userEmail);
+    await updateDoc(userRef, {
+      points: userPoints - price,
+    });
+
+    const purchaseRef = await addDoc(collection(db, "purchases"), {
+      cost: price,
+      date_purchased: Timestamp.fromDate(new Date()),
+      item: itemId,
+      used: false,
+      user_email: userEmail,
+    });
+
+    usePlayerChances(purchaseRef.id);
   }
 
   // Camera functions ==========================
@@ -335,6 +474,12 @@ function init() {
   });
 
   document.querySelector(".capture-btn").addEventListener("click", () => {
+    document.querySelector(".play-wrapper__camera").classList.add("shutter");
+    setTimeout(() => {
+      document
+        .querySelector(".play-wrapper__camera")
+        .classList.remove("shutter");
+    }, 200);
     base64Image = webcam.snap();
     document.querySelector("#previewImage").setAttribute("src", base64Image);
     document.querySelector("#previewImage").style.zIndex = 2;
@@ -375,34 +520,37 @@ function init() {
       let domContent = "<h2>Need photo</h2>";
       domContent += `<svg width="90" height="90" viewBox="0 0 90 90" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M90 9.06428L80.9357 0L45 35.9357L9.06428 0L0 9.06428L35.9357 45L0 80.9357L9.06428 90L45 54.0643L80.9357 90L90 80.9357L54.0643 45L90 9.06428Z" fill="#E76057"/></svg>`;
       domContent += `<p>Take a picture of something first before submitting!</p>`;
-      domContent += `<hr><button class="btn btn-primary"><a href="#play" class="close-btn">Close</a></button>`;
+      domContent += `<hr><button class="btn btn-secondary"><a href="#play" class="close-btn">Close</a></button>`;
       document.querySelector(".popup-window").innerHTML = domContent;
-  
-      document.querySelector('.play-wrapper_progress_bar').classList.add("fade");
-      document.querySelector('.play-wrapper_card').classList.add("fade");
+
+      document
+        .querySelector(".play-wrapper_progress_bar")
+        .classList.add("fade");
+      document.querySelector(".play-wrapper_card").classList.add("fade");
       document.querySelector(".popup-window").classList.add("show");
 
       setTimeout(() => {
-        document.querySelector('.close-btn').addEventListener('click', () => {
-          document.querySelector('.play-wrapper_progress_bar').classList.remove("fade");
-          document.querySelector('.play-wrapper_card').classList.remove("fade");
+        document.querySelector(".close-btn").addEventListener("click", () => {
+          document
+            .querySelector(".play-wrapper_progress_bar")
+            .classList.remove("fade");
+          document.querySelector(".play-wrapper_card").classList.remove("fade");
           document.querySelector(".popup-window").classList.remove("show");
-        })
-      }, 100)
+        });
+      }, 100);
     }
   });
 
-  document.querySelectorAll('.main-menu li a').forEach(link => {
-    link.addEventListener('click', () => {
-      if (link.getAttribute('href') != "#play") {
-        webcam.stop()
+  document.querySelectorAll(".main-menu li a").forEach((link) => {
+    link.addEventListener("click", () => {
+      if (link.getAttribute("href") != "#play") {
+        webcam.stop();
       }
-    })
-  })
+    });
+  });
 }
 
 document.getElementById("pageName").innerHTML = "play";
 document.getElementById("pageName").style.color = "#FF90E8";
-document.querySelector('[href="#play"]').innerHTML = '<div style="background: #FF90E8;" class="menu-icon"><img src="./../images/icons/camera-3-fill-w.svg" alt=""></div><span>Play</span>';
-
-init();
+document.querySelector('[href="#play"]').innerHTML =
+  '<div style="background: #FF90E8;" class="menu-icon"><img src="./../images/icons/camera-3-fill-w.svg" alt=""></div><span>Play</span>';

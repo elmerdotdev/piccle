@@ -57,16 +57,6 @@
 <style>
   body {
     overflow: hidden;
-    animation: movingBackground 90s infinite linear;
-  }
-
-  @keyframes movingBackground {
-    from {
-      background-position: 0 0;
-    }
-    to {
-      background-position: 100vw 100vh;
-    }
   }
 
   .wrapper {
@@ -120,7 +110,7 @@
   }
 
   .play-wrapper__numbers .used-hint .circle {
-    background-color: red;
+    background-color: #e76057;
   }
 
   .play-wrapper__numbers .current-hint .circle {
@@ -146,13 +136,14 @@
   .play-wrapper_card {
     margin: 1rem;
     padding: 0;
+    width: 100%;
   }
 
   .play-wrapper__controls {
     text-align: center;
     display: flex;
     flex-flow: row wrap;
-    row-gap: 3rem;
+    row-gap: 2rem;
     justify-content: center;
   }
 
@@ -161,12 +152,13 @@
   }
 
   .play-wrapper__hint {
-    /* font-size: 1.5rem; */
+    font-size: 1.5rem;
+    padding: 2rem 3rem;
     min-height: 56px;
-    text-align: center;
     background-color: #fed235;
+    font-weight: 700;
+    text-align: center;
     border-radius: 20px 20px 0 0;
-    padding: 2rem;
   }
 
   .play_wrapper__card_body {
@@ -174,19 +166,37 @@
   }
 
   .play-wrapper__camera {
+    display: grid;
+    place-items: center;
     position: relative;
-    width: 240px;
-    height: 280px;
+    width: 100%;
+    aspect-ratio: 4 / 3;
     margin: auto;
-    border: 2px solid #000000;
+    border: 2px solid #222;
   }
 
   .play-wrapper__camera * {
     position: absolute;
     top: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .play-wrapper__camera::before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+    background-color: white;
+    opacity: 0;
+  }
+
+  .play-wrapper__camera.shutter::before {
+    animation: shutter 0.2s ease-in;
+    z-index: 9999;
   }
 
   .play-wrapper__camera video {
@@ -196,6 +206,8 @@
 
   .play-wrapper__camera img {
     z-index: 0;
+    width: auto;
+    object-fit: cover;
   }
 
   .play-wrapper__controls button {
@@ -213,6 +225,8 @@
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 9999;
+    max-width: 430px;
+    width: 100%;
     text-align: center;
     padding: 1.5rem 0;
     /*background-color: white;
@@ -249,9 +263,34 @@
     margin-bottom: 1rem;
   }
 
+  .popup-btns {
+    display: flex;
+    justify-content: center;
+    column-gap: 0.5rem;
+    padding: 0 1rem;
+  }
+
+  .popup-btns button:first-child {
+    flex: 1;
+  }
+
+  .popup-btns button:last-child {
+    min-width: auto;
+  }
+
+  .popup-btns.not-enough-piccles button {
+    flex: 0;
+    min-width: 200px;
+  }
+
   .btn a {
     display: block;
     color: inherit;
+    text-align: center;
+  }
+
+  .remaining-chances {
+    margin-top: 0.5rem;
   }
 
   .results-wrapper {
@@ -292,6 +331,10 @@
     text-align: center;
     border: 1px solid black;
     border-radius: 25px 50px 50px 20px;
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    justify-content: space-between;
   }
 
   .statistics h2 {
@@ -327,7 +370,7 @@
     text-align: center;
   }
 
-  .results-wrapper img {
+  .results-details img {
     max-width: 100%;
     height: auto;
     border: 2px solid black;
@@ -342,25 +385,16 @@
       width: 450px;
     }
     .play-wrapper_card {
-      /* max-width: 900px; */
+      max-width: 600px;
       margin: auto;
     }
 
     .play-wrapper__hint {
-      padding: 1rem;
+      padding: 2rem 3rem;
     }
 
     .play_wrapper__card_body {
-      padding: 2rem 8rem;
-    }
-
-    .play-wrapper__camera {
-      width: 373px;
-      height: 280px;
-    }
-
-    .play-wrapper__controls {
-      row-gap: 1rem;
+      padding: 2rem 5rem 1rem;
     }
   }
 
@@ -401,9 +435,21 @@
     0%,
     100% {
       background-color: #fed235;
+      transform: scale(1);
     }
     50% {
       background-color: #fffaea;
+      transform: scale(1.1);
+    }
+  }
+
+  @keyframes shutter {
+    0%,
+    100% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
     }
   }
 </style>
