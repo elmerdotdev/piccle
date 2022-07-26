@@ -1,4 +1,4 @@
-import { Router, Page } from './routing.js'
+import { Router, Page } from "./routing.js";
 
 Router.init("mainArea", [
   new Page(
@@ -67,7 +67,7 @@ Router.init("mainArea", [
     "pages/aboutus.html",
     "pages/js/aboutus.js",
     "pages/css/aboutus.css"
-    ),
+  ),
   new Page(
     "#onboarding",
     "pages/onboarding.html",
