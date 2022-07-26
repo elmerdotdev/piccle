@@ -7,11 +7,13 @@
       </div>
     </div>
     <div class="filter-wrapper">
-      <select class="filter">
-        <option value="" selected>Filter</option>
-        <option value="win">Win</option>
-        <option value="lose">Lose</option>
-      </select>
+      <div class="filter-select">
+        <select class="filter">
+          <option value="" selected>Filter</option>
+          <option value="win">Win</option>
+          <option value="lose">Lose</option>
+        </select>
+      </div>
     </div>
   </div>
 
@@ -19,9 +21,21 @@
 
   <div class="history-wrapper__popup-overlay">
     <div class="popup-message">
-      <button class="close-btn">X</button>
+      <button class="close-btn btn btn-icon">
+        <img src="./../images/icons/arrow_back_ios.svg" />
+      </button>
       <div class="popup-content"></div>
-      <div class="popup-social-share"></div>
+      <div class="popup-social-share">
+        <div class="ht__header__wrapper_head">Share with your friends</div>
+        <div class="share-wrapper-body">
+          <button type="button" class="btn btn-icon round shareFacebook">
+            <img src="./../images/icons/facebook-fill.svg" />
+          </button>
+          <button type="button" class="btn btn-icon round shareTwitter">
+            <img src="./../images/icons/twitter-fill.svg" />
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </div>

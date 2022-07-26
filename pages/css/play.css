@@ -56,3 +56,8 @@
 .control-btn:not(:disabled):hover {
   background-color: lightgray;
 }
+
+.shareButtons {
+  display: flex;
+  gap: 1rem;
+}

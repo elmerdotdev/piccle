@@ -1,18 +1,17 @@
+import { db, auth } from "../../firebase.js"
+
 import { getAuth, signOut,
     createUserWithEmailAndPassword, signInWithEmailAndPassword,
     signInWithPopup, FacebookAuthProvider,
     GoogleAuthProvider, TwitterAuthProvider,
-} from 'https://www.gstatic.com/firebasejs/9.8.3/firebase-auth.js'
+} from '../../firebase-lib/firebase-auth.js'
 
 import {
     getFirestore, collection, doc, getDoc,
-    setDoc,
-} from 'https://www.gstatic.com/firebasejs/9.8.3/firebase-firestore.js'
+    setDoc, updateDoc, arrayUnion,
+} from '../../firebase-lib/firebase-firestore.js'
 
-// initialize firebase services
-const auth = getAuth();
-const db = getFirestore();
-// console.log(auth)
+export function init () {
 
 // reference to collections
 const colRefUsers = collection(db, "users")
@@ -101,6 +100,30 @@ async function checkUIDinBrowser () {
     };
 };
 
+// Store providerID in "users" collection
+function addProviderToCollection () {
+    const userDoc = doc(db, "users", localStorage.piccleUID);
+    const currProviderId = auth.currentUser.providerData[0].providerId; 
+    getDoc( userDoc )
+    .then(res => {
+        const providerIDsArray = res.get("providerIDs")
+        if (providerIDsArray === undefined) {
+            updateDoc(userDoc, {
+                providerIDs: [currProviderId]
+            })
+        } else if (! providerIDsArray.includes(currProviderId) ) {
+            updateDoc(userDoc, {
+                providerIDs: arrayUnion(currProviderId)
+            })
+            .then(() => {console.log("Provider stored.")})
+        } else {
+            console.log("This provider was already added.")
+        }
+        console.log("Provider update complete.")
+    })
+    .catch(err => {console.log(err.message)})
+}
+
 // Signing in User using Email and Password
 
 const appLoginForm = document.querySelector('.login-field form');
@@ -118,6 +141,7 @@ appLoginButton.addEventListener('click', (e) => {
         .then((cred) => {
             console.log('user signed in:', cred.user);
             storeUIDInBrowser(userEmail);
+            addProviderToCollection();
             window.location.hash = "home";
         })
         .catch((err) => {
@@ -145,6 +169,7 @@ fbLoginButton.addEventListener('click', (e) => {
             console.log(user);
             createEmailInUserCol(user.email, user.displayName, "");
             storeUIDInBrowser(user.email);
+            addProviderToCollection();
             window.location.hash = "home";
         })
         .catch((err) => {
@@ -163,6 +188,7 @@ twLoginButton.addEventListener('click', (e) => {
         const user = cred._tokenResponse;
         createEmailInUserCol(user.email, user.displayName, "");
         storeUIDInBrowser(user.email);
+        addProviderToCollection();
         window.location.hash = "home" 
     })
     .catch((err) => {
@@ -183,6 +209,7 @@ googleLoginButton.addEventListener('click', (e) => {
         const user = cred.user.providerData[0];
         createEmailInUserCol(user.email, user.displayName, "");
         storeUIDInBrowser(user.email);
+        addProviderToCollection();
         window.location.hash = "home";
     })
     .catch((err) => {
@@ -203,3 +230,5 @@ function revealPW() {
         x.type = "password";
     }
   }
+  
+}

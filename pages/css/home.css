@@ -1,3 +1,7 @@
+body {
+  overflow: hidden;
+}
+
 .visual-header-logo.visually-hidden {
   clip: unset;
   clip-path: unset;
@@ -6,7 +10,11 @@
   position: relative;
   white-space: unset;
   width: unset;
-  padding: 3rem 2%;
+  padding: 2rem 2%;
+}
+
+.main-menu {
+  display: none;
 }
 
 .header-border {
@@ -14,11 +22,10 @@
   border-radius: unset;
   box-shadow: unset;
   padding: unset;
-  background-color: #fff;
 }
 
 main {
-  padding: 2rem 2%;
+  padding: 0 2%;
 }
 
 ul li {
@@ -62,6 +69,7 @@ a .btn,
   grid-column: 1/-1;
   padding: 0;
   background-color: #ff90e8;
+  transition: transform 0.75s ease-in-out;
   /* background: linear-gradient(to top, #fff 32%, #FF90E8 32% 68%); */
 }
 
@@ -71,6 +79,7 @@ a .btn,
   min-height: 197px;
   align-content: center;
   position: relative;
+  transform: translateX(0);
 }
 
 .icon-chance {
@@ -126,14 +135,15 @@ a .btn,
   font-size: 2rem;
 }
 
-span {
+.main-wrapper span {
   font-size: 2rem;
 }
 
 .leaderboard-border {
   border-color: #e76057;
   box-shadow: 0px 8px 0px #e76057;
-  transition: all 0.5s;
+  transition: background-color 0.5s, color 0.5s, border-color 0.5s,
+    box-shadow 0.5s, transform 0.75s ease-in-out 0.1s;
 }
 
 .leaderboard-border:hover {
@@ -146,6 +156,7 @@ span {
 .leaderboard-border .player-rank,
 .history-border .player-history,
 .shop-border .earned-points,
+.settings-border .earned-points,
 .go-play .game-chance {
   font-weight: 400;
   font-size: 66px;
@@ -154,10 +165,23 @@ span {
   color: #1d1d1f;
 }
 
+.settings-border .st-points {
+  color: transparent;
+}
+
+.settings-border .card-head {
+  position: relative;
+}
+
+.settings-border .card-head .btn {
+  position: absolute;
+}
+
 .history-border {
   border-color: #b470ed;
   box-shadow: 0px 8px 0px #b470ed;
-  transition: all 0.5s;
+  transition: background-color 0.5s, color 0.5s, border-color 0.5s,
+    box-shadow 0.5s, transform 0.75s ease-in-out 0.2s;
 }
 
 .history-border:hover {
@@ -170,7 +194,8 @@ span {
 .shop-border {
   border-color: #4ec887;
   box-shadow: 0px 8px 0px #4ec887;
-  transition: all 0.5s;
+  transition: background-color 0.5s, color 0.5s, border-color 0.5s,
+    box-shadow 0.5s, transform 0.75s ease-in-out 0.3s;
 }
 
 .shop-border:hover {
@@ -183,7 +208,8 @@ span {
 .settings-border {
   border-color: #5c91f6;
   box-shadow: 0px 8px 0px #5c91f6;
-  transition: all 0.5s;
+  transition: background-color 0.5s, color 0.5s, border-color 0.5s,
+    box-shadow 0.5s, transform 0.75s ease-in-out 0.4s;
 }
 
 .settings-border:hover {
@@ -191,6 +217,25 @@ span {
   color: #000;
   border-color: #1d1d1d;
   box-shadow: 0px 8px 0px #1d1d1d;
+}
+
+span.game-chance.icon-label {
+  color: #fff;
+}
+
+span.game-hint {
+  text-align: center;
+}
+
+div.btn-icon:hover {
+  background-color: #fafafc;
+}
+
+.card-head {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
 }
 
 @media screen and (min-width: 1100px) {

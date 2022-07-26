@@ -12,7 +12,13 @@ window.onload = function () {
         console.log(pageName);
         if (
           window.location.href == "http://127.0.0.1:5500/" ||
+          window.location.href == "http://127.0.0.1:5500/#home" ||
+          window.location.href == "https://demo.piccle.fun/" ||
+          window.location.href == "https://demo.piccle.fun/#home" ||
+          window.location.href == "https://dev.piccle.fun/" ||
           window.location.href == "https://dev.piccle.fun/#home" ||
+          window.location.href == "https://demo.piccle.fun" ||
+          window.location.href == "https://demo.piccle.fun/#home" ||
           pageName == "home" ||
           pageName == "signup" ||
           pageName == "signin"
@@ -73,3 +79,13 @@ function setNavBarIconColor() {
   document.querySelector('[href="#shop"]').innerHTML =
     '<div style="background: #fff;" class="menu-icon"><img src="./../images/icons/P.svg" alt=""></div><span>Shop</span>';
 }
+
+// Check internet status
+if (navigator.onLine) {
+  console.log('online');
+} else {
+  console.log('offline');
+}
+
+window.addEventListener('offline', function(e) { console.log('offline'); });
+window.addEventListener('online', function(e) { console.log('online'); });

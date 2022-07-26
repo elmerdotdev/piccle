@@ -13,7 +13,9 @@
 }
 
 .history-wrapper__header .filter-wrapper {
-  text-align: end;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: end;
 }
 
 .history-wrapper__body {
@@ -23,7 +25,7 @@
   padding: 1rem;
   text-align: center;
   max-height: calc(100vh - 210px);
-  overflow: scroll;
+  overflow: auto;
 }
 
 .history-wrapper__body .box {
@@ -85,7 +87,7 @@
 }
 
 .history-wrapper__popup-overlay .popup-message {
-  padding: 1rem;
+  padding: 2rem;
   background-color: white;
 }
 
@@ -96,15 +98,27 @@
   line-height: 28px;
   letter-spacing: -0.025em;
 }
-.filter {
+
+.filter-select {
+  padding: 0.5rem;
   background: #fafafc;
   border: 1px solid #1d1d1f;
   box-shadow: 0px 2px 0px #000000;
   border-radius: 8px;
+  width: 6rem;
+}
+
+.filter-select select:focus-visible {
+  outline: none;
+}
+
+.filter {
+  background: transparent;
   font-weight: 700;
   font-size: 14px;
   line-height: 24px;
-  padding: 0.5rem;
+  border: 0;
+  width: 5rem;
 }
 
 .status-lose {
@@ -115,6 +129,37 @@
 .status-win {
   border: 4px solid #4ec887;
   box-shadow: 0px 8px 0px #4ec887;
+}
+
+.popup-content h3 {
+  margin-block-start: 0.5em;
+  margin-block-end: 0.5em;
+  text-align: center;
+  font-family: "Rubik";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 43px;
+  letter-spacing: -0.025em;
+  color: #1d1d1f;
+}
+
+.popup-social-share {
+  text-align: center;
+  margin-top: 1rem;
+  border-top: 1px solid #000;
+  padding-top: 1rem;
+}
+
+.popup-social-share .ht__header__wrapper_head {
+  padding-bottom: 0.5rem;
+}
+
+.popup-social-share .share-wrapper-body {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 2rem;
+  justify-content: center;
 }
 
 @media only screen and (min-width: 600px) {

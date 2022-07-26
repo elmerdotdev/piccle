@@ -4,6 +4,34 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta property="fb:app_id" content="575774550631375" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Piccle: Guess the Object Game" />
+    <meta
+      property="og:description"
+      content="Check my score and challenge in global leaderboard."
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:url" content="https://demo.piccle.fun/" />
+    <meta property="og:site_name" content="demo.piccle.fun/" />
+    <meta
+      property="og:image"
+      content="https://firebasestorage.googleapis.com/v0/b/wmdd-4885-integrated-project.appspot.com/o/Images%2FfacebookShare.png?alt=media&token=5ce8d032-0187-4911-ba4f-31d0b41926f0"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary" />
+    <meta property="og:url" content="https://demo.piccle.fun/" />
+    <meta property="og:title" content="Piccle: Guess the Object Game" />
+    <meta
+      property="og:description"
+      content="Check my score and challenge in global leaderboard."
+    />
+    <meta
+      property="og:image"
+      content="https://firebasestorage.googleapis.com/v0/b/wmdd-4885-integrated-project.appspot.com/o/Images%2FfacebookShare.png?alt=media&token=5ce8d032-0187-4911-ba4f-31d0b41926f0"
+    />
     <link rel="manifest" href="manifest.json" />
     <title>Piccle</title>
     <link rel="icon" type="image/x-icon" href="./images/favicon.png" />
@@ -21,9 +49,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Rammetto+One&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;600;700&family=Rammetto+One&display=swap"
       rel="stylesheet"
     />
+    <script
+      async
+      src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"
+    ></script>
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script
@@ -40,7 +72,23 @@
       gtag("config", "G-DNP3DE1WFP");
     </script>
 
-    <script src="./pwa.js"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.ready.then((reg) => {
+        console.log(`Service Worker ready (Scope: ${reg.scope})`);
+      });
+      navigator.serviceWorker
+        .register("./firebase-messaging-sw.js", { scope: "/"})
+        .then(reg => {
+          console.log(`Firebase Messaging Service Worker Registration (Scope: ${reg.scope})`);
+        })
+        .catch(err => {
+          console.log(err.message);
+        });
+      } else {
+        console.warn("Service Worker not available");
+      }
+    </script>
     <!-- <script src="./notifications.js"></script> -->
     <script src="./firebase.js" type="module"></script>
   </head>
@@ -71,7 +119,7 @@
             <div class="menu-icon">
               <img src="./../images/icons/trophy-fill.svg" alt="" />
             </div>
-            <span>Ranking</span></a
+            <span>Leaderboard</span></a
           >
         </li>
         <li>
@@ -136,12 +184,15 @@
     </div>
 
     <footer class="visually-hidden">
+      <!-- <div>
+        <button class="dcFirebase">Disconnect from Firebase</button>
+        <button class="rcFirebase">Connect to Firebase</button>
+      </div> -->
       <p>© Sunshine Corp, 2022</p>
     </footer>
     <script src="./main.js" defer></script>
-    <script src="./sw.js"></script>
-    <script src="./routing.js"></script>
-    <script src="./routing-module.js"></script>
+    <script type="./routing.js" type="module"></script>
+    <script src="./routing-module.js" type="module"></script>
     <script src="./vision.js" type="module"></script>
     <script src="https://unpkg.com/webcam-easy/dist/webcam-easy.min.js"></script>
   </body>

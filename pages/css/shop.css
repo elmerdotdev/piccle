@@ -21,6 +21,7 @@
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
+  gap: 1rem;
 }
 
 .points-available {
@@ -50,14 +51,20 @@
 
 .items-available {
   padding: 1rem;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .shop_item {
+  flex: 0 0 25%;
   background: #fafafc;
   border: 2px solid #1d1d1f;
   box-shadow: 0px 4px 0px #1d1d1d;
   border-radius: 16px;
+  transition: 0.5s;
+}
+
+.shop_item:hover {
+  background: #4ec887;
 }
 
 .shop_item .btn-icon {
@@ -87,6 +94,7 @@
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
+  gap: 0.5rem;
 }
 
 .shop_item .shop_item__point_wrapper .btn-icon,
@@ -97,7 +105,7 @@
 }
 
 .shop-wrapper__purchased {
-  height: 15rem;
+  min-height: 15rem;
 }
 
 .shop-wrapper__purchased h3 {
@@ -106,6 +114,7 @@
 
 .items-purchased {
   padding: 1rem;
+  overflow: scroll;
 }
 
 .popup-content {
