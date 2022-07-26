@@ -394,7 +394,7 @@ input.pw-checkbox {
 /* start of settings page */
 
 .nav-bar {
-  display: none;
+  display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
 }
