@@ -594,6 +594,7 @@ li.main-menu-active a span {
     flex-flow: column nowrap;
     justify-content: center;
     align-items: center;
+    color: #000;
   }
 
   .left-menu h1 {
@@ -609,9 +610,9 @@ li.main-menu-active a span {
 
 @keyframes movingBackground {
   from {
-    background-position: 0 0
+    background-position: 0 0;
   }
   to {
-    background-position: 100vw 100vh
+    background-position: 100vw 100vh;
   }
 }
