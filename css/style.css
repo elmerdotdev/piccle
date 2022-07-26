@@ -312,9 +312,6 @@ input.pw-checkbox {
   main {
     flex-flow: row nowrap;
     justify-content: center;
-    border: 1px solid black;
-    border-radius: 20px;
-    box-shadow: 5px 5px;
     padding: 0;
   }
 
@@ -397,7 +394,7 @@ input.pw-checkbox {
 /* start of settings page */
 
 .nav-bar {
-  display: flex;
+  display: none;
   flex-flow: row nowrap;
   justify-content: space-between;
 }
