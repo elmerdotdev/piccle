@@ -69,7 +69,7 @@ a .btn,
   grid-column: 1/-1;
   padding: 0;
   background-color: #ff90e8;
-  transition: transform .75s ease-in-out;
+  transition: transform 0.75s ease-in-out;
   /* background: linear-gradient(to top, #fff 32%, #FF90E8 32% 68%); */
 }
 
@@ -142,7 +142,8 @@ a .btn,
 .leaderboard-border {
   border-color: #e76057;
   box-shadow: 0px 8px 0px #e76057;
-  transition: background-color 0.5s, color 0.5s, border-color 0.5s, box-shadow 0.5s, transform .75s ease-in-out .1s;
+  transition: background-color 0.5s, color 0.5s, border-color 0.5s,
+    box-shadow 0.5s, transform 0.75s ease-in-out 0.1s;
 }
 
 .leaderboard-border:hover {
@@ -155,6 +156,7 @@ a .btn,
 .leaderboard-border .player-rank,
 .history-border .player-history,
 .shop-border .earned-points,
+.settings-border .earned-points,
 .go-play .game-chance {
   font-weight: 400;
   font-size: 66px;
@@ -163,10 +165,23 @@ a .btn,
   color: #1d1d1f;
 }
 
+.settings-border .st-points {
+  color: transparent;
+}
+
+.settings-border .card-head {
+  position: relative;
+}
+
+.settings-border .card-head .btn {
+  position: absolute;
+}
+
 .history-border {
   border-color: #b470ed;
   box-shadow: 0px 8px 0px #b470ed;
-  transition: background-color 0.5s, color 0.5s, border-color 0.5s, box-shadow 0.5s, transform .75s ease-in-out .2s;
+  transition: background-color 0.5s, color 0.5s, border-color 0.5s,
+    box-shadow 0.5s, transform 0.75s ease-in-out 0.2s;
 }
 
 .history-border:hover {
@@ -179,7 +194,8 @@ a .btn,
 .shop-border {
   border-color: #4ec887;
   box-shadow: 0px 8px 0px #4ec887;
-  transition: background-color 0.5s, color 0.5s, border-color 0.5s, box-shadow 0.5s, transform .75s ease-in-out .3s;
+  transition: background-color 0.5s, color 0.5s, border-color 0.5s,
+    box-shadow 0.5s, transform 0.75s ease-in-out 0.3s;
 }
 
 .shop-border:hover {
@@ -192,7 +208,8 @@ a .btn,
 .settings-border {
   border-color: #5c91f6;
   box-shadow: 0px 8px 0px #5c91f6;
-  transition: background-color 0.5s, color 0.5s, border-color 0.5s, box-shadow 0.5s, transform .75s ease-in-out .4s;
+  transition: background-color 0.5s, color 0.5s, border-color 0.5s,
+    box-shadow 0.5s, transform 0.75s ease-in-out 0.4s;
 }
 
 .settings-border:hover {
@@ -212,6 +229,13 @@ span.game-hint {
 
 div.btn-icon:hover {
   background-color: #fafafc;
+}
+
+.card-head {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
 }
 
 @media screen and (min-width: 1100px) {
