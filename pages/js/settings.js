@@ -1,4 +1,5 @@
 export function init() {
+  document.getElementById("st-sidenavId").style.width = "0%";
   document.getElementById("pageName").innerHTML = "Settings";
   document.getElementById("pageName").style.color = "#5C91F6";
   document.querySelector('[href="#settings"]').innerHTML =
@@ -24,7 +25,6 @@ function removeUIDinBrowser() {
 }
 
 const ntShow = document.querySelector(".show-nt");
-debugger;
 ntShow.addEventListener("click", () => {
   document.querySelector(".nt-popup-window").classList.add("show");
 });

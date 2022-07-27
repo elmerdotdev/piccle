@@ -75,17 +75,19 @@
 
     <script>
       if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.ready.then((reg) => {
-        console.log(`Service Worker ready (Scope: ${reg.scope})`);
-      });
-      navigator.serviceWorker
-        .register("./firebase-messaging-sw.js", { scope: "/"})
-        .then(reg => {
-          console.log(`Firebase Messaging Service Worker Registration (Scope: ${reg.scope})`);
-        })
-        .catch(err => {
-          console.log(err.message);
+        navigator.serviceWorker.ready.then((reg) => {
+          console.log(`Service Worker ready (Scope: ${reg.scope})`);
         });
+        navigator.serviceWorker
+          .register("./firebase-messaging-sw.js", { scope: "/" })
+          .then((reg) => {
+            console.log(
+              `Firebase Messaging Service Worker Registration (Scope: ${reg.scope})`
+            );
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
       } else {
         console.warn("Service Worker not available");
       }
@@ -167,6 +169,9 @@
         </li>
         <li>
           <a href="#play"><span>Play</span></a>
+        </li>
+        <li>
+          <a href="#leaderboard"><span>Leaderboard</span></a>
         </li>
         <li>
           <a href="#history"><span>History</span></a>

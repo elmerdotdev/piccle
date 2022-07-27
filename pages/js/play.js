@@ -19,6 +19,7 @@ import {
 import Vision from "../../vision.js";
 
 export function init() {
+  document.getElementById("st-sidenavId").style.width = "0%";
   const userEmail = localStorage.getItem("piccleUID");
   if (!userEmail) {
     location.hash = "#signin";
