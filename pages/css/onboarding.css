@@ -30,10 +30,15 @@ body {
   }
 
 
-
-header {
-    visibility: hidden;
-}
+header, .visually-hidden {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+    }
 
 main {
     display: block;
@@ -378,6 +383,10 @@ p {
 
 
 @media screen and (min-width: 1100px) {
+    header {
+        visibility: hidden;
+    }
+    
     main {
         border: unset;
         border-radius: unset; 
