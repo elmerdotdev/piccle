@@ -524,6 +524,9 @@ p {
 
     .desktop-right {
         height: 70vh;
+        display: grid;
+        grid-template-rows: 1fr 1fr 1fr;
+        padding: 0;
     }
 
     .onboarding-banner-1 .play-wrapper__progress_line {
@@ -534,5 +537,9 @@ p {
 
     span.play-wrapper__progress_line {
         width: 37%;
+    }
+
+    .btn-primary {
+        min-width: 150px;
     }
 }
