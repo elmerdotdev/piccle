@@ -87,6 +87,7 @@
 }
 
 .history-wrapper__popup-overlay .popup-message {
+  margin: auto 2rem;
   padding: 2rem;
   background-color: white;
 }
