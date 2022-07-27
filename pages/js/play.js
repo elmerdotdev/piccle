@@ -305,8 +305,9 @@ export function init() {
           "https://twitter.com/intent/tweet?url=" +
             url +
             "&text=" +
-            "I have scored " +
-            userPoints
+            "I scored " +
+            wordPoints +
+            " points 🎉🎉."
         );
       });
 
