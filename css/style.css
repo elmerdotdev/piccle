@@ -596,6 +596,7 @@ li.main-menu-active a span {
 
 .offline-overlay.persist-overlay .popup-icon {
   transition: background-color .25s;
+  cursor: pointer;
 }
 
 .offline-overlay.persist-overlay .popup-icon img {
