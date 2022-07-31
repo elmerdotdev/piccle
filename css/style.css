@@ -533,6 +533,119 @@ li.main-menu-active a span {
   transform: translateX(100vw);
 }
 
+/* OFFLINE OVERLAY =================== */
+
+.offline-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,.8);
+  display: grid;
+  place-items: center;
+  text-align: center;
+  z-index: 100;
+}
+.offline-overlay .popup-title {
+  margin-bottom: 1rem;
+}
+.offline-overlay .popup-icon {
+  height: 125px;
+  width: 125px;
+  aspect-ratio: 1/1;
+  padding: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.offline-overlay .popup-icon:hover {
+  background-color:#fafafc;
+}
+
+.offline-overlay .popup-icon img {
+  width: 80px;
+  height: auto;
+  aspect-ratio: 1/1;
+}
+
+.offline-overlay .popup-buttons {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  flex-grow: 0;
+}
+
+.offline-overlay .popup-message {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.offline-overlay.persist-overlay {
+  background-color: unset;
+  align-items: end;
+  justify-items: end;
+  height: auto;
+  width: auto;
+  top: unset;
+  left: unset;
+  left: 2rem;
+  bottom: 2rem;
+  transition: visibility 2s;
+}
+
+.offline-overlay.persist-overlay .popup-icon {
+  transition: background-color .25s;
+  cursor: pointer;
+}
+
+.offline-overlay.persist-overlay .popup-icon img {
+  width: 80px;
+}
+
+.offline-overlay.persist-overlay .popup-icon:hover {
+  background-color: #e76057;
+}
+
+.offline-overlay.persist-overlay .popup-icon:hover img {
+  content: url("/images/icons/offline-white.svg");
+}
+
+.offline-overlay.persist-overlay .popup-message,
+.offline-overlay.persist-overlay .popup-title, 
+.offline-overlay.persist-overlay .popup-buttons {
+  display: none;
+  /* width: 100px; */
+}
+
+.offline-overlay.persist-overlay .card {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  border: none;
+  box-shadow: none;
+  background-color: unset;
+}
+
+div.offline-overlay.offline-overlay-hide {
+  display: none !important;
+}
+
+@media screen and (max-width: 1099px) {
+  .offline-overlay.persist-overlay {
+    left: 0;
+    bottom: 1rem;
+  }
+
+  .offline-overlay.persist-overlay .popup-icon {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+/* END OF OFFLINE OVERLAY =================== */
+
+
 @media only screen and (min-width: 600px) {
   .st-main {
     border: 0;
