@@ -627,8 +627,20 @@ li.main-menu-active a span {
   background-color: unset;
 }
 
-div.offline-overlay.hide {
+div.offline-overlay.offline-overlay-hide {
   display: none !important;
+}
+
+@media screen and (max-width: 1099px) {
+  .offline-overlay.persist-overlay {
+    left: 0;
+    bottom: 1rem;
+  }
+
+  .offline-overlay.persist-overlay .popup-icon {
+    width: 80px;
+    height: 80px;
+  }
 }
 
 /* END OF OFFLINE OVERLAY =================== */
