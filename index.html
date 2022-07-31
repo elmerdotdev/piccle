@@ -183,7 +183,8 @@
     <div id="mainArea">
       <!-- the main part will be dynamically updated as each page loads -->
     </div>
-    <div class="offline-overlay">
+
+    <div class="offline-overlay offline-overlay-hide">
       <div class="card account-wrapper__popup">
         <h2 class="popup-title">No Internet</h2>
         <div class="popup-icon btn-icon round">
@@ -199,23 +200,6 @@
         </div>
       </div>
     </div>
-
-    <script>
-      const offlineOverlay = document.querySelector('.offline-overlay');
-      offlineOverlay.querySelector('.btn-primary')
-      .addEventListener('click', e => {
-        e.preventDefault();
-        offlineOverlay.classList.add('persist-overlay');
-        offlineOverlay.querySelector('.popup-icon')
-        .addEventListener('click', e => {
-          e.preventDefault();
-          offlineOverlay.classList.remove('persist-overlay');
-          offlineOverlay.querySelector('.popup-icon')
-          .removeEventListener('click');
-        })
-      })
-
-    </script>
 
     <footer class="visually-hidden">
       <!-- <div>
