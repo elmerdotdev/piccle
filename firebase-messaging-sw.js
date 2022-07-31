@@ -4,7 +4,7 @@ const urlsToCache = [
     "/pwa.js","/firebase-lib/firebase-app-compat.js","/firebase-lib/firebase-app.js","/firebase-lib/firebase-auth.js","/firebase-lib/firebase-firestore.js","/firebase.js","/main.js","/notifications.js","/routing-module.js","/routing.js","/vision.js","/pages/js/history.js","/pages/js/home.js","/pages/js/leaderboard.js","/pages/js/play.js","/pages/js/settings.js","/pages/js/shop.js","/pages/js/signin.js","/pages/js/signup.js",
   "/" ,"/index.html","/pages/component.html","/pages/history.html","/pages/home.html","/pages/leaderboard.html","/pages/play.html","/pages/settings.html","/pages/shop.html","/pages/signin.html","/pages/signup.html",
   "/css/components.css","/css/style.css","/pages/css/component.css","/pages/css/history.css","/pages/css/home.css","/pages/css/leaderboard.css","/pages/css/play.css","/pages/css/settings.css","/pages/css/shop.css","/pages/css/signin.css","/pages/css/signup.css",
-  "/images/animated-logo.svg","/images/favicon.png","/images/logo.png","/images/pattern.png",
+  "/images/animated-logo.svg","/images/favicon.png","/images/logo.png","/images/pattern.png","./images/icons/offline.svg", "./images/icons/offline-white.svg", "./images/icons/attachment-2.svg", "./images/icons/delete-bin-2-fill.svg", "./images/icons/camera-3-fill-w.svg", "./images/icons/account-circle-fill-w.svg", "./images/icons/bell-w.svg", "./images/icons/logo-icon.svg", "./images/icons/instagram-w.svg", "./images/icons/support-w.svg", "./images/icons/sign-out.svg", "./images/icons/settings-white.svg"
 ];
 
 
