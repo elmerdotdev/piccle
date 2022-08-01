@@ -13,12 +13,15 @@ import {
   getDoc,
 } from "../../firebase-lib/firebase-firestore.js";
 
-export function init () {
+export function init() {
   // If not logged in, redirect to login page
   const userEmail = localStorage.getItem("piccleUID");
   if (!userEmail) {
     location.hash = "#signin";
   }
+
+  let points;
+  let rank;
 
   // Messages
   const messages = {
@@ -152,6 +155,29 @@ export function init () {
       document.querySelector(".box-" + id).addEventListener("click", () => {
         showPopup(date, message, resolved, tries, word);
       });
+
+      const shareTwitter = document.querySelector(".shareTwitter");
+      shareTwitter.addEventListener("click", () => {
+        var url = "https://demo.piccle.fun/";
+        window.open(
+          "https://twitter.com/intent/tweet?url=" +
+            url +
+            "&text=" +
+            "I have scored " +
+            points +
+            " points."
+        );
+      });
+
+      const shareFacebook = document.querySelector(".shareFacebook");
+      shareFacebook.addEventListener("click", () => {
+        var url = "https://demo.piccle.fun/";
+        window.open(
+          "http://www.facebook.com/sharer.php?u=" + url,
+          "",
+          "width=1200, height=630, scrollbars=yes, resizable=no"
+        );
+      });
     }, 100);
   };
 
@@ -170,13 +196,14 @@ export function init () {
   const showPopup = async (date, message, resolved, tries, word) => {
     let popupElement = "";
     const wordpoints = await wordAndPoints(word);
-
+    points = wordpoints.points;
     document
       .querySelector(".history-wrapper__popup-overlay")
       .classList.add("show");
+    document.querySelector(".popup-message").classList.add("card");
 
     popupElement += `<h3>${date}</h3>`;
-    popupElement += `<p>${message}</p>`;
+    popupElement += `<h3>${message}</h3>`;
     popupElement += `<table>`;
     popupElement += `<tr><th>Word of the day:</th><td>${wordpoints.word}</td></tr>`;
     if (resolved) {

@@ -1,6 +1,6 @@
 "use strict";
 
-import { db } from "../../firebase.js"
+import { db } from "../../firebase.js";
 
 import {
   getFirestore,
@@ -15,7 +15,7 @@ import {
   Timestamp,
 } from "../../firebase-lib/firebase-firestore.js";
 
-export function init () {
+export function init() {
   // If not logged in, redirect to login page
   const userEmail = localStorage.getItem("piccleUID");
   if (!userEmail) {
@@ -35,9 +35,9 @@ export function init () {
     shopItems.forEach((item) => {
       let element = "";
       element += `<div class="shop_item item-${item.id}">`;
-      element += `<button type="button" class="btn btn-icon round"><img src="./../images/icons/star.svg" /></button>`;
+      element += `<button type="button" class="btn btn-icon round no-hover"><img src="./../images/icons/star.svg" /></button>`;
       element += `<div class="item-name">${item.data().name}</div>`;
-      element += `<div class="shop_item__point_wrapper"><button type="button" class="btn btn-icon round"><img src="./../images/icons/P.svg" /></button><div class="item-price">${
+      element += `<div class="shop_item__point_wrapper"><button type="button" class="btn btn-icon round no-hover"><img src="./../images/icons/P.svg" /></button><div class="item-price">${
         item.data().price
       }</div>`;
       element += `</div>`;
@@ -56,9 +56,12 @@ export function init () {
       getDoc(itemRef).then((doc) => {
         let element = "";
         element += `<div class="shop_item item-${item.id}">`;
+        element += `<button type="button" class="btn btn-icon round no-hover"><img src="./../images/icons/star.svg" /></button>`;
         element += `<div class="item-name">${doc.data().name}</div>`;
         element += `<div class="item-desc">${doc.data().desc}</div>`;
-        element += `<div class="item-price">${item.data().cost}</div>`;
+        element += `<div class="shop_item__point_wrapper"><button type="button" class="btn btn-icon round no-hover"><img src="./../images/icons/P.svg" /></button><div class="item-price">${
+          item.data().cost
+        }</div>`;
         element += `</div>`;
         document.querySelector(".items-purchased").innerHTML += element;
       });
