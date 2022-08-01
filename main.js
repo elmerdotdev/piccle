@@ -87,14 +87,8 @@ function showOfflineOverlay() {
   offlineOverlay.querySelector('.btn-primary')
   .addEventListener('click', e => {
     e.preventDefault();
-    offlineOverlay.classList.add('persist-overlay');
-    offlineOverlay.querySelector('.popup-icon')
-    .addEventListener('click', e => {
-      e.preventDefault();
-      offlineOverlay.classList.remove('persist-overlay');
-      offlineOverlay.querySelector('.popup-icon')
-      .removeEventListener('click');
-    })
+    location.reload();
+    // offlineOverlay.classList.add('persist-overlay');
   });
   offlineOverlay.classList.remove('offline-overlay-hide');
 }
@@ -109,10 +103,4 @@ if (navigator.onLine) {
 window.addEventListener('offline', function(e) { 
   console.log('offline');
   showOfflineOverlay();
-});
-
-window.addEventListener('online', function(e) { 
-  console.log('online'); 
-  offlineOverlay.classList.add('offline-overlay-hide');
-  offlineOverlay.classList.remove('persist-overlay');
 });
