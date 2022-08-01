@@ -1,7 +1,8 @@
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.8.3/firebase-app.js'
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-analytics.js"
-import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-messaging.js";
-import { getFirestore, doc, getDoc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/9.8.3/firebase-firestore.js";
+import { initializeApp } from './firebase-lib/firebase-app.js'
+import { getAnalytics } from "./firebase-lib/firebase-analytics.js"
+import { getMessaging, getToken, onMessage } from "./firebase-lib/firebase-messaging.js";
+import { getFirestore, doc, getDoc, updateDoc, arrayUnion, enableIndexedDbPersistence, CACHE_SIZE_UNLIMITED, disableNetwork, enableNetwork } from "./firebase-lib/firebase-firestore.js";
+import { getAuth } from "./firebase-lib/firebase-auth.js";
 
 // import { getAuth, signOut,
 //     createUserWithEmailAndPassword, signInWithEmailAndPassword,
@@ -22,7 +23,26 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const messaging = getMessaging(app);
-const db = getFirestore(app);
+export const auth = getAuth(app);
+export const db = getFirestore(app, {
+    cacheSizeBytes: CACHE_SIZE_UNLIMITED
+});
+
+enableIndexedDbPersistence(db).then(
+    console.log("Indexed db from: firebase.js")
+).catch((err) => {
+    console.log(err.code)
+});
+
+// document.querySelector('.dcFirebase').addEventListener('click', async () => {
+//     await disableNetwork(db);
+//     console.log("Network disabled!");
+// })
+
+// document.querySelector('.rcFirebase').addEventListener('click', async () => {
+//     await enableNetwork(db);
+//     console.log("Network enabled!");
+// })
 
 // Function to request notification approval from user
 function requestPermission() {

@@ -1,5 +1,5 @@
 var oldHref = document.location.href;
-//test github contribution
+
 window.onload = function () {
   var bodyList = document.querySelector("body");
 
@@ -13,7 +13,9 @@ window.onload = function () {
         if (
           window.location.href == "http://127.0.0.1:5500/" ||
           window.location.href == "http://127.0.0.1:5500/#home" ||
-          window.location.href == "https://dev.piccle.fun" ||
+          window.location.href == "https://demo.piccle.fun/" ||
+          window.location.href == "https://demo.piccle.fun/#home" ||
+          window.location.href == "https://dev.piccle.fun/" ||
           window.location.href == "https://dev.piccle.fun/#home" ||
           window.location.href == "https://demo.piccle.fun" ||
           window.location.href == "https://demo.piccle.fun/#home" ||
@@ -75,5 +77,42 @@ function setNavBarIconColor() {
   document.querySelector('[href="#settings"]').innerHTML =
     '<div style="background: #fff;" class="menu-icon"><img src="./../images/icons/settings.svg" alt=""></div><span>Settings</span>';
   document.querySelector('[href="#shop"]').innerHTML =
-    '<div style="background: #fff;" class="menu-icon"><img src="./../images/icons/P.svg" alt=""></div><span>Shop</span>';
+  '<div style="background: #fff;" class="menu-icon"><img src="./../images/icons/P.svg" alt=""></div><span>Shop</span>';
 }
+
+// Check internet status
+const offlineOverlay = document.querySelector('.offline-overlay');
+
+function showOfflineOverlay() {
+  offlineOverlay.querySelector('.btn-primary')
+  .addEventListener('click', e => {
+    e.preventDefault();
+    offlineOverlay.classList.add('persist-overlay');
+    offlineOverlay.querySelector('.popup-icon')
+    .addEventListener('click', e => {
+      e.preventDefault();
+      offlineOverlay.classList.remove('persist-overlay');
+      offlineOverlay.querySelector('.popup-icon')
+      .removeEventListener('click');
+    })
+  });
+  offlineOverlay.classList.remove('offline-overlay-hide');
+}
+
+if (navigator.onLine) {
+  console.log('online');
+} else {
+  console.log('offline');
+  showOfflineOverlay();
+}
+
+window.addEventListener('offline', function(e) { 
+  console.log('offline');
+  showOfflineOverlay();
+});
+
+window.addEventListener('online', function(e) { 
+  console.log('online'); 
+  offlineOverlay.classList.add('offline-overlay-hide');
+  offlineOverlay.classList.remove('persist-overlay');
+});

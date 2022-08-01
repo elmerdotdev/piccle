@@ -1,5 +1,7 @@
 "use strict";
 
+import { db } from "../../firebase.js";
+
 import {
   getFirestore,
   collection,
@@ -11,17 +13,14 @@ import {
   updateDoc,
   addDoc,
   Timestamp,
-} from "https://www.gstatic.com/firebasejs/9.8.3/firebase-firestore.js";
+} from "../../firebase-lib/firebase-firestore.js";
 
-function init() {
+export function init() {
   // If not logged in, redirect to login page
   const userEmail = localStorage.getItem("piccleUID");
   if (!userEmail) {
     location.hash = "#signin";
   }
-
-  // Connect to Firebase
-  const db = getFirestore();
 
   // Build shop page
   const renderShop = async (email) => {
@@ -36,9 +35,9 @@ function init() {
     shopItems.forEach((item) => {
       let element = "";
       element += `<div class="shop_item item-${item.id}">`;
-      element += `<button type="button" class="btn btn-icon round"><img src="./../images/icons/star.svg" /></button>`;
+      element += `<button type="button" class="btn btn-icon round no-hover"><img src="./../images/icons/star.svg" /></button>`;
       element += `<div class="item-name">${item.data().name}</div>`;
-      element += `<div class="shop_item__point_wrapper"><button type="button" class="btn btn-icon round"><img src="./../images/icons/P.svg" /></button><div class="item-price">${
+      element += `<div class="shop_item__point_wrapper"><button type="button" class="btn btn-icon round no-hover"><img src="./../images/icons/P.svg" /></button><div class="item-price">${
         item.data().price
       }</div>`;
       element += `</div>`;
@@ -57,9 +56,12 @@ function init() {
       getDoc(itemRef).then((doc) => {
         let element = "";
         element += `<div class="shop_item item-${item.id}">`;
+        element += `<button type="button" class="btn btn-icon round no-hover"><img src="./../images/icons/star.svg" /></button>`;
         element += `<div class="item-name">${doc.data().name}</div>`;
         element += `<div class="item-desc">${doc.data().desc}</div>`;
-        element += `<div class="item-price">${item.data().cost}</div>`;
+        element += `<div class="shop_item__point_wrapper"><button type="button" class="btn btn-icon round no-hover"><img src="./../images/icons/P.svg" /></button><div class="item-price">${
+          item.data().cost
+        }</div>`;
         element += `</div>`;
         document.querySelector(".items-purchased").innerHTML += element;
       });
@@ -140,23 +142,14 @@ function init() {
     const shopRef = collection(db, "shop");
     const shopQuery = query(shopRef);
     const snapshot = await getDocs(shopQuery);
-
-    try {
-      return snapshot.docs;
-    } catch (error) {
-      console.log(error);
-    }
+    return snapshot.docs;
   };
 
   // Get specific shop item
   const getSpecificItem = async (itemId) => {
     const itemRef = doc(db, "shop", itemId);
     const snapshot = await getDoc(itemRef);
-    try {
-      return snapshot;
-    } catch (error) {
-      console.log(error);
-    }
+    return snapshot;
   };
 
   // Get purchases
@@ -167,15 +160,14 @@ function init() {
       where("user_email", "==", email)
     );
     const snapshot = await getDocs(purchasesQuery);
-    try {
-      return snapshot.docs;
-    } catch (error) {
-      console.log(error);
-    }
+    return snapshot.docs;
   };
   /*  END QUERY FUNCTIONS ========================================= */
 
   renderShop(userEmail);
-}
 
-init();
+  document.getElementById("pageName").innerHTML = "Shop";
+  document.getElementById("pageName").style.color = "#4EC887";
+  document.querySelector('[href="#shop"]').innerHTML =
+    '<div style="background: #4EC887;" class="menu-icon"><img src="./../images/icons/P-w.svg" alt=""></div><span>Shop</span>';
+}
