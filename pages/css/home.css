@@ -137,10 +137,18 @@ a .btn,
 .go-play .home-labels {
   padding: 1rem;
   width: 100%;
-  background-color: #fff;
+  background: linear-gradient(to bottom, #ff90e8 50%, #fff 50%);
+  background-size: 100% 200%;
+  background-position-y: 100%;
   color: #ff90e8;
   font-size: 2rem;
   border-radius: 0 0 22px 22px;
+  transition: all .4s ease-in-out;
+}
+
+.go-play:hover .home-labels {
+  background-position-y: 0;
+  color: white;
 }
 
 .icon-chance {
