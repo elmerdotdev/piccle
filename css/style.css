@@ -283,6 +283,12 @@ input.pw-checkbox {
   margin-left: 2rem;
 }
 
+.page-home .nav-bar,
+.page-signin .nav-bar,
+.page-signup .nav-bar {
+  display: none;
+}
+
 @media screen and (min-width: 700px) {
   main {
     margin: auto;
