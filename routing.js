@@ -31,9 +31,10 @@ export class Router {
       for (let i = 0; i < Router.pages.length; i++) {
         // find which page matches the hash then navigate to it
         if (urlHash === Router.pages[i].name) {
+          let animDelay = 0;
           if (urlHash == "#home" || urlHash == "#signin" || urlHash == "#signup") {
-            
           } else {
+            animDelay = 700;
             document.querySelectorAll('#mainArea > *').forEach((element, i) => {
               setTimeout(() => {
                 element.classList.add('anim-slideout')
@@ -42,7 +43,7 @@ export class Router {
           }
           setTimeout(() => {
             Router.goToPage(Router.pages[i]);
-          }, 700)
+          }, animDelay)
           break;
         }
       }
