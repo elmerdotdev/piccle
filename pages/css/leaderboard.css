@@ -9,6 +9,10 @@
   box-shadow: 0 0;
 }
 
+.lt-main section {
+  padding: 1rem;
+}
+
 .lt__header {
   display: flex;
   flex-flow: row nowrap;
@@ -113,4 +117,14 @@
 .lt-table .current-user td:last-child {
   border-right: 2px solid #1d1d1f;
   border-radius: 0 50rem 50rem 0;
+}
+
+@media only screen and (max-width: 600px) {
+  .lt-main .lt__header__wrapper_head {
+    font-size: 1.4rem;
+  }
+
+  .share-wrapper-body button {
+    margin: 0 0.5rem;
+  }
 }

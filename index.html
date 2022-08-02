@@ -93,7 +93,23 @@
     <!-- <script src="./notifications.js"></script> -->
     <script src="./firebase.js" type="module"></script>
   </head>
-  <body>
+  <body class="page-home">
+    <script>
+      bodyClass()
+
+      window.addEventListener('hashchange', () => {
+        bodyClass()
+      })
+
+      function bodyClass() {
+        const body = document.querySelector('body')
+        let url = window.location.href;
+        pageName = 'page-' + url.split("#")[1].toLowerCase();
+        body.setAttribute('class', '')
+        body.classList.add(pageName)
+      }
+    </script>
+
     <header class="nav-bar" id="nav-bar">
       <div class="left-menu">
         <h1 id="pageName" class="hs-header"></h1>
