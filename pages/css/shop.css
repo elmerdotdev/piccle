@@ -168,15 +168,15 @@
   align-items: center;
 }
 
-.shop-wrapper__purchased .btn-icon {
-  cursor: auto;
+.shop-wrapper__popup .popup-buttons {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
 }
 
-.shop-wrapper__purchased .shop_item:hover {
-  background: #d9d9d9;
-}
-
-@media screen and (min-width: 600px) {
+@media only screen and (max-width: 600px) {
   .shop_item {
     min-width: 180px;
   }
