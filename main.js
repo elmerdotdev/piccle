@@ -9,7 +9,7 @@ window.onload = function () {
         oldHref = document.location.href;
         let url = window.location.href;
         pageName = url.split("#")[1];
-        console.log(pageName);
+        // console.log(pageName);
         if (
           window.location.href == "http://127.0.0.1:5500/" ||
           window.location.href == "http://127.0.0.1:5500/#home" ||
@@ -67,6 +67,17 @@ window.onload = function () {
   observer.observe(bodyList, config);
 };
 
+let menu = document.getElementById("menuBtn");
+let closeBtn = document.getElementById("clsBtn");
+
+menu.addEventListener("click", function () {
+  document.getElementById("st-sidenavId").style.width = "100%";
+});
+
+closeBtn.addEventListener("click", function () {
+  document.getElementById("st-sidenavId").style.width = "0%";
+});
+
 function setNavBarIconColor() {
   document.querySelector('[href="#history"]').innerHTML =
     '<div style="background: #fff;" class="menu-icon"><img src="./../images/icons/fire-fill.svg" alt=""></div><span>History</span>';
@@ -77,15 +88,30 @@ function setNavBarIconColor() {
   document.querySelector('[href="#settings"]').innerHTML =
     '<div style="background: #fff;" class="menu-icon"><img src="./../images/icons/settings.svg" alt=""></div><span>Settings</span>';
   document.querySelector('[href="#shop"]').innerHTML =
-    '<div style="background: #fff;" class="menu-icon"><img src="./../images/icons/P.svg" alt=""></div><span>Shop</span>';
+  '<div style="background: #fff;" class="menu-icon"><img src="./../images/icons/P.svg" alt=""></div><span>Shop</span>';
 }
 
 // Check internet status
-if (navigator.onLine) {
-  console.log('online');
-} else {
-  console.log('offline');
+const offlineOverlay = document.querySelector('.offline-overlay');
+
+function showOfflineOverlay() {
+  offlineOverlay.querySelector('.btn-primary')
+  .addEventListener('click', e => {
+    e.preventDefault();
+    location.reload();
+    // offlineOverlay.classList.add('persist-overlay');
+  });
+  offlineOverlay.classList.remove('offline-overlay-hide');
 }
 
-window.addEventListener('offline', function(e) { console.log('offline'); });
-window.addEventListener('online', function(e) { console.log('online'); });
+if (navigator.onLine) {
+  console.log("online");
+} else {
+  console.log('offline');
+  showOfflineOverlay();
+}
+
+window.addEventListener('offline', function(e) { 
+  console.log('offline');
+  showOfflineOverlay();
+});
