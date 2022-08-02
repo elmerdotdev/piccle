@@ -14,6 +14,7 @@ import {
 } from "../../firebase-lib/firebase-firestore.js";
 
 export function init() {
+  document.getElementById("st-sidenavId").style.width = "0%";
   // If not logged in, redirect to login page
   const userEmail = localStorage.getItem("piccleUID");
   if (!userEmail) {

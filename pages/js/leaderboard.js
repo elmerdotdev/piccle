@@ -15,6 +15,7 @@ import {
 } from "../../firebase-lib/firebase-firestore.js";
 
 export function init() {
+  document.getElementById("st-sidenavId").style.width = "0%";
   // initialize firebase services
   const auth = getAuth();
   const user = localStorage.piccleUID;

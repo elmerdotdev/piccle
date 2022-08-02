@@ -1,17 +1,26 @@
 "use strict";
 
-import { db } from "../../firebase.js"
+import { db } from "../../firebase.js";
 
-import { getFirestore, collection, query, where, 
-    getDocs, getDoc, doc, orderBy, limit  } from '../../firebase-lib/firebase-firestore.js'
-    
-export function init () {
+import {
+  getFirestore,
+  collection,
+  query,
+  where,
+  getDocs,
+  getDoc,
+  doc,
+  orderBy,
+  limit,
+} from "../../firebase-lib/firebase-firestore.js";
 
-    let loggedInUser = localStorage.getItem('piccleUID');
-    let userPoints = null;
-    let userHints = 5;
-    let userCurrentGame = null;
-    let userGameWord = null;
+export function init() {
+  document.getElementById("st-sidenavId").style.width = "0%";
+  let loggedInUser = localStorage.getItem("piccleUID");
+  let userPoints = null;
+  let userHints = 5;
+  let userCurrentGame = null;
+  let userGameWord = null;
 
   const userRef = collection(db, "users");
   const progressColRef = collection(db, "progress");
@@ -58,10 +67,11 @@ export function init () {
   getDocs(queries["userProgress"]).then((snapshot) => {
     if (snapshot.size === 0) {
       document.querySelector("span.game-chance").style.display = "none";
-      document.querySelector("span.game-hint").innerHTML = playHintDisplay["ready"];
+      document.querySelector("span.game-hint").innerHTML =
+        playHintDisplay["ready"];
     } else {
       snapshot.forEach((docSnap) => {
-        console.log("Curr progress >>>>",docSnap.data());
+        console.log("Curr progress >>>>", docSnap.data());
         userCurrentGame = docSnap.data();
         userGameWord = userCurrentGame.word;
         const lastGameDate = new Date(
@@ -122,7 +132,7 @@ export function init () {
     document.querySelectorAll(".hide").forEach((card) => {
       card.classList.remove("hide");
     });
-  }, 300)
+  }, 300);
 }
 
 function ordinalSuffixOf(i) {

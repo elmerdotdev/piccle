@@ -1,9 +1,11 @@
+html {
+    height: 100vh;
+}
 
 body {
     /* max-width: 37.5rem; */
     margin: 0 auto;
     height: 100vh;
-    width: 100vw;
   }
   
   * {
@@ -30,10 +32,15 @@ body {
   }
 
 
-
-header {
-    visibility: hidden;
-}
+header, .visually-hidden {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+    }
 
 main {
     display: block;
@@ -80,6 +87,12 @@ ol, li {
     color: #fff;
     font-size: 2em;
   }
+
+  .carousel__slide:nth-child(2) .play-wrapper__progress_line,
+  .carousel__slide:nth-child(3) .play-wrapper__progress_line,
+  .carousel__slide:nth-child(4) .play-wrapper__progress_line {
+    top: 26px;
+  }
   
   .carousel__snapper {
     position: absolute;
@@ -93,6 +106,21 @@ ol, li {
 
 .header-border button {
     margin-left: 0;
+}
+
+.btn {
+    font-size: unset;
+}
+
+.btn-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+}
+
+.carousel__slide:nth-child(2) .btn-icon,
+.carousel__slide:nth-child(3) .btn-icon,
+.carousel__slide:nth-child(4) .btn-icon {
+    padding: 0.4rem 0.1rem;
 }
 
 .onboarding-banner-1 {
@@ -111,17 +139,30 @@ ol, li {
     background-color: #4EC887;
 }
 
+.carousel__slide:nth-child(4) .round img {
+    width: 20px;
+}
+.carousel__slide:nth-child(4) .round {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
 .desktop-left {
     display: grid;
-    gap: 2rem;
+    /* gap: 2rem; */
     margin-bottom: 2rem;
     height: 35vh;
-    /* align-content: center; */
+}
+
+.onboarding-banner-2,
+.onboarding-banner-3,
+.onboarding-banner-4 {
+    grid-template-rows: .5fr .5fr 2fr;
 }
 
 .desktop-left h2 {
-    padding: 1.5rem 3rem;
-    font-size: 2.4rem;
+    padding: 1rem 2rem;
+    font-size: 1.2rem;
 }
 
 .image-wrapper   {
@@ -129,6 +170,7 @@ ol, li {
     justify-content: center;
     align-items: center;
 }
+
 .card {
     padding: 0;
     background: unset;
@@ -137,13 +179,18 @@ ol, li {
     border-radius: unset;
 }
 
+.btn-icon {
+    padding-top: 0.48rem;
+    padding-bottom: 0.48rem;
+}
+
 .desktop-right {
-    height: 45vh;
+    /* height: 45vh; */
     display: flex;
     align-items: center;
     justify-content: center;
     align-content: center;
-    gap: 4rem;
+    /* gap: 4rem; */
     padding: 0 5%;
 }
 
@@ -153,7 +200,7 @@ ol, li {
 }
 
 p {
-    font-size: 2rem;
+    font-size: 1.2rem;
 }
 
 .skip-next {
@@ -161,14 +208,18 @@ p {
     justify-content: space-evenly;
     align-items: center;
     /* margin: 5rem 0; */
-    gap: 4rem;
+    gap: 2rem;
 }
 
 .skip-next a {
-    font-size: 1.6rem;
+    font-size: 1rem;
     font-weight: bold;
     text-decoration: underline;
     color: #000;
+}
+
+.btn-primary {
+    min-width: 80px;
 }
 
 /* extra ================= */
@@ -179,7 +230,7 @@ p {
 
   .play-wrapper__numbers {
     display: flex;
-    column-gap: 5rem;
+    column-gap: 2rem;
     list-style: none;
     margin: 1rem auto;
     padding: 0;
@@ -198,8 +249,8 @@ p {
 
   .play-wrapper__numbers li .circle {
     font-size: 2rem;
-    width: 37px;
-    height: 37px;
+    width: 20px;
+    height: 20px;
     background-color: rgb(255, 255, 255);
     color: white;
     text-align: center;
@@ -218,7 +269,7 @@ p {
 
   .play-wrapper__progress_line {
     border: 1px solid #000;
-    width: 60%;
+    width: 70%;
     align-self: center;
     position: absolute;
     /* bottom: 33px;
@@ -231,24 +282,8 @@ p {
   }
     
   .onboarding-banner-1 .play-wrapper__progress_line{
-    top: 80px;
+    top: 29px;
   }
-
-  
-  /* .carousel::before,
-  .carousel::after,
-  .carousel__prev,
-  .carousel__next {
-    position: absolute;
-    top: 0;
-    margin-top: 37.5%;
-    width: 4rem;
-    height: 4rem;
-    transform: translateY(-50%);
-    border-radius: 50%;
-    font-size: 0;
-    outline: 0;
-  } */
   
   .carousel::before,
   .carousel__prev {
@@ -276,112 +311,135 @@ p {
   }
 
 
-
-@media screen and (min-width: 414px) {
+@media screen and (min-width: 285px) {
     .onboarding-banner-1 .play-wrapper__progress_line {
-        top: 35px;
+        top: 42px;
     }
 
     .play-wrapper__progress_line {
-        width: 81%;
+        width: 68%;
     }
 }
 
-@media screen and (min-width: 443px) {
-    span.play-wrapper__progress_line {
-        width: 78%;
-    }
-}
-
-@media screen and (min-width: 526px) {
-    span.play-wrapper__progress_line {
-        width: 65%;
-    }
-}
-
-
-
-@media screen and (min-width: 506px) {
-    .onboarding-banner-1 .play-wrapper__progress_line {
-        top: 62px;
-    }
-
+@media screen and (min-width: 291px) {
     .play-wrapper__progress_line {
-        width: 61%;
-    }
-}
-
-
-@media screen and (min-width: 613px) {
-    .play-wrapper__progress_line {
-        width: 55%;
-    }
-}
-
-@media screen and (min-width: 639px) {
-    span.play-wrapper__progress_line {
         width: 53%;
     }
 }
 
 
-
-
-@media screen and (min-width: 671px) {
+@media screen and (min-width: 335px) {
     .play-wrapper__progress_line {
-        width: 49%;
+        width: 45%;
+    }
+}
+
+
+@media screen and (min-width: 414px) {
+    .onboarding-banner-1 .play-wrapper__progress_line {
+        top: 43px;
+    }
+
+    .play-wrapper__progress_line {
+        width: 43%;
+    }
+}
+
+@media screen and (min-width: 440px) {
+    span.play-wrapper__progress_line {
+        width: 34%;
+    }
+
+    .onboarding-banner-1 .play-wrapper__progress_line {
+        top: 58px;
+    }
+}
+
+@media screen and (min-width: 551px) {
+    span.play-wrapper__progress_line {
+        width: 27%;
+    }
+}
+
+@media screen and (min-width: 639px) {
+    .play-wrapper__numbers li .circle {
+        width: 25px;
+        height: 25px;
+    }
+
+    .onboarding-banner-1 .play-wrapper__progress_line {
+        top: 55px;
+    }
+
+    .desktop-left h2 {
+        font-size: 1.5rem;
+    }
+
+    .desktop-right {
+        padding: 0 15%;
+    }
+
+    span.play-wrapper__progress_line {
+        width: 24%;
+    }
+
+
+    p {
+        font-size: 1.3rem;
+    }
+
+    .desktop-right {
+        gap: 2rem;
+        margin: 3rem;
     }
 }
 
 @media screen and (min-width: 765px) {
     span.play-wrapper__progress_line {
-        width: 43%;
-    }
-}
-
-@media screen and (min-width: 815px) {
-    .play-wrapper__progress_line {
-        width: 40%;
+        width: 21%;
     }
 }
 
 @media screen and (min-width: 816px) {
-    .onboarding-banner-1 .play-wrapper__progress_line  {
-        top: 91px;
-    }
-}
-
-@media screen and (min-width: 939px) {
-    span.play-wrapper__progress_line {
-        width: 35%;
-    }
-}
-
-@media screen and (min-width: 1004px) {
-    /* .onboarding-banner-1 .play-wrapper__progress_line  {
-        top: 182px;
-    }
     .play-wrapper__progress_line {
-        width: 31%;
-    } */
-
-    .onboarding-banner-1 .play-wrapper__progress_line {
-        top: 91px;
+        width: 19%;
     }
-
-    .onboarding-banner-1 .play-wrapper__progress_line {
-        width: 33%;
-    }
-
-    
 }
+
+@media screen and (min-width: 967px) {
+    span.play-wrapper__progress_line {
+        width: 16%;
+    }
+
+    .desktop-left h2 {
+        font-size: 1.8rem;
+    }
+
+    .onboarding-banner-1 .play-wrapper__progress_line {
+        top: 52px;
+    }
+}
+
 
 
 @media screen and (min-width: 1100px) {
+    #mainArea {
+        height: 80vh;
+    }
+    
+    header {
+        visibility: hidden;
+    }
+
     main {
         border: unset;
         border-radius: unset; 
         box-shadow: unset;
+    }
+
+    .carousel__slide {
+        margin: 0 1rem;
+        flex: 0 0 98%;
     }
 
     .carousel {
@@ -408,17 +466,20 @@ p {
         padding: unset;
     }
     
+    .main-wrapper {
+        margin-top: 2rem;
+    }
 
     .onboarding-wrapper {
-        display: flex;
-        flex-flow: row nowrap;
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
         justify-content: center;
         border: 1px solid black;
         border-radius: 20px;
         box-shadow: 5px 5px;
         padding: 0;
         
-        max-height: 65vh;
+        max-height: 85vh;
         background-color: white;
     }
 
@@ -440,9 +501,10 @@ p {
     
     .desktop-left {
         margin-bottom: 0;
-        height: unset;
+        height: 84.71vh;
         gap: 0;
         grid-template-rows: repeat(3,1fr);
+        align-items: center;
     }
 
     .desktop-left button {
@@ -457,14 +519,27 @@ p {
 
     .desktop-left h2 {
         grid-row: 2/3;
+        font-size: 2.4rem;
     }
 
     .desktop-right {
         height: 70vh;
+        display: grid;
+        grid-template-rows: 1fr 1fr 1fr;
+        padding: 0;
     }
 
     .onboarding-banner-1 .play-wrapper__progress_line {
-        top: 166px;
-        width: 65%;
+        top: 29px;
+        width: 37%;
+    }
+    
+
+    span.play-wrapper__progress_line {
+        width: 37%;
+    }
+
+    .btn-primary {
+        min-width: 150px;
     }
 }
