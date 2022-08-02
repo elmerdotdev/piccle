@@ -293,6 +293,7 @@ export function init() {
     domContent += `<div class="home-btn"><button class="btn btn-primary"><a href="index.html#home">Home</a></button></div>`;
     document.querySelector(".results-wrapper").innerHTML = domContent;
 
+    document.querySelector(".wrapper").classList.remove('anim-slidein');
     document.querySelector(".wrapper").classList.add("correct-answer");
     setTimeout(() => {
       document

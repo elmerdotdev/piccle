@@ -31,7 +31,19 @@ export class Router {
       for (let i = 0; i < Router.pages.length; i++) {
         // find which page matches the hash then navigate to it
         if (urlHash === Router.pages[i].name) {
-          Router.goToPage(Router.pages[i]);
+          let animDelay = 0;
+          if (urlHash == "#home" || urlHash == "#signin" || urlHash == "#signup") {
+          } else {
+            animDelay = 700;
+            document.querySelectorAll('#mainArea > *').forEach((element, i) => {
+              setTimeout(() => {
+                element.classList.add('anim-slideout')
+              }, 150 * i)
+            })
+          }
+          setTimeout(() => {
+            Router.goToPage(Router.pages[i]);
+          }, animDelay)
           break;
         }
       }
