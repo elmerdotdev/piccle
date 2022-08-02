@@ -78,6 +78,28 @@ closeBtn.addEventListener("click", function () {
   document.getElementById("st-sidenavId").style.width = "0%";
 });
 
+function updateSideMenuColor() {
+  document.querySelectorAll('.st-main-menu li:not(:first-of-type)').forEach(liElem => {
+    if (liElem.querySelector(`a[href="${window.location.hash}"]`)) {
+      liElem.classList.add('main-menu-active');
+    } else {
+      liElem.classList.remove('main-menu-active');
+    };
+  })
+}
+
+updateSideMenuColor();
+
+window.addEventListener("hashchange", () => {
+  updateSideMenuColor();
+})
+
+document.querySelectorAll('.st-main-menu li:not(:first-of-type)').forEach(liElem => {
+  liElem.querySelector('a').addEventListener('click', () => {
+    document.getElementById("st-sidenavId").style.width = "0%";
+  });
+})
+
 function setNavBarIconColor() {
   document.querySelector('[href="#history"]').innerHTML =
     '<div style="background: #fff;" class="menu-icon"><img src="./../images/icons/fire-fill.svg" alt=""></div><span>History</span>';
