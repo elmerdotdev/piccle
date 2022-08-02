@@ -93,6 +93,12 @@ h2 {
   text-align: center;
 }
 
+h2 {
+  -webkit-text-stroke: 1px black;
+  color: white;
+  text-shadow: 1px 3px 0 #000, -1px 3px 0 #000, 1px 1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
 p {
   margin: 0;
 }
@@ -109,14 +115,6 @@ li a {
   display: block;
 }
 
-/* button {
-  border & shadow
-  box-shadow: 4px 4px;
-  border-radius: 5px;
-  width: 3rem;
-  height: 3rem;
-} */
-
 /* ======================= index */
 /* =============== header */
 header img {
@@ -129,7 +127,6 @@ main {
   margin: auto;
   display: flex;
   flex-flow: column nowrap;
-  max-width: 1920px;
 }
 
 .desktop-right {
@@ -190,8 +187,8 @@ main {
 .signup-btn {
   background: none;
   color: inherit;
-  border: 1px solid black;
-  box-shadow: 5px 5px;
+  /* border: 1px solid black;
+  box-shadow: 5px 5px; */
   padding: 0;
   font: inherit;
   cursor: pointer;
@@ -295,7 +292,6 @@ input.pw-checkbox {
     margin: auto;
     display: flex;
     flex-flow: column nowrap;
-    max-width: 1100px;
   }
 
   .desktop-right {
@@ -382,9 +378,6 @@ input.pw-checkbox {
     background-color: transparent;
 
     display: flex;
-    /* border-top: 1px solid black;
-    border-radius: 100px 0;
-    box-shadow: 0px -8px 0px 0px; */
     justify-content: center;
     align-items: center;
     margin: 2rem 0;
@@ -701,7 +694,6 @@ div.offline-overlay.offline-overlay-hide {
     border: 0;
     box-shadow: 0 0;
     position: relative;
-    /* min-height: 100vh; */
     justify-content: center;
     align-items: center;
   }

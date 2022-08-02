@@ -12,7 +12,7 @@
   width: 100%;
   background: #fff;
   text-align: center;
-  border-radius: 0 0 10px 10px;
+  border-radius: 0 0 20px 20px;
   padding: 0.5rem;
   font-weight: 600;
 }
@@ -103,7 +103,7 @@
   background: #5c91f6;
   border: 1px solid #616161;
   box-shadow: 4px 4px 0px #474747;
-  border-radius: 10px;
+  border-radius: 20px;
   margin: 1rem 0;
   height: 150px;
   cursor: pointer;
