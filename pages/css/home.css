@@ -36,10 +36,33 @@ ul li {
 }
 
 .card {
+  position: relative;
   padding: 2rem 1rem 1rem;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 0;
+  height: 0;
+  background: transparent;
+  border-radius: 50%;
+  z-index: 0;
+  transition: all .4s ease-in-out;
+}
+
+.card:hover::before {
+  width: 130%;
+  height: 130%;
 }
 
 .card a {
+  position: relative;
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
@@ -74,6 +97,10 @@ a .btn,
   background-color: #ff90e8;
   transition: transform 0.75s ease-in-out;
   /* background: linear-gradient(to top, #fff 32%, #FF90E8 32% 68%); */
+}
+
+.go-play::before {
+  background-color: #ff90e8;
 }
 
 .go-play a {
@@ -154,6 +181,15 @@ a .btn,
   box-shadow: 0px 8px 0px #1d1d1d;
 }
 
+.leaderboard-border::before {
+  background-color: #e76057;
+}
+
+.leaderboard-border .btn-icon {
+  border: 2px solid #e76057;
+  box-shadow: 0px 4px 0px #e76057;
+}
+
 .leaderboard-border .player-rank,
 .history-border .player-history,
 .shop-border .earned-points,
@@ -191,6 +227,15 @@ a .btn,
   box-shadow: 0px 8px 0px #1d1d1d;
 }
 
+.history-border::before {
+  background-color: #b470ed;
+}
+
+.history-border .btn-icon {
+  border: 2px solid #b470ed;
+  box-shadow: 0px 4px 0px #b470ed;
+}
+
 .shop-border {
   border-color: #4ec887;
   box-shadow: 0px 8px 0px #4ec887;
@@ -205,6 +250,15 @@ a .btn,
   box-shadow: 0px 8px 0px #1d1d1d;
 }
 
+.shop-border::before {
+  background-color: #4ec887;
+}
+
+.shop-border .btn-icon {
+  border: 2px solid #4ec887;
+  box-shadow: 0px 4px 0px #4ec887;
+}
+
 .settings-border {
   border-color: #5c91f6;
   box-shadow: 0px 8px 0px #5c91f6;
@@ -212,11 +266,20 @@ a .btn,
     box-shadow 0.5s, transform 0.75s ease-in-out 0.4s;
 }
 
+.settings-border::before {
+  background-color: #5c91f6;
+}
+
 .settings-border:hover {
   background-color: #5c91f6;
   color: #000;
   border-color: #1d1d1d;
   box-shadow: 0px 8px 0px #1d1d1d;
+}
+
+.settings-border .btn-icon {
+  border: 2px solid #5c91f6;
+  box-shadow: 0px 4px 0px #5c91f6;
 }
 
 span.game-chance.icon-label {
@@ -238,6 +301,12 @@ div.btn-icon:hover {
   align-items: center;
   justify-content: center;
   gap: 1rem;
+}
+
+.btn-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @media screen and (min-width: 1100px) {
