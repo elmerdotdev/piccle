@@ -54,6 +54,7 @@ export function init() {
           userPoints = userInfo.points;
         }
       });
+      userPoints = kFormatter(userPoints);
       const userRank = emailList.indexOf(loggedInUser) + 1;
       document.querySelector(".player-rank").innerHTML =
         ordinalSuffixOf(userRank);
@@ -147,6 +148,10 @@ function ordinalSuffixOf(i) {
     return i + "rd";
   }
   return i + "th";
+}
+
+function kFormatter(num) {
+  return Math.abs(num) > 999 ? Math.sign(num)*((Math.abs(num)/1000).toFixed(1)) + 'k' : Math.sign(num)*Math.abs(num)
 }
 
 function datesAreOnSameDay(first, second) {

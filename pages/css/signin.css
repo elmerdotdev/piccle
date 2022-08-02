@@ -18,12 +18,16 @@ header {
   display: none;
 }
 
+main {
+  max-width: 900px;
+}
+
 .header-border {
   background-color: #fed235;
 }
 
 .login-field {
-  padding: 2rem 8%;
+  padding: 2rem 6%;
   background-color: unset;
   border-radius: 0 22px 22px 0;
 }
@@ -50,13 +54,13 @@ input::placeholder {
 input[type=submit] {
   width: 10rem;
   font-weight: bold;
-  font-size: 1.3rem;
+  font-size: 1rem;
   height: auto;
   padding: 1rem;
 }
 
 .or {
-  padding-bottom: 4rem;
+  padding-bottom: 1rem;
 }
 
 /* for incorrect password ==== */
@@ -72,11 +76,55 @@ input.btn-primary[value="Signin"]:not(:hover) {
   transition: none;
 }
 
+.nav-bar {
+  display: none;
+}
+
+.header.visually-hidden {
+  margin-bottom: 0;
+}
+
+.password-options {
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0;
+}
+
+.welcome p {
+  font-size: 1rem;
+}
+
+.formfield-wrapper label {
+  font-size: 1rem;
+}
+
+.password-options a {
+  color: black;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.signin-button {
+  row-gap: 1rem;
+}
+
+.login-social p {
+  font-size: 1rem;
+}
+
+.socialmedia-icons a {
+  padding: .4rem;
+  width: 40px;
+  height: 40px;
+}
+
 @media screen and (min-width: 1100px) {
   .socialmedia-icons a {
     width: 4rem;
     height: 4rem;
   }
+
   .header.visually-hidden {
     clip: rect(0 0 0 0);
     clip-path: inset(50%);
@@ -90,12 +138,9 @@ input.btn-primary[value="Signin"]:not(:hover) {
   main {
     margin-top: 5rem;
     background: linear-gradient(to right, #fed235 20%, #ffff 20% 80%);
-  }
-
-  .desktop-left .logo-img {
-    position: absolute;
-    top: 35%;
-    left: 15%;
+    border: 2px solid #1d1d1f;
+    box-shadow: 0px 8px 0px #1d1d1d;
+    border-radius: 24px;
   }
 
   .desktop-left {
@@ -109,11 +154,15 @@ input.btn-primary[value="Signin"]:not(:hover) {
     margin-bottom: 0;
     box-shadow: unset;
     border-bottom: 0;
-    display: block;
+    display: flex;
     position: relative;
   }
 
   .desktop-right {
     background-color: #ffff;
+  }
+
+  .welcome p {
+    font-size: 1.2rem;
   }
 }
