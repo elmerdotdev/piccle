@@ -393,6 +393,14 @@ input.pw-checkbox {
 
 /* start of settings page */
 
+.main-menu li {
+  font-weight: 600;
+}
+
+.main-menu a {
+  row-gap: .3rem;
+}
+
 .nav-bar {
   display: flex;
   flex-flow: row nowrap;
@@ -426,6 +434,10 @@ input.pw-checkbox {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
+}
+
+.st-main-menu {
+  padding: 0;
 }
 
 .st-main-menu .sd-menu-header a[href="#home"] {
@@ -465,8 +477,28 @@ input.pw-checkbox {
   font-weight: 600;
 }
 
-li.main-menu-active a span {
+.st-main-menu li:not(:first-of-type) {
+  font-size: 32px;
+}
+
+li.main-menu-active a[href="#settings"] span {
   color: #5c91f6;
+}
+
+li.main-menu-active a[href="#play"] span {
+  color: #ff90e8;
+}
+
+li.main-menu-active a[href="#leaderboard"] span {
+  color: #e76057;
+}
+
+li.main-menu-active a[href="#history"] span {
+  color: #b470ed;
+}
+
+li.main-menu-active a[href="#shop"] span {
+  color:#4ec887;
 }
 
 .sd-setting-header {
@@ -646,7 +678,7 @@ div.offline-overlay.offline-overlay-hide {
 /* END OF OFFLINE OVERLAY =================== */
 
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 790px) {
   .st-main {
     border: 0;
     box-shadow: 0 0;
@@ -697,6 +729,13 @@ div.offline-overlay.offline-overlay-hide {
   .main-menu {
     flex: 0 0 50%;
     justify-content: space-around;
+    /* padding: 0; */
+    flex-grow: 1;
+    max-width: 700px;
+  }
+
+  .main-menu li {
+    flex: 1;
   }
 
   .main-menu li a {
