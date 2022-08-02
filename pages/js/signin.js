@@ -130,7 +130,7 @@ const appLoginForm = document.querySelector('.login-field form');
 const appLoginButton = document.querySelector('.login-field form .formfield-wrapper:nth-of-type(3)');
 const appLoginPWField = document.querySelector('.login-field form input[type=password]');
 
-appLoginButton.addEventListener('click', (e) => {
+appLoginForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const userEmail = appLoginForm.email.value;
     const userPw = appLoginForm.password.value;
