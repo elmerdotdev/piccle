@@ -671,10 +671,12 @@ div.offline-overlay.offline-overlay-hide {
 }
 
 .anim-slidein {
+  position: relative;
   animation: slideIn .55s forwards ease-in-out;
 }
 
 .anim-slideout {
+  position: relative;
   animation: slideOut .55s forwards ease-in-out;
 }
 
@@ -783,20 +785,29 @@ div.offline-overlay.offline-overlay-hide {
 
 @keyframes slideIn {
   from {
-    transform: translateX(100vw);
+    left: 100vw;
   }
   to {
-    transform: translateX(0);
+    left: 0;
   }
 }
 
 @keyframes slideOut {
   from {
-    transform: translateX(0);
+    left: 0;
   }
   to {
-    transform: translateX(-100vw);
+    left: -100vw;
   }
+}
+
+@keyframes bounce {
+    0%, 10%, 11% {
+        transform: translateY(0);
+    }
+    5% {
+        transform: translateY(-10px);
+    }
 }
 
 
@@ -854,13 +865,4 @@ div.offline-overlay.offline-overlay-hide {
 /* E */
 #Layer_1-2 > g > g > g:nth-child(4) {
     animation-delay: .5s
-}
-
-@keyframes bounce {
-    0%, 10%, 11% {
-        transform: translateY(0);
-    }
-    5% {
-        transform: translateY(-10px);
-    }
 }
