@@ -152,6 +152,13 @@
   align-items: center;
 }
 
+.shop-wrapper__popup .popup-buttons {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  align-content: center;
+
 @media only screen and (max-width: 600px) {
   .shop_item {
     min-width: 250px;
