@@ -556,7 +556,7 @@ li.main-menu-active a[href="#shop"] span {
 }
 
 .leaderboard-border.hide {
-  transform: translateY(-100vw);
+  transform: translateY(-100vh);
 }
 
 .history-border.hide {
@@ -564,7 +564,7 @@ li.main-menu-active a[href="#shop"] span {
 }
 
 .shop-border.hide {
-  transform: translateY(100vw);
+  transform: translateY(100vh);
 }
 
 .settings-border.hide {
