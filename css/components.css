@@ -17,6 +17,11 @@
   transition: all 0.2s ease-in-out;
 }
 
+.shiny-card {
+  position: relative;
+  overflow: hidden;
+}
+
 .btn-primary::before {
   content: "";
   display: block;
@@ -24,8 +29,20 @@
   height: 100%;
   position: absolute;
   top: 0;
-  left: -50px;
+  left: -100px;
   background-color: rgba(255, 255, 255, 0.6);
+  transform: skewX(-10deg);
+}
+
+.shiny-card::before {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: -100px;
+  background-color: rgba(255, 255, 255, 0.5);
   transform: skewX(-10deg);
 }
 
@@ -36,6 +53,10 @@
 
 .btn-primary:hover::before {
   animation: shinySlide 0.3s forwards linear;
+}
+
+.shiny-card:hover::before {
+  animation: shinySlide 0.35s forwards linear;
 }
 
 .btn-primary:disabled,
@@ -196,9 +217,9 @@ input:checked + .slider:before {
 
 @keyframes shinySlide {
   from {
-    left: -45px;
+    left: -100px;
   }
   to {
-    left: calc(100% + 10px);
+    left: calc(100% + 50px);
   }
 }

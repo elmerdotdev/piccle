@@ -58,6 +58,7 @@ body {
   margin: 0;
   background-image: url(./../images/pattern.png);
   background-size: 300px;
+  overflow: hidden;
   animation: movingBackground 90s infinite linear;
 }
 
@@ -669,6 +670,14 @@ div.offline-overlay.offline-overlay-hide {
   display: none !important;
 }
 
+.anim-slidein {
+  animation: slideIn .55s forwards ease-in-out;
+}
+
+.anim-slideout {
+  animation: slideOut .55s forwards ease-in-out;
+}
+
 @media screen and (max-width: 1099px) {
   .offline-overlay.persist-overlay {
     left: 0;
@@ -769,6 +778,24 @@ div.offline-overlay.offline-overlay-hide {
   }
   to {
     background-position: 100vw 100vh;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100vw);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideOut {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100vw);
   }
 }
 
