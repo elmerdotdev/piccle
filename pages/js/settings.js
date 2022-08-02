@@ -24,7 +24,7 @@ function removeUIDinBrowser() {
 }
 
 const ntShow = document.querySelector(".show-nt");
-debugger;
+// debugger;
 ntShow.addEventListener("click", () => {
   document.querySelector(".nt-popup-window").classList.add("show");
 });
