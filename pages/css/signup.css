@@ -70,7 +70,9 @@ input[type=submit] {
 
   main {
     margin-top: 5rem;
-    background: linear-gradient(to right, #FF90E8 20%, #ffff 20% 80%);
+    background: linear-gradient(to right, #FF90E8 20%, #ffff 20% 80%);    border: 2px solid #1d1d1f;
+    box-shadow: 0px 8px 0px #1d1d1d;
+    border-radius: 24px;
   }
 
   .signup-banner.desktop-left.order-1.header-border {

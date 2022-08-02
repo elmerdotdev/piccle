@@ -95,7 +95,23 @@
     <!-- <script src="./notifications.js"></script> -->
     <script src="./firebase.js" type="module"></script>
   </head>
-  <body>
+  <body class="page-home">
+    <script>
+      bodyClass()
+
+      window.addEventListener('hashchange', () => {
+        bodyClass()
+      })
+
+      function bodyClass() {
+        const body = document.querySelector('body')
+        let url = window.location.href;
+        pageName = 'page-' + url.split("#")[1].toLowerCase();
+        body.setAttribute('class', '')
+        body.classList.add(pageName)
+      }
+    </script>
+
     <header class="nav-bar" id="nav-bar">
       <div class="left-menu">
         <h1 id="pageName" class="hs-header"></h1>
@@ -187,6 +203,23 @@
 
     <div id="mainArea">
       <!-- the main part will be dynamically updated as each page loads -->
+    </div>
+
+    <div class="offline-overlay offline-overlay-hide">
+      <div class="card account-wrapper__popup">
+        <h2 class="popup-title">No Internet</h2>
+        <div class="popup-icon btn-icon round">
+          <img src="./images/icons/offline.svg"></img>
+        </div>
+        <div class="popup-message">
+          <p>Seems like you are offline.</p>
+          <p>Connect to the internet to get</p>
+          <p>full features of Piccle.</p>
+        </div>
+        <div class="popup-buttons">
+            <button class="btn btn-primary popup-proceed show">Reload</button>
+        </div>
+      </div>
     </div>
 
     <footer class="visually-hidden">
