@@ -178,6 +178,16 @@
   align-content: center;
 }
 
+.shop-wrapper__popup .point-wrapper {
+  gap: .5rem;
+  cursor: auto;
+}
+
+.shop-wrapper__popup .point-wrapper .btn-icon:hover {
+  background-color: #fafafc;
+  cursor: default;
+}
+
 .items-purchased .shop_item__point_wrapper {
   display: none;
 }
