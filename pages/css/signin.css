@@ -111,6 +111,7 @@ input.btn-primary[value="Signin"]:not(:hover) {
 
 .login-social p {
   font-size: 1rem;
+  font-weight: 700;
 }
 
 .socialmedia-icons a {
@@ -120,6 +121,10 @@ input.btn-primary[value="Signin"]:not(:hover) {
 }
 
 @media screen and (min-width: 1100px) {
+  .login-social p {
+    font-size: 1.25rem;
+  }
+
   .socialmedia-icons a {
     width: 4rem;
     height: 4rem;
