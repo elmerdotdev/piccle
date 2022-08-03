@@ -5,6 +5,11 @@ main {
     display: unset;
 }
 
+.lt-main {
+    display: flex;
+    flex-flow: column nowrap;
+}
+
 .aboutus--header,
 .aboutus--elem h3 {
     text-align: center;
@@ -51,8 +56,9 @@ section.aboutus-profile {
     position: fixed;
     background-color: #FED235;
     border-radius: 24px 24px 0 0 !important;
+    flex-grow: 1;
     bottom: 0;
-    top: 55%;
+    /* top: 55%; */
     left: 0;
     right: 0;
 }
@@ -73,7 +79,7 @@ section.aboutus-profile {
     max-width: 900px;
     margin-left: auto;
     margin-right: auto;
-    font-size: 20px;
+    font-size: 16px;
 }
 
 .aboutus--elem h3 {
@@ -136,20 +142,25 @@ img.card {
         padding-left: 5%;
         padding-right: 5%;
     }
+    
 }
 
 @media screen and (min-width: 989px) {
     main {
         padding: 0 5%;        
     }
-
+    
+    .aboutus--elem p {
+        font-size: 20px;
+    }
+    
     /* aboutus-profile {
         padding: 0 5%;
     } */
     
-    .aboutus-description {
+    /* .aboutus-description {
         top: 60%;
-    }
+    } */
 
     .aboutus-profile ul {
         overflow-x: unset;
@@ -160,6 +171,7 @@ img.card {
         grid-template-columns: repeat(2,1fr);
         gap: 1rem;
     }
+
 }
 
 
@@ -168,7 +180,7 @@ img.card {
         clip: rect(0 0 0 0);
         clip-path: inset(50%);
         overflow: hidden;
-        position: unsabsoluteet;
+        position: absolute;
         white-space: nowrap;
     }
 }
