@@ -5,6 +5,7 @@
 
 .lt-main {
   flex-flow: column nowrap;
+  max-width: 1000px;
   border: 0;
   box-shadow: 0 0;
 }
