@@ -137,7 +137,7 @@
 
 .items-purchased {
   padding: 1rem;
-  overflow: scroll;
+  overflow-x: scroll;
 }
 
 .popup-content {
