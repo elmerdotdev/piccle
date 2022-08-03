@@ -1,6 +1,6 @@
 main { 
     border: unset;
-    border-radius: unset;
+    /* border-radius: unset; */
     box-shadow: unset;
     display: unset;
 }
@@ -8,20 +8,33 @@ main {
 .aboutus--header,
 .aboutus--elem h3 {
     text-align: center;
+    font-size: 40px;
+}
+
+.aboutus--header h3 {
+    margin: 1rem 0 0 0;
 }
 
 section.aboutus-profile {
     margin-bottom: 3rem;
 }
 
+.aboutus-profile .team-members {
+    overflow-x: scroll;
+}
+
 .aboutus-profile ul {
     display: grid;
     grid-template-columns: repeat(7,1fr);
-    gap: 1rem;
-    overflow-x: scroll;
-    scroll-snap-type: x mandatory;
-    padding: 1rem;
+    gap: 3%;
+    /* scroll-snap-type: x mandatory; */
+    padding: 1rem 2rem;
     justify-items: center;
+    min-width: 1350px;
+}
+
+.aboutus-profile ul .card {
+    border-width: 4px;
 }
 
 .member--wrapper {
@@ -31,14 +44,17 @@ section.aboutus-profile {
     align-items: center;
     align-content: center;
     scroll-snap-align: start;
-    width: 123px;
     text-align: center;
 }
 
 .aboutus-description {
     position: fixed;
     background-color: #FED235;
-    border-radius: 24px;
+    border-radius: 24px 24px 0 0 !important;
+    bottom: 0;
+    top: 55%;
+    left: 0;
+    right: 0;
 }
 
 .aboutus--elem {
@@ -50,6 +66,14 @@ section.aboutus-profile {
     border: unset;
     max-height: 50vh;
     overflow: auto;
+    padding: 26px;
+}
+
+.aboutus--elem p {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 20px;
 }
 
 .aboutus--elem h3 {
@@ -57,8 +81,9 @@ section.aboutus-profile {
 }
 
 .member--wrapper img {
-    width: 123px; 
-    height: 132px;
+    /* width: 123px;  */
+    height: auto;
+    aspect-ratio: 1;
     object-fit: cover;
     position: relative;
     top: 0;
@@ -77,10 +102,14 @@ img.card {
 
 .member--wrapper .name,
 .member--wrapper .role {
-    font-size: .75rem;
+    font-size: 16px;
 }
 
-a {
+.member--wrapper .name {
+    font-weight: 600;
+}
+
+.member--wrapper a {
     color: black;
     font-weight: 600;
     font-size: .8rem;
@@ -98,15 +127,6 @@ a {
     white-space: nowrap;
     width: 1px;
     }
-    .member--wrapper {
-        max-width: 123px;
-    }
-
-    .aboutus-description {
-    background-color: unset;
-    border-radius: unset;
-    position: unset;
-    }
 
     .aboutus-description {
         overflow-y: unset;
@@ -123,10 +143,13 @@ a {
         padding: 0 5%;        
     }
 
-    aboutus-profile {
+    /* aboutus-profile {
         padding: 0 5%;
-    }
+    } */
     
+    .aboutus-description {
+        top: 60%;
+    }
 
     .aboutus-profile ul {
         overflow-x: unset;
