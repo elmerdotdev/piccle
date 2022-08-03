@@ -74,7 +74,7 @@ export function init() {
   const showPopup = (itemId, name, price) => {
     let element = "";
     element += `<div class="item-name">${name}</div>`;
-    element += `<div class="point-wrapper"><button type="button" class="btn btn-icon round"><img src="./../images/icons/star.svg"></button><div class="item-price">${price}</div></div>`;
+    element += `<div class="point-wrapper"><button type="button" class="btn btn-icon round"><img src="./../images/icons/P.svg"></button><div class="item-price">${price}</div></div>`;
     document.querySelector(".popup-content").innerHTML = element;
 
     document.querySelector(".popup-purchase").setAttribute("item-id", itemId);
