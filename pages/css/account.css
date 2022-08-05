@@ -33,7 +33,7 @@ input {
     flex-direction: column;
 }
 
-span, label {
+.account span, .account label {
     font-size: 1.4rem;
     font-weight: bold;
 }

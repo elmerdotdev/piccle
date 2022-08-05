@@ -374,6 +374,7 @@ div.btn-icon:hover {
 
   span.game-hint {
     align-self: start;
+    padding: 1rem;
     font-size: 2rem;
   }
 
