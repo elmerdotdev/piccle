@@ -1,3 +1,7 @@
+html {
+  overflow: hidden;
+}
+
 .stepper-wrapper {
   margin: 50px auto;
   width: 500px;
@@ -60,4 +64,67 @@
 .shareButtons {
   display: flex;
   gap: 1rem;
+}
+
+@media screen and (max-width: 600px) {
+  .play-wrapper {
+    padding: 0 1rem;
+  }
+
+  .play-wrapper__numbers {
+    margin-top: 1rem;
+    column-gap: 2rem;
+  }
+
+  .play-wrapper_card {
+    margin: 1rem 0;
+  }
+
+  .play_wrapper__card_body {
+    padding: 1rem;
+  }
+
+  .play-wrapper__hint {
+    padding: 2rem;
+    font-size: 1.2rem;
+  }
+
+  .popup-window {
+    width: 90%;
+  }
+
+  .results-wrapper {
+    margin-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  .results-success-title {
+    display: none;
+  }
+
+  .results-inner {
+    border: none;
+    border-radius: 0 0 30px;
+  }
+
+  .statistics {
+    padding: 2rem;
+    border-radius: 0 0 50px 0;
+  }
+
+  .statistics h2 {
+    margin-bottom: 1rem;
+  }
+
+  .shareButtons {
+    margin-top: 1rem;
+  }
+
+  .results-details {
+    padding: 1rem 2rem;
+  }
+
+  .results-details img {
+    max-height: 220px;
+  }
 }
