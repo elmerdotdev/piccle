@@ -86,7 +86,7 @@ console.log('script2 loaded');
 // your app's Firebase config object.
 // https://firebase.google.com/docs/web/setup#config-object
 firebase.initializeApp({
-    apiKey: "AIzaSyBz55X3M4wdtYiW7EsbFwGz98K1Mw4xOOo",
+    apiKey: piccleConfig.firebase,
     authDomain: "wmdd-4885-integrated-project.firebaseapp.com",
     projectId: "wmdd-4885-integrated-project",
     storageBucket: "wmdd-4885-integrated-project.appspot.com",
